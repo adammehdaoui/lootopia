@@ -3,6 +3,12 @@
 
 name: Build and deploy JAR app to Azure Web App - lootopia-server
 
+on:
+  push:
+    branches:
+      - setup/backend
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: windows-latest
