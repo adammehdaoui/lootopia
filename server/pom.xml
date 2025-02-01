@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lootopia</groupId>
-    <artifactId>backend</artifactId>
+    <artifactId>server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>backend</name>
-    <description>backend</description>
+    <name>server</name>
+    <description>lootopia-server</description>
     <url/>
     <licenses>
         <license/>
@@ -189,11 +189,11 @@
                 <artifactId>azure-container-apps-maven-plugin</artifactId>
                 <version>0.1.0</version>
                 <configuration>
-                    <subscriptionId>your-subscription-id</subscriptionId>
-                    <resourceGroup>your-resource-group</resourceGroup>
-                    <appEnvironmentName>your-app-environment-name</appEnvironmentName>
-                    <region>your-region</region>
-                    <appName>backend</appName>
+                    <subscriptionId>367d2566-a187-4aec-9602-f23739d5ea25</subscriptionId>
+                    <resourceGroup>367d2566-a187-4aec-9602-f23739d5ea25</resourceGroup>
+                    <appEnvironmentName>prod</appEnvironmentName>
+                    <region>West Europe</region>
+                    <appName>lootopia-server</appName>
                     <containers>
                         <container>
                             <type>code</type>
