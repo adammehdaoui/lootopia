@@ -1,0 +1,2 @@
+CREATE DATABASE lootopia;
+GO
