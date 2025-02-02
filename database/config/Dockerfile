@@ -1,4 +1,4 @@
-# For local development
+# Use this for local development only
 FROM mcr.microsoft.com/mssql/server:latest
 
 USER root
