@@ -27,7 +27,7 @@ jobs:
           SPRING_APPLICATION_PROPERTIES: ${{ secrets.SPRING_APPLICATION_PROPERTIES }}
         run: |
           cd server 
-          echo "$SPRING_APPLICATION_PROPERTIES" > src/main/resources/application.properties
+          printf "%s" "$SPRING_APPLICATION_PROPERTIES" > src/main/resources/application.properties
           mvn clean install
 
       - name: Upload artifact for deployment job
