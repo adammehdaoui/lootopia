@@ -24,11 +24,12 @@ jobs:
 
       - name: Build with Maven
         env:
-          SPRING_APPLICATION_PROPERTIES: ${{ secrets.SPRING_APPLICATION_PROPERTIES }}
+          SPRING_DATASOURCE_URL: ${{ SPRING_DATASOURCE_URL}}
+          SPRING_DATASOURCE_USERNAME: ${{ SPRING_DATASOURCE_USERNAME}}
+          SPRING_DATASOURCE_PASSWORD: ${{ SPRING_DATASOURCE_PASSWORD}}
         run: |
           cd server 
-          printf "%s" "$SPRING_APPLICATION_PROPERTIES" > src/main/resources/application.properties
-          mvn clean install
+          mvn clean install -Dspring.profiles.active=distant
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
