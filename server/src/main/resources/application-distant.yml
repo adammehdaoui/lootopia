@@ -1,0 +1,19 @@
+# Distant properties
+
+spring:
+  application:
+    name: lootopia-backend
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  security:
+    user:
+      name: ${SPRING_SECURITY_USERNAME}
+      password: ${SPRING_SECURITY_PASSWORD}
+  session:
+    jdbc:
+      initialize-schema: always
+
+logging:
+  level:
+    web: DEBUG
