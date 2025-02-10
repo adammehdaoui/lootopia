@@ -1,0 +1,8 @@
+services:
+  sqlserver:
+    build: ./config
+    image: custom-mssql
+    container_name: sqlserver_container
+    ports:
+      - "1433:1433"
+    restart: always
