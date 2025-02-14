@@ -3,7 +3,7 @@
 ## Lancer le container
 
 ```sh
-docker compose up -d --build
+docker compose up -d
 ```
 
 ## Une fois connecté au container (avec docker exec ou en depuis l'interface graphique de Docker Desktop), pour se connecter à la base de données
