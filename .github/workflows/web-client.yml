@@ -41,57 +41,38 @@ jobs:
         path: ./client-web/playwright-report/
         retention-days: 30
 
-  build-and-push:
+  build_and_deploy_job:
+    runs-on: ubuntu-latest
     needs: [unit, e2e]
-    runs-on: ubuntu-latest
+    name: Build and Deploy Job
     permissions:
-      contents: read #This is required for actions/checkout
+       id-token: write
+       contents: read
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Node.js version
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
         with:
-          node-version: '20.x'
-      - name: npm install, build, and test
-        run: |
-          cd client-web
-          npm install
-          npm run build --if-present
-          npm run test --if-present
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
+          submodules: true
+          lfs: false
+      - name: Install OIDC Client from Core Package
+        run: npm install @actions/core@1.6.0 @actions/http-client
+      - name: Get Id Token
+        uses: actions/github-script@v6
+        id: idtoken
         with:
-          name: node-app
-          path: release.zip
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build-and-push
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+           script: |
+               const coredemo = require('@actions/core')
+               return await coredemo.getIDToken()
+           result-encoding: string
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
         with:
-          name: node-app
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_476CE2E50521440396C18E94E14FC8A5 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_7F64176DDFFC4F1989FAD7655C044A23 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_DFA5F41D90854626B246C4FB7118ABA5 }}
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'lootopia-client'
-          slot-name: 'Production'
-          package: .
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_AGREEABLE_WAVE_00C624303 }}
+          action: "upload"
+          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: "/client-web" # App source code path
+          api_location: "" # Api source code path - optional
+          output_location: "build" # Built app content directory - optional
+          github_id_token: ${{ steps.idtoken.outputs.result }}
+          ###### End of Repository/Build Configurations ######
