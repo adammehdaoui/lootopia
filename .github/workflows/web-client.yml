@@ -3,8 +3,8 @@ name: Build, test and deploy lootopia web client
 on:
   push:
     branches: [ main, setup/frontend-web ]
-  pull_request:
-    branches: main
+  #pull_request:
+  #  branches: main
   workflow_dispatch:
 
 jobs:
@@ -68,7 +68,7 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_AGREEABLE_WAVE_00C624303 }}
           action: "upload"
-          skip_api_build: true
-          app_location: "client-web"
-          output_location: "build"
+          app_location: "./client-web"
+          output_location: "build/client"
           github_id_token: ${{ steps.idtoken.outputs.result }}
+          skip_api_build: true
