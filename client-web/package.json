@@ -9,7 +9,7 @@
     "test": "jest",
     "e2e": "playwright test",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    "start": "npm i && cross-env NODE_ENV=production node ./server.js",
+    "start": "NODE_ENV=production node ./server.js",
     "typecheck": "tsc"
   },
   "dependencies": {
