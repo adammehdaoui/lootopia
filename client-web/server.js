@@ -7,10 +7,10 @@ const viteDevServer =
   process.env.NODE_ENV === "production"
     ? undefined
     : await import("vite").then((vite) =>
-        vite.createServer({
-          server: { middlewareMode: true },
-        })
-      );
+      vite.createServer({
+        server: { middlewareMode: true },
+      })
+    );
 
 const remixHandler = createRequestHandler({
   build: viteDevServer
@@ -45,7 +45,7 @@ app.use(morgan("tiny"));
 // handle SSR requests
 app.all("*", remixHandler);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 app.listen(port, () =>
   console.log(`Express server listening at http://localhost:${port}`)
 );
