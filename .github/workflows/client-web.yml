@@ -3,7 +3,10 @@ name: Build, test and deploy lootopia web client
 on:
   push:
     branches:
-      - setup/frontend-web
+      - main
+  pull_request:
+   branches:
+     - main
   workflow_dispatch:
 
 defaults:
@@ -11,38 +14,46 @@ defaults:
     working-directory: client-web
 
 jobs:
-  # unit:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - uses: actions/setup-node@v4
-  #     with:
-  #       node-version: lts/*
-  #   - name: Install dependencies
-  #     run: npm ci
-  #   - name: Run unit tests
-  #     run: npm run test
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
 
-  # e2e:
-  #   timeout-minutes: 60
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - uses: actions/setup-node@v4
-  #     with:
-  #       node-version: lts/*
-  #   - name: Install dependencies
-  #     run: npm ci
-  #   - name: Install Playwright Browsers
-  #     run: npx playwright install --with-deps
-  #   - name: Run Playwright tests
-  #     run: npx playwright test
-  #   - uses: actions/upload-artifact@v4
-  #     if: ${{ !cancelled() }}
-  #     with:
-  #       name: playwright-report
-  #       path: ./client-web/playwright-report/
-  #       retention-days: 30
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run unit tests
+      run: npm run test
+
+  e2e:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+
+    - name: Run Playwright tests
+      run: npx playwright test
+
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: ./client-web/playwright-report/
+        retention-days: 30
 
   build:
     runs-on: ubuntu-latest
