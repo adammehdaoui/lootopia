@@ -46,3 +46,7 @@ typings/
 # Remix
 
 /build/
+
+# Secrets
+
+.env
