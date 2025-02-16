@@ -9,6 +9,10 @@ on:
   #    - main
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: server
+
 jobs:
   build-and-push:
     runs-on: windows-latest
@@ -26,9 +30,7 @@ jobs:
           SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
           SPRING_SECURITY_USERNAME: ${{ secrets.SPRING_SECURITY_USERNAME }}
           SPRING_SECURITY_PASSWORD: ${{ secrets.SPRING_SECURITY_PASSWORD }}
-        run: |
-          cd server 
-          mvn clean install -D spring.profiles.active=distant -X
+        run: mvn clean install -D spring.profiles.active=distant -X
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -49,7 +51,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: server
-          
+
       - name: Login to Azure
         uses: azure/login@v2
         with:

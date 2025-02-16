@@ -19,9 +19,9 @@ jobs:
   #     with:
   #       node-version: lts/*
   #   - name: Install dependencies
-  #     run: cd client-web && npm ci
+  #     run: npm ci
   #   - name: Run unit tests
-  #     run: cd client-web && npm run test
+  #     run: npm run test
 
   # e2e:
   #   timeout-minutes: 60
@@ -32,11 +32,11 @@ jobs:
   #     with:
   #       node-version: lts/*
   #   - name: Install dependencies
-  #     run: cd client-web && npm ci
+  #     run: npm ci
   #   - name: Install Playwright Browsers
   #     run: npx playwright install --with-deps
   #   - name: Run Playwright tests
-  #     run: cd client-web && npx playwright test
+  #     run: npx playwright test
   #   - uses: actions/upload-artifact@v4
   #     if: ${{ !cancelled() }}
   #     with:
@@ -68,7 +68,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: release.zip
+          path: client-web/release.zip
 
   deploy:
     runs-on: ubuntu-latest
