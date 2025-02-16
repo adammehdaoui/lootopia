@@ -42,3 +42,7 @@ typings/
 # Jest
 
 /coverage/
+
+# Remix
+
+/build/
