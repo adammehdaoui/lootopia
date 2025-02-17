@@ -14,8 +14,27 @@ defaults:
     working-directory: server
 
 jobs:
+  unit:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java version
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'microsoft'
+
+      - name: Test with Maven
+        env:
+          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
+          SPRING_SECURITY_USERNAME: ${{ secrets.SPRING_SECURITY_USERNAME }}
+          SPRING_SECURITY_PASSWORD: ${{ secrets.SPRING_SECURITY_PASSWORD }}
+        run: test -Dspring.profiles.active=local -f pom.xml
+
   build-and-push:
     runs-on: windows-latest
+    needs: unit
     steps:
       - uses: actions/checkout@v4
 
