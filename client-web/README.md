@@ -2,11 +2,17 @@
 
 - 📖 [Remix docs](https://remix.run/docs)
 
+## Install dependencies
+
+```sh
+npm install
+```
+
 ## Development
 
 Run the dev server:
 
-```shellscript
+```sh
 npm run dev
 ```
 
