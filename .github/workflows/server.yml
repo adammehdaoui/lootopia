@@ -1,40 +1,18 @@
-name: Build, test and deploy lootopia server
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy JAR app to Azure Web App - lootopia-server
 
 on:
-  push:
+  pull_request:
     branches:
       - main
-  pull_request:
-   branches:
-     - main
   workflow_dispatch:
 
-defaults:
-  run:
-    working-directory: server
-
 jobs:
-  unit:
+  build:
     runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Set up Java version
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'microsoft'
-
-      - name: Test with Maven
-        env:
-          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
-          SPRING_SECURITY_USERNAME: ${{ secrets.SPRING_SECURITY_USERNAME }}
-          SPRING_SECURITY_PASSWORD: ${{ secrets.SPRING_SECURITY_PASSWORD }}
-        run: mvn test -D spring.profiles.active=local -f pom.xml
-
-  build-and-push:
-    runs-on: windows-latest
-    needs: unit
     steps:
       - uses: actions/checkout@v4
 
@@ -49,7 +27,9 @@ jobs:
           SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
           SPRING_SECURITY_USERNAME: ${{ secrets.SPRING_SECURITY_USERNAME }}
           SPRING_SECURITY_PASSWORD: ${{ secrets.SPRING_SECURITY_PASSWORD }}
-        run: mvn clean install -D spring.profiles.active=distant -X
+        run: |
+          cd server 
+          mvn clean install -D spring.profiles.active=distant -X
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -59,18 +39,19 @@ jobs:
 
   deploy:
     runs-on: windows-latest
-    needs: build-and-push
+    needs: build
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: server
-
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
