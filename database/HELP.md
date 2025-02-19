@@ -16,4 +16,5 @@ docker compose up -d
 
 ```sql
 SELECT name FROM sys.databases;
+GO
 ```
