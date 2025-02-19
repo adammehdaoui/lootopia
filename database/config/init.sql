@@ -1,2 +1,2 @@
-CREATE DATABASE lootopia;
+CREATE DATABASE [lootopia]
 GO
