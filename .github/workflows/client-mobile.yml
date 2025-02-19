@@ -6,6 +6,10 @@ on:
       - setup/frontend-mobile
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: client-mobile
+
 jobs:
   unit:
     runs-on: ubuntu-latest
