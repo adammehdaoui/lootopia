@@ -1,7 +1,3 @@
 .DS_Store
 .idea/
-<<<<<<< HEAD
 .package-lock.json
-=======
-.package-lock.jsonnp
->>>>>>> 26ec1cd (LOO104: Setup & CI/CD frontend (mobile) - Expo - React Native)
