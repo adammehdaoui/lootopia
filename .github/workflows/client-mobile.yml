@@ -19,7 +19,9 @@ jobs:
       with:
         node-version: 20
         cache: 'npm'
-        cache-dependency-path: client-mobile/package-lock.json
+        cache-dependency-path: |
+          client-mobile/package-lock.json
+          client-mobile/node_modules
     - run: npm ci
 
   lint:
