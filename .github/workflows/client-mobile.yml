@@ -11,54 +11,53 @@ defaults:
     working-directory: client-mobile
 
 jobs:
-  cache:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
     - uses: actions/setup-node@v4
       with:
         node-version: 20
         cache: 'npm'
-        cache-dependency-path: |
-          client-mobile/package-lock.json
-          client-mobile/node_modules
-    - run: npm ci
-
-  lint:
-    needs: cache
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
+        cache-dependency-path: client-mobile/package-lock.json
+    
+    - name: Install dependencies
+      run: npm ci
 
     - name: Lint code
       run: npm run lint
 
   unit:
-    needs: cache
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
 
     - uses: actions/setup-node@v4
       with:
-        node-version: lts/*
+        node-version: 20
+        cache: 'npm'
+        cache-dependency-path: client-mobile/package-lock.json
       
+    - name: Install dependencies
+      run: npm ci
+
     - name: Run unit tests
       run: npm run test
 
   build:
-    needs: cache
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
 
     - uses: actions/setup-node@v4
       with:
-        node-version: lts/*
+        node-version: 20
+        cache: 'npm'
+        cache-dependency-path: client-mobile/package-lock.json
+
+    - name: Install dependencies
+      run: npm ci
 
     - name: Build mobile client
       run: npm run build
