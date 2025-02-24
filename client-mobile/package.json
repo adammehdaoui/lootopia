@@ -3,11 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "reset-project": "node ./scripts/reset-project.js",
-    "create": "eas device:create",
-    "prebuild": "expo prebuild --clean",
-    "build": "eas build --profile development-simulator --platform ios",
-    "start": "expo start --dev-client",
+    "build": "expo prebuild --clean --platform ios",
     "ios": "expo run:ios",
     "ios-device": "expo run:ios --device",
     "test": "jest",
