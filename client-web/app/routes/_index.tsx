@@ -22,7 +22,13 @@ export default function Index() {
             vast array of interactive scavenger hunts, solving puzzles, decoding
             clues, and uncovering hidden treasures. Whether you are a casual
             adventurer or a competitive seeker, Lootopia offers challenges for
-            all skill levels.
+            all skill levels. The platform allows users to create their own
+            treasure hunts, share them with the community, and even earn rewards
+            for successful completions. Featuring dynamic rankings, an in-game
+            marketplace, and social interactions, Lootopia blends adventure,
+            mystery, and competition in a unique gaming experience. Join the
+            hunt and see if you have what it takes to become a legendary
+            treasure seeker! 🏴‍☠️✨
           </p>
           <iframe
             className="w-full lg:w-[560px] h-[250px] md:h-[280px] lg:h-[315px]"
