@@ -1,6 +1,5 @@
 package com.lootopia.server.service;
 
-<<<<<<< HEAD
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
@@ -14,23 +13,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-=======
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
-
->>>>>>> a603abb (WIP: send email after register)
 @Service
 @PropertySource("classpath:application-${spring.profiles.active}.yml")
 public class MailService {
 
     JavaMailSender emailSender;
-<<<<<<< HEAD
     Logger LOGGER = LoggerFactory.getLogger(MailService.class);
-=======
->>>>>>> a603abb (WIP: send email after register)
 
     @Value("${mail.domain}")
     private String username;
