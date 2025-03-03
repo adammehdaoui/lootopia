@@ -9,7 +9,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="m-6 md:m-14 bg-[#142247] border-8 border-white rounded-2xl p-4">
+    <div className=" m-8 bg-[#142247] border-8 border-white rounded-2xl p-4">
       {/* ----- DIV DU HAUT ----- */}
       <div className="p-4 text-white">
         <h1 className="text-2xl md:text-3xl flex justify-center mb-4">
@@ -26,7 +26,7 @@ export default function Index() {
           </p>
           <iframe
             className="w-full lg:w-[560px] h-[250px] md:h-[280px] lg:h-[315px]"
-            src="https://www.youtube.com/embed/Ou7c8Sg9YVg?si=c4qagz2fr1F4dg6E"
+            src="https://www.youtube.com/embed/QI80NZ2zJkg?si=9H1x_noCOYzVVy45"
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           ></iframe>
