@@ -1,0 +1,21 @@
+feat: working sign up API
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch feat/auth
+# Your branch is up to date with 'origin/feat/auth'.
+#
+# Changes to be committed:
+#	modified:   server/src/main/java/com/lootopia/server/config/SecurityConfig.java
+#	modified:   server/src/main/java/com/lootopia/server/controller/AuthController.java
+#	modified:   server/src/main/java/com/lootopia/server/controller/TestController.java
+#	modified:   server/src/main/java/com/lootopia/server/domain/Member.java
+#	modified:   server/src/main/java/com/lootopia/server/dto/MailDto.java
+#	modified:   server/src/main/java/com/lootopia/server/repository/MemberRepository.java
+#	modified:   server/src/main/java/com/lootopia/server/security/CustomUserDetails.java
+#	modified:   server/src/main/java/com/lootopia/server/service/AuthService.java
+#	modified:   server/src/main/java/com/lootopia/server/service/MailService.java
+#	modified:   server/src/main/java/com/lootopia/server/utils/PasswordUtils.java
+#	modified:   server/src/main/resources/application-distant.yml
+#	new file:   server/src/main/resources/static/images/lootopia.png
+#

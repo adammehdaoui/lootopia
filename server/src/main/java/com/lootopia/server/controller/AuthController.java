@@ -1,5 +1,6 @@
 package com.lootopia.server.controller;
 
+import com.lootopia.server.dto.ActivateDto;
 import com.lootopia.server.dto.MailDto;
 import com.lootopia.server.security.CustomUserDetails;
 import com.lootopia.server.service.AuthService;
@@ -34,6 +35,14 @@ public class AuthController {
                 .askForRegister(activationCode, mailDto.to(), mailDto.rawPassword());
 
         return ResponseEntity.ok(currentMember);
+    }
+
+    @PostMapping("/activate")
+    public ResponseEntity<CustomUserDetails> activate(
+            @RequestBody ActivateDto activateDto) {
+        // TODO
+
+        return null;
     }
 
 }

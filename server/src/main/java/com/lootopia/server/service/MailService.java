@@ -2,6 +2,8 @@ package com.lootopia.server.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
@@ -16,6 +18,7 @@ import java.util.UUID;
 public class MailService {
 
     JavaMailSender emailSender;
+    Logger LOGGER = LoggerFactory.getLogger(MailService.class);
 
     @Value("${mail.domain}")
     private String username;
@@ -27,7 +30,7 @@ public class MailService {
         this.emailSender = emailSender;
     }
 
-    public UUID sendMessage(String to) throws MessagingException {
+    public UUID sendMessage(String to) {
         UUID generatedUUID = UUID.randomUUID();
         String uuid = generatedUUID.toString();
         String subject = "Account activation";
@@ -41,7 +44,7 @@ public class MailService {
                             <p style='font-size: 16px; color: #555;'>Thank you for signing up! Use the URL below to confirm your email:</p>
                             <p style='font-size: 14px; color: #888;'>This code is valid for a limited time.</p>
                             <p>
-                                <a href='%s?code=%s&mail=%s' style='display: inline-block; padding: 10px 20px; background-color: #2C89F7; 
+                                <a href='%s?code=%s&mail=%s' style='display: inline-block; padding: 10px 20px; background-color: #2C89F7;
                                 color: #fff; text-decoration: none; border-radius: 5px; font-size: 16px;'>Activate Now</a>
                             </p>
                             <p style='font-size: 12px; color: #999;'>If you did not request this email, please ignore it.</p>
@@ -50,21 +53,28 @@ public class MailService {
                 to, activationUrl, uuid, to
         );
 
-        MimeMessage message = emailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(
-                message,
-                true,
-                "UTF-8"
-        );
-        helper.setFrom(username);
-        helper.setTo(to);
-        helper.setSubject(subject);
-        helper.setText(htmlContent, true);
+        try {
+            MimeMessage message = emailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(
+                    message,
+                    true,
+                    "UTF-8"
+            );
+            helper.setFrom(username);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(htmlContent, true);
 
-        ClassPathResource logo = new ClassPathResource("static/images/lootopia.png");
-        helper.addInline("logoImage", logo);
+            ClassPathResource logo = new ClassPathResource("static/images/lootopia.png");
+            helper.addInline("logoImage", logo);
 
-        emailSender.send(message);
+            emailSender.send(message);
+
+        } catch (MessagingException e) {
+            LOGGER.error("""
+                    Error while sending email: {}
+                    """, e.getMessage());
+        }
 
         return generatedUUID;
     }
