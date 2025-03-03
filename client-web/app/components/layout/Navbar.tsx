@@ -1,39 +1,65 @@
 import { Link } from "@remix-run/react";
 import { Button } from "../Button";
 import { useState } from "react";
-import { Crown, User } from "lucide-react";
+import { Crown, User, Menu } from "lucide-react";
 
 export function Navbar() {
   const [nbCrowns, setNbCrowns] = useState(999);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <div className="bg-[#142247] sticky  top-0 flex items-center justify-between px-8 rounded-b-xl ">
-      <div className="flex gap-4">
+    <div className="bg-[#142247] sticky top-0 flex items-center justify-between px-8 py-4 rounded-b-xl">
+      <div className="flex items-center gap-4">
         <Link to="/" className="flex items-center">
           <img
             src="/assets/logo.webp"
             alt="Lootopia Logo"
-            className="h-20 m-4 w-auto"
+            className="h-16 md:h-20 m-2 w-auto"
           />
         </Link>
-        <div className="flex justify-center items-center gap-8">
-          <Button text="Hunts list" />
-          <Button text="Marketplace" />
-          <Button text="Leaderboard" />
-        </div>{" "}
+        <div className="hidden lg:flex justify-center items-center gap-4 md:gap-2 lg:gap-8">
+          <Button
+            text="Hunts list"
+            className="md:text-xs lg:text-base md:px-2 md:py-1"
+          />
+          <Button
+            text="Marketplace"
+            className="md:text-xs lg:text-base md:px-2 md:py-1"
+          />
+          <Button
+            text="Leaderboard"
+            className="md:text-xs lg:text-base md:px-2 md:py-1"
+          />
+        </div>
       </div>
-      <div className="flex gap-10 justify-center items-center">
-        {" "}
-        <button className="flex h-10 px-4 text-white border-4 rounded-full items-center gap-2 hover:text-[#142247] hover:bg-white hover:font-semibold">
-          <Crown size={28} />
+      <div className="flex gap-6 md:gap-10 justify-center items-center">
+        <button className="flex h-10 sm:h-8 px-4 sm:px-3 text-white border-4 rounded-full items-center gap-2 hover:text-[#142247] hover:bg-white hover:font-semibold">
+          <Crown size={24} />
           <p>{nbCrowns}</p>
           <p>|</p>
           <p>+</p>
         </button>
         <User
           className="text-white hover:scale-125 duration-300 cursor-pointer"
-          size={32}
+          size={28}
         />
+        <button
+          className="lg:hidden text-white"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <Menu
+            className="text-white hover:scale-125 duration-300 cursor-pointer"
+            size={32}
+          />
+        </button>
       </div>
+      {menuOpen && (
+        <div className="absolute top-full right-0 bg-[#142247] flex flex-col items-center py-4 md:block">
+          <Button text="Hunts list" className="text-lg" />
+          <Button text="Marketplace" className="text-lg" />
+          <Button text="Leaderboard" className="text-lg" />
+        </div>
+      )}
     </div>
   );
 }
