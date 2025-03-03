@@ -13,11 +13,18 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String password;
+
+    private boolean active;
+
+    private String activationCode;
 
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<Role> roles;
