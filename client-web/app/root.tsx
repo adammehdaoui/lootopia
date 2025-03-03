@@ -26,12 +26,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="h-fit bg-deep">
+      <body className="h-screen">
         <Navbar />
         {children}
         <Footer />
-        <Toaster />
-
         <ScrollRestoration />
         <Scripts />
       </body>
