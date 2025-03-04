@@ -6,10 +6,7 @@ import com.lootopia.server.security.CustomUserDetails;
 import com.lootopia.server.service.AuthService;
 import com.lootopia.server.service.MailService;
 import jakarta.mail.MessagingException;
-<<<<<<< HEAD
 import org.springframework.http.HttpStatus;
-=======
->>>>>>> 14ab836 (feat: working sign up API)
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
