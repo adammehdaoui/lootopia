@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
-import { Button } from "../Button";
 import { useState } from "react";
 import { Crown, User, Menu } from "lucide-react";
+import { Button } from "../ui/button";
 
 export function Navbar() {
   const [nbCrowns, setNbCrowns] = useState(999);
@@ -25,27 +25,18 @@ export function Navbar() {
           />
         </Link>
         <div className="hidden lg:flex justify-center items-center gap-4 md:gap-2 lg:gap-8">
-          <Button
-            text="Hunts list"
-            className="md:text-xs lg:text-base md:px-2 md:py-1"
-          />
-          <Button
-            text="Marketplace"
-            className="md:text-xs lg:text-base md:px-2 md:py-1"
-          />
-          <Button
-            text="Leaderboard"
-            className="md:text-xs lg:text-base md:px-2 md:py-1 "
-          />
+          <Button>Hunts list</Button>
+          <Button>Marketplace</Button>
+          <Button>Leaderboard</Button>
         </div>
       </div>
       <div className="flex gap-6 md:gap-10 justify-center items-center">
-        <button className="flex h-10 sm:h-8 px-4 sm:px-3 text-white border-2 rounded-full items-center gap-2 hover:text-[#142247] hover:bg-white hover:font-semibold">
+        <Button variant="crown">
           <Crown size={24} />
           <p>{nbCrowns}</p>
           <p>|</p>
           <p>+</p>
-        </button>
+        </Button>
         <User
           className="text-white hover:text-gray-500 duration-300 cursor-pointer"
           size={28}
@@ -68,9 +59,9 @@ export function Navbar() {
       </div>
       {menuOpen && (
         <div className="absolute top-full right-0 bg-[#142247] flex flex-col items-center py-4 md:block">
-          <Button text="Hunts list" className="text-lg" />
-          <Button text="Marketplace" className="text-lg" />
-          <Button text="Leaderboard" className="text-lg" />
+          <Button variant="noscale">Hunts list</Button>
+          <Button variant="noscale">Marketplace</Button>
+          <Button variant="noscale">Leaderboard</Button>
         </div>
       )}
 
@@ -84,12 +75,9 @@ export function Navbar() {
               <a href="/" className="text-white hover:underline py-2">
                 Test
               </a>
-              <button
-                onClick={handleLogout}
-                className="text-white bg-[#142247] py-2 px-4 border-2 rounded-full mt-2 hover:bg-white hover:text-[#142247] transition duration-300"
-              >
+              <Button variant="noscale" onClick={handleLogout}>
                 Log Out
-              </button>
+              </Button>
             </>
           ) : (
             <>
