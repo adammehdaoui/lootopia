@@ -19,9 +19,9 @@ export function Navbar() {
       <div className="flex items-center gap-4">
         <Link to="/" className="flex items-center">
           <img
-            src="/assets/logo.webp"
+            src="/assets/logo.png"
             alt="Lootopia Logo"
-            className="h-16 md:h-20 m-2 w-auto"
+            className="h-28 md:h-28 m-2 w-auto"
           />
         </Link>
         <div className="hidden lg:flex justify-center items-center gap-4 md:gap-2 lg:gap-8">
@@ -40,14 +40,14 @@ export function Navbar() {
         </div>
       </div>
       <div className="flex gap-6 md:gap-10 justify-center items-center">
-        <button className="flex h-10 sm:h-8 px-4 sm:px-3 text-white border-4 rounded-full items-center gap-2 hover:text-[#142247] hover:bg-white hover:font-semibold">
+        <button className="flex h-10 sm:h-8 px-4 sm:px-3 text-white border-2 rounded-full items-center gap-2 hover:text-[#142247] hover:bg-white hover:font-semibold">
           <Crown size={24} />
           <p>{nbCrowns}</p>
           <p>|</p>
           <p>+</p>
         </button>
         <User
-          className="text-white hover:scale-125 duration-300 cursor-pointer"
+          className="text-white hover:text-gray-500 duration-300 cursor-pointer"
           size={28}
           onClick={() => {
             setUserMenuOpen(!userMenuOpen);
@@ -61,7 +61,7 @@ export function Navbar() {
           }}
         >
           <Menu
-            className="text-white hover:scale-125 duration-300 cursor-pointer "
+            className="text-white hover:text-gray-500 duration-300 cursor-pointer "
             size={32}
           />
         </button>
