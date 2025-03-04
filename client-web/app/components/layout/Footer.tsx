@@ -3,7 +3,7 @@ import { AiOutlineApple } from "react-icons/ai";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
 import { LuFacebook, LuInstagram, LuTwitter } from "react-icons/lu";
 
-export function Footer() {
+export default function Footer() {
   return (
     <div className="flex flex-col bg-[#142247] rounded-t-xl text-white p-8 md:p-16">
       <div className="flex justify-center  md:flex-row gap-8 md:gap-24">
@@ -21,27 +21,27 @@ export function Footer() {
         </span>
         <span className="flex flex-col gap-4">
           <p className="font-bold py-4">Download app</p>
-          <a href="/" className="flex items-center gap-2 hover:scale-110">
+          <a href="/" className="flex items-center gap-2 hover:scale-110 duration-300">
             Apple Store <AiOutlineApple size={25} />
           </a>
-          <a href="/" className="flex items-center gap-2 hover:scale-110">
+          <a href="/" className="flex items-center gap-2 hover:scale-110 duration-300">
             Play Store <IoLogoGooglePlaystore size={20} />
           </a>
         </span>
         <span className="flex flex-col gap-4">
           <p className="font-bold py-4">Comment ça marche ?</p>
-          <a href="/" className="hover:underline">
+          <a href="/" className="hover:scale-110 duration-300">
             FAQ
           </a>
-          <a href="/" className="hover:underline">
+          <a href="/" className="hover:scale-110 duration-300">
             Guide d&apos;utilisation
           </a>
-          <a href="/" className="hover:underline">
+          <a href="/" className="hover:scale-110 duration-300">
             Avis des utilisateurs
           </a>
         </span>
       </div>
-      <span className="flex justify-center md:flex-row items-cente  r gap-6 pt-8">
+      <span className="flex justify-center md:flex-row items-center gap-6 pt-8">
         <p className="font-semibold text-center md:text-left">
           © 2025 Lootopia, Inc. Tous droits réservés
         </p>

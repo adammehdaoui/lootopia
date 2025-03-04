@@ -3,46 +3,33 @@ import type { MetaFunction } from "@remix-run/node";
 export const meta: MetaFunction = () => {
   return [
     { title: "Lootopia" },
-    { name: "description", content: "Welcome to Remix!" },
+    { name: "description", content: "Lootopia is your treasure finding app!" },
   ];
 };
 
 export default function Index() {
   return (
-    <div className=" m-8 bg-[#142247] border-4 border-white rounded-2xl p-4">
-      {/* ----- DIV DU HAUT ----- */}
-      <div className="p-4 text-white">
-        <h1 className="text-2xl md:text-3xl flex justify-center mb-4 font-montserrat font-bold ">
-          WHAT IS LOOTOPIA
+    <div className="m-8 bg-[#142247] border-4 border-white rounded-2xl p-4">
+      <div className="flex flex-col mt-5 pb-10 space-y-10 text-white">
+        <h1 className="flex justify-center text-2xl md:text-3xl mb-4 font-montserrat font-bold ">
+          WHAT IS LOOTOPIA ? 😮
         </h1>
         <div className="flex flex-col lg:flex-row items-center lg:justify-around gap-6 font-biorhyme">
           <p className="w-full lg:w-1/2 text-center lg:text-left ">
-            Lootopia is an immersive online platform that brings the excitement
-            of treasure hunting into the digital world. Players can explore a
-            vast array of interactive scavenger hunts, solving puzzles, decoding
-            clues, and uncovering hidden treasures. Whether you are a casual
-            adventurer or a competitive seeker, Lootopia offers challenges for
-            all skill levels. The platform allows users to create their own
-            treasure hunts, share them with the community, and even earn rewards
-            for successful completions. Featuring dynamic rankings, an in-game
-            marketplace, and social interactions, Lootopia blends adventure,
-            mystery, and competition in a unique gaming experience. Join the
-            hunt and see if you have what it takes to become a legendary
-            treasure seeker! 🏴‍☠️✨
+            Lootopia is a digital treasure-hunting platform where players solve puzzles, decode clues, and uncover hidden rewards. Whether casual or competitive, users can create, share, and complete challenges while engaging in dynamic rankings, an in-game marketplace, and social interactions. Join the hunt and become a legendary seeker! 🏴‍☠️✨
           </p>
           <iframe
             className="w-full lg:w-[560px] h-[250px] md:h-[280px] lg:h-[315px]"
-            src="https://www.youtube.com/embed/QI80NZ2zJkg?si=9H1x_noCOYzVVy45"
+            src="https://www.youtube.com/embed/fQvpDfFjjPo?autoplay=1&mute=1"
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           ></iframe>
         </div>
       </div>
-      <hr className="mx-8 border-gray-300" />
 
-      {/* ----- DIV DU BAS ----- */}
+      <hr className="mx-8 pb-10 border-gray-300" />
+
       <div className="flex flex-col items-center p-4 gap-4">
-        {/* DIV POPULAR HUNTS */}
         <div className="w-full">
           <p className="text-2xl md:text-3xl text-white text-center mb-4 font-montserrat font-bold">
             Popular hunts
@@ -53,9 +40,8 @@ export default function Index() {
                 <img
                   src="/assets/logo.png"
                   alt="Lootopia Logo"
-                  className="h-40 w-40 sm:h-64 sm:w-64 md:h-72 md:w-96 m-2 rounded-lg"
                 />
-                <p className="text-white">Name</p>
+                <p className="text-white">Name {index}</p>
               </div>
             ))}
           </div>
