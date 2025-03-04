@@ -6,12 +6,14 @@ import com.lootopia.server.security.CustomUserDetails;
 import com.lootopia.server.service.AuthService;
 import com.lootopia.server.service.MailService;
 import jakarta.mail.MessagingException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.util.UUID;
 
 @RestController
@@ -38,11 +40,16 @@ public class AuthController {
     }
 
     @PostMapping("/activate")
-    public ResponseEntity<CustomUserDetails> activate(
+    public ResponseEntity<Object> activate(
             @RequestBody ActivateDto activateDto) {
-        // TODO
+        UUID uuid = UUID.fromString(activateDto.activationCode());
 
-        return null;
+        try {
+            CustomUserDetails currentMember = authService.askForActivation(uuid, activateDto.mail());
+            return ResponseEntity.ok(currentMember);
+        } catch (AccountNotFoundException a) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(a.getMessage());
+        }
     }
 
 }

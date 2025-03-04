@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.util.UUID;
 
 @Service
@@ -38,6 +39,31 @@ public class AuthService {
         memberRepository.save(newMember);
 
         return new CustomUserDetails(newMember);
+    }
+
+    public CustomUserDetails askForActivation(UUID uuid, String email) throws AccountNotFoundException {
+        Member member = memberRepository.findByEmail(email);
+
+        if (member == null) {
+            LOGGER.error("User not found");
+            throw new AccountNotFoundException("User not found");
+        }
+
+        if (member.isActive()) {
+            LOGGER.warn("User already activated");
+            return new CustomUserDetails(member);
+        }
+
+        if (!member.getActivationCode().equals(uuid.toString())) {
+            LOGGER.error("Activation code not matched");
+            throw new AccountNotFoundException("Activation code not matched");
+        }
+
+        member.setActive(true);
+
+        memberRepository.save(member);
+
+        return new CustomUserDetails(member);
     }
 
 }
