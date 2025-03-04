@@ -1,9 +1,10 @@
 import { Link } from "@remix-run/react";
+import { Crown, Menu, User } from "lucide-react";
 import { useState } from "react";
-import { Crown, User, Menu } from "lucide-react";
 import { Button } from "../ui/button";
 
-export function Navbar() {
+export default function Navbar() {
+  //eslint-disable-next-line
   const [nbCrowns, setNbCrowns] = useState(999);
   const [menuOpen, setMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
