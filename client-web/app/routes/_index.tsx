@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 import type { MetaFunction } from "@remix-run/node"
-=======
-import type { MetaFunction } from "@remix-run/node";
-import { Button } from "~/components/ui/button";
->>>>>>> 0273c46 (add font, css, logo)
 
 export const meta: MetaFunction = () => {
   return [
