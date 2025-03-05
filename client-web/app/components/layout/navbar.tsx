@@ -1,97 +1,93 @@
-import { Link } from "@remix-run/react";
-import { Crown, Menu, User } from "lucide-react";
-import { useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger
+} from "@/components/ui/navigation-menu"
+import { Crown } from "lucide-react"
+import { GiTreasureMap } from "react-icons/gi"
 
 export default function Navbar() {
-  //eslint-disable-next-line
-  const [nbCrowns, setNbCrowns] = useState(999);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-
-  const [userLoggedIn, setUserLoggedIn] = useState(true);
-
-  const handleLogout = () => {
-    setUserLoggedIn(false);
-  };
 
   return (
-    <div className="bg-[#142247] sticky top-0 flex items-center justify-between px-8 py-4 rounded-b-xl">
-      <div className="flex items-center gap-4">
-        <Link to="/" className="flex items-center">
-          <img
-            src="/assets/logo.png"
-            alt="Lootopia Logo"
-            className="h-28 md:h-28 m-2 w-auto"
-          />
-        </Link>
-        <div className="hidden lg:flex justify-center items-center gap-4 md:gap-2 lg:gap-8">
-          <Button>Hunts list</Button>
-          <Button>Marketplace</Button>
-          <Button>Leaderboard</Button>
-        </div>
-      </div>
-      <div className="flex gap-6 md:gap-10 justify-center items-center">
-        <Button variant="crown">
-          <Crown size={24} />
-          <p>{nbCrowns}</p>
-          <p>|</p>
-          <p>+</p>
-        </Button>
-        <User
-          className="text-white hover:text-gray-500 duration-300 cursor-pointer"
-          size={28}
-          onClick={() => {
-            setUserMenuOpen(!userMenuOpen);
-          }}
-        />
-        <button
-          className="lg:hidden text-white"
-          onClick={() => {
-            setMenuOpen(!menuOpen);
-            setUserMenuOpen(false);
-          }}
-        >
-          <Menu
-            className="text-white hover:text-gray-500 duration-300 cursor-pointer "
-            size={32}
-          />
-        </button>
-      </div>
-      {menuOpen && (
-        <div className="absolute top-full right-0 bg-[#142247] flex flex-col items-center py-4 md:block">
-          <Button variant="noscale">Hunts list</Button>
-          <Button variant="noscale">Marketplace</Button>
-          <Button variant="noscale">Leaderboard</Button>
-        </div>
-      )}
+    <div className="sticky top-0 flex justify-between rounded-b-xl bg-royal px-8 py-4">
+      <NavigationMenu className="ml-10">
+        <NavigationMenuList className="flex space-x-3">
+          <NavigationMenuItem>
+            <img src="/assets/logo.png" alt="Lootopia Logo" className="m-2 h-28 w-auto" />
+          </NavigationMenuItem>
+          <NavigationMenuItem className="hidden md:flex">
+            <Button variant="navigation">Hunts list</Button>
+          </NavigationMenuItem>
+          <NavigationMenuItem className="hidden md:flex">
+            <Button variant="navigation">Marketplace</Button>
+          </NavigationMenuItem>
+          <NavigationMenuItem className="hidden md:flex">
+            <Button variant="navigation">Leaderboard</Button>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
 
-      {userMenuOpen && (
-        <div className="absolute top-full right-0 bg-[#142247] flex flex-col items-center p-8 border-2 border-white rounded-xl ">
-          {userLoggedIn ? (
-            <>
-              <a href="/" className="text-white hover:underline py-2">
-                Test
-              </a>
-              <a href="/" className="text-white hover:underline py-2">
-                Test
-              </a>
-              <Button variant="noscale" onClick={handleLogout}>
-                Log Out
+      <div className="mr-10 flex space-x-5">
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <Button variant="crown">
+                <Crown size={30} />
+                <span>999 | +</span>
               </Button>
-            </>
-          ) : (
-            <>
-              <button className="text-white bg-[#142247] py-2 px-4 border-2 rounded-full mt-2 hover:bg-white hover:text-[#142247] transition duration-300">
-                Sign In
-              </button>
-              <button className="text-white bg-[#142247] py-2 px-4 border-2 rounded-full mt-2 hover:bg-white hover:text-[#142247] transition duration-300">
-                Sign Up
-              </button>
-            </>
-          )}
-        </div>
-      )}
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+
+        <NavigationMenu className="flex md:hidden">
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger className="p-5">
+                <GiTreasureMap size={24} />
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <NavigationMenuLink asChild>
+                  <a
+                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                    href="/"
+                  >
+                    <div className="mb-2 mt-4 text-lg font-medium">Hunts list</div>
+                    <p className="text-sm leading-tight text-muted-foreground">
+                      Treasure hunts and hidden rewards.
+                    </p>
+                  </a>
+                </NavigationMenuLink>
+
+                <NavigationMenuLink asChild>
+                  <a
+                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                    href="/"
+                  >
+                    <div className="mb-2 mt-4 text-lg font-medium">Marketplace</div>
+                    <p className="text-sm leading-tight text-muted-foreground">
+                      Buy and sell products easily
+                    </p>
+                  </a>
+                </NavigationMenuLink>
+
+                <NavigationMenuLink asChild>
+                  <a
+                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                    href="/"
+                  >
+                    <div className="mb-2 mt-4 text-lg font-medium">Leaderboard</div>
+                    <p className="text-sm leading-tight text-muted-foreground">Top user rankings</p>
+                  </a>
+                </NavigationMenuLink>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
     </div>
-  );
+  )
 }
