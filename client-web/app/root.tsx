@@ -1,26 +1,20 @@
-import type { LinksFunction } from "@remix-run/node";
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
+import type { LinksFunction } from "@remix-run/node"
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react"
 
-import Footer from "./components/layout/footer";
-import Navbar from "./components/layout/navbar";
-import "./tailwind.css";
+import Footer from "./components/layout/footer"
+import Navbar from "./components/layout/navbar"
+import "./tailwind.css"
 
 export const links: LinksFunction = () => [
   {
     href: "https://fonts.googleapis.com/css2?family=BioRhyme:wght@200..800&display=swap",
-    rel: "stylesheet",
+    rel: "stylesheet"
   },
   {
     href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap",
-    rel: "stylesheet",
-  },
-];
+    rel: "stylesheet"
+  }
+]
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -31,7 +25,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="h-screen">
+      <body className="h-fit">
         <Navbar />
         {children}
         <Footer />
@@ -40,9 +34,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  );
+  )
 }
 
 export default function App() {
-  return <Outlet />;
+  return <Outlet />
 }
