@@ -11,9 +11,8 @@ import { Crown } from "lucide-react"
 import { GiTreasureMap } from "react-icons/gi"
 
 export default function Navbar() {
-
   return (
-    <div className="sticky top-0 flex justify-between rounded-b-xl bg-royal px-8 py-4">
+    <div className="sticky top-0 z-10 flex justify-between rounded-b-xl bg-royal px-8 py-4">
       <NavigationMenu className="ml-10">
         <NavigationMenuList className="flex space-x-3">
           <NavigationMenuItem>
