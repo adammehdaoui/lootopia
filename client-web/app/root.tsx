@@ -84,11 +84,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
+<<<<<<< HEAD
       <body className="bg-deep">
         <Navbar connected={connected} />
         <QueryClientProvider client={queryClient}>
           <div className="min-h-screen">{children}</div>
         </QueryClientProvider>
+=======
+      <body className="h-fit">
+        <Navbar />
+        {children}
+>>>>>>> 342a14e (chore: update front components)
         <Footer />
         <Toaster />
         <ScrollRestoration />
