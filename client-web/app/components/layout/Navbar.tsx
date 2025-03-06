@@ -15,22 +15,22 @@ export default function Navbar() {
     <div className="sticky top-0 z-10 flex justify-between rounded-b-xl bg-royal px-8 py-4">
       <NavigationMenu className="ml-10">
         <NavigationMenuList className="flex space-x-3">
-          <NavigationMenuItem>
-            <img src="/assets/logo.png" alt="Lootopia Logo" className="m-2 h-28 w-auto" />
+          <NavigationMenuItem className="whitespace-nowrap">
+            <img src="/assets/logo.png" alt="Lootopia Logo" className="max-w-24 max-h-24" />
           </NavigationMenuItem>
-          <NavigationMenuItem className="hidden md:flex">
+          <NavigationMenuItem className="hidden lg:flex">
             <Button variant="navigation">Hunts list</Button>
           </NavigationMenuItem>
-          <NavigationMenuItem className="hidden md:flex">
+          <NavigationMenuItem className="hidden lg:flex">
             <Button variant="navigation">Marketplace</Button>
           </NavigationMenuItem>
-          <NavigationMenuItem className="hidden md:flex">
+          <NavigationMenuItem className="hidden lg:flex">
             <Button variant="navigation">Leaderboard</Button>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className="mr-10 flex space-x-5">
+      <div className="ml-5 mr-10 flex space-x-5">
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -42,7 +42,7 @@ export default function Navbar() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <NavigationMenu className="flex md:hidden">
+        <NavigationMenu className="flex lg:hidden">
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger className="p-5">
