@@ -6,10 +6,10 @@
   "scripts": {
     "build": "remix vite:build",
     "dev": "NODE_ENV=development node ./server.js",
+    "start": "NODE_ENV=production node ./server.js",
     "test": "jest",
     "e2e": "playwright test",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    "start": "NODE_ENV=production node ./server.js",
     "typecheck": "tsc",
     "format": "prettier --write ."
   },
