@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 import {
   Drawer,
   DrawerClose,
@@ -7,21 +7,19 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-import {
-  NavigationMenu,
-  NavigationMenuList
-} from "@/components/ui/navigation-menu";
+  DrawerTrigger
+} from "@/components/ui/drawer"
+import { NavigationMenu, NavigationMenuList } from "@/components/ui/navigation-menu"
 
-import { RxHamburgerMenu } from "react-icons/rx";
+import { RxHamburgerMenu } from "react-icons/rx"
 
 export default function DrawerMenu() {
   return (
     <NavigationMenu className="flex lg:hidden">
       <NavigationMenuList>
         <Drawer>
-          <DrawerTrigger className="text-white"><RxHamburgerMenu />
+          <DrawerTrigger className="text-white">
+            <RxHamburgerMenu />
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader>

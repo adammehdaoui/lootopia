@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList
-} from "@/components/ui/navigation-menu";
-import { Crown } from "lucide-react";
+} from "@/components/ui/navigation-menu"
+import { Crown } from "lucide-react"
 
 export default function RewardMenu() {
   return (
