@@ -14,7 +14,7 @@ export default function Index() {
         <h1 className="text-4xl md:text-5xl font-extrabold">
           Welcome to <span className="text-yellow-400">Lootopia</span> 🏴‍☠️
         </h1>
-        <p className="mt-4 max-w-2xl text-lg text-gray-300">
+        <p className="mt-4 max-w-2xl text-lg text-gray-300 font-biorhyme">
           A digital treasure-hunting experience where you solve clues, complete quests, and unlock hidden rewards. Are you ready for the challenge?
         </p>
         <a

@@ -4,9 +4,6 @@
 
 html,
 body {
-  font-family: "Biorhyme", sans-serif;
-  font-family: "Montserrat", "sans-serif";
-
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
