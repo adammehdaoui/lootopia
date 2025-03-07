@@ -5,7 +5,7 @@ import { LuFacebook, LuInstagram, LuTwitter } from "react-icons/lu"
 
 export default function Footer() {
   return (
-    <div className="flex flex-col rounded-t-xl bg-[#142247] p-8 text-white md:p-16">
+    <div className="flex flex-col rounded-t-xl bg-royal p-8 text-white md:p-16">
       <div className="flex justify-center gap-8 md:flex-row md:gap-24">
         <span className="flex flex-col gap-4">
           <p className="py-4 font-bold">Réseaux sociaux</p>
