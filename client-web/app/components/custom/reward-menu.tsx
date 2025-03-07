@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Crown } from "lucide-react";
 
-
 export default function RewardMenu() {
   return (
     <NavigationMenu>
