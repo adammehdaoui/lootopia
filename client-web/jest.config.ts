@@ -3,7 +3,7 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type { Config } from 'jest';
+import type { Config } from "jest"
 
 const config: Config = {
   // All imported modules in your tests should be mocked automatically
@@ -155,9 +155,7 @@ const config: Config = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  testMatch: [
-     "**/tests/**/*.[jt]s?(x)",
-   ],
+  testMatch: ["**/tests/**/*.[jt]s?(x)"]
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   // testPathIgnorePatterns: [
@@ -193,6 +191,6 @@ const config: Config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-};
+}
 
-export default config;
+export default config
