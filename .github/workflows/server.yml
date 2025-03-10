@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-  pull_request:
-   branches:
-     - main
+  #pull_request:
+  # branches:
+  #   - main
   workflow_dispatch:
 
 defaults:
@@ -22,8 +22,8 @@ jobs:
       - name: Set up Java version
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
-          distribution: 'microsoft'
+          java-version: "21"
+          distribution: "microsoft"
 
       - name: Test with Maven
         env:
@@ -43,8 +43,8 @@ jobs:
       - name: Set up Java version
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
-          distribution: 'microsoft'
+          java-version: "21"
+          distribution: "microsoft"
 
       - name: Build with Maven
         env:
@@ -57,13 +57,13 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: server
-          path: '${{ github.workspace }}/server/target/*.jar'
+          path: "${{ github.workspace }}/server/target/*.jar"
 
   deploy:
     runs-on: windows-latest
     needs: build-and-push
     environment:
-      name: 'Production'
+      name: "Production"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
@@ -85,6 +85,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'lootopia-server'
-          slot-name: 'Production'
-          package: '*.jar'
+          app-name: "lootopia-server"
+          slot-name: "Production"
+          package: "*.jar"
