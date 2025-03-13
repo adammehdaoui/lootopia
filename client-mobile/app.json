@@ -11,6 +11,9 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
+        "NsLocationUsageDescription": "This app requires access to your location.",
+        "UIBackgroundModes": ["location", "fetch", "remote-notification"],
+        "NSLocationWhenInUseUsageDescription": "This app requires access to your location when open.",
         "NSPhotoLibraryUsageDescription": "$(PRODUCT_NAME) would like to read photos for AR experiences.",
         "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos",
         "NSCameraUsageDescription": "$(PRODUCT_NAME) uses your camera for AR experiences.",
@@ -51,6 +54,16 @@
             "photosPermission": "$(PRODUCT_NAME) would like to read photos for AR experiences.",
             "savephotosPermission": "$(PRODUCT_NAME) would like to save photos to your library during AR experiences."
           }
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location.",
+          "locationAlwaysPermission": "Allow $(PRODUCT_NAME) to use your location.",
+          "locationWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location.",
+          "isIosBackgroundLocationEnabled": true,
+          "isAndroidBackgroundLocationEnabled": true
         }
       ]
     ],
