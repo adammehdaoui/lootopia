@@ -11,7 +11,6 @@ export default function Confirm() {
   useEffect(() => {
     if (code && mail) {
       confirm(code, mail)
-        .then((res) => res.json())
         .then((data) => {
           setMessage(data.message || "Compte activé ! Vous pouvez vous connecter.")
         })

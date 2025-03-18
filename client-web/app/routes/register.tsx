@@ -1,28 +1,30 @@
 import { Button } from "@/components/ui/button"
-import { json } from "@remix-run/node"
+import { ActionFunctionArgs, json } from "@remix-run/node"
 import { Form, useActionData } from "@remix-run/react"
 import { useState } from "react"
+import axios from "axios"
 
-export const action = async ({ request }) => {
+type ActionResponse = { message?: string; error?: string }
+
+export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData()
   const email = formData.get("email")
   const password = formData.get("password")
 
-  const response = await fetch("http://localhost:8080/auth/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ to: email, rawPassword: password })
-  })
-
-  if (response.ok) {
-    return json({ message: "Un email de confirmation vous a été envoyé." })
+  const response = await axios.post(
+    "http://localhost:8080/auth/register",
+    { to: email, rawPassword: password },
+    { headers: { "Content-Type": "application/json" } }
+  )
+  if (response.status.valueOf() === 200) {
+    return json<ActionResponse>({ message: "Un email de confirmation vous a été envoyé." })
   }
 
-  return json({ error: "Erreur lors de l'inscription." }, { status: 400 })
+  return json<ActionResponse>({ error: "Erreur lors de l'inscription." }, { status: 400 })
 }
 
 export default function Signup() {
-  const actionData = useActionData()
+  const actionData = useActionData<typeof action>()
   const [loading, setLoading] = useState(false)
 
   return (
