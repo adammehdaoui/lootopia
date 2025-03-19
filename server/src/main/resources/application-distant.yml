@@ -19,5 +19,11 @@ logging:
     web: DEBUG
     org.springframework.security: DEBUG
 
+mail:
+  host: ${MAIL_HOST}
+  port: ${MAIL_PORT}
+  domain: ${MAIL_DOMAIN}
+  password: ${MAIL_PASSWORD}
+
 cors:
   allowed-origins: https://lootopia-client.azurewebsites.net
