@@ -28,11 +28,11 @@ export default function Signup() {
   const [loading, setLoading] = useState(false)
 
   return (
-    <div className="mx-72 my-16 flex flex-col items-center justify-center rounded-3xl border-4 border-white bg-royal p-8">
+    <div className="mx-auto my-32 flex max-w-lg flex-col items-center justify-center rounded-3xl border-4 border-white bg-royal p-8 sm:w-full sm:px-4">
       <h1 className="pb-8 text-2xl font-bold text-white">Inscription</h1>
       <Form
         method="post"
-        className="flex w-80 flex-col justify-center gap-4"
+        className="flex w-full max-w-xs flex-col justify-center gap-4"
         onSubmit={() => setLoading(true)}
       >
         <input
@@ -40,14 +40,14 @@ export default function Signup() {
           name="email"
           placeholder="Email"
           required
-          className="-2-white rounded-md border-2 bg-deep p-2 text-white"
+          className="w-full rounded-md border-2 border-white bg-deep p-2 text-white"
         />
         <input
           type="password"
           name="password"
           placeholder="Mot de passe"
           required
-          className="rounded-md border-2 border-white bg-deep p-2 text-white"
+          className="w-full rounded-md border-2 border-white bg-deep p-2 text-white"
         />
         <Button variant="submit">{loading ? "Envoi..." : "S'inscrire"}</Button>
       </Form>

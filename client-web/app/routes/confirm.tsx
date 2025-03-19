@@ -1,5 +1,8 @@
+import { Button } from "@/components/ui/button"
 import { confirm } from "@/services/auth"
 import { useSearchParams } from "@remix-run/react"
+import { Link } from "@remix-run/react"
+
 import { useEffect, useState } from "react"
 
 export default function Confirm() {
@@ -22,11 +25,13 @@ export default function Confirm() {
   }, [code, mail])
 
   return (
-    <div className="flex flex-col items-center">
-      <h1 className="text-2xl font-bold">{message}</h1>
-      <a href="/login" className="mt-4 text-blue-500">
-        Se connecter
-      </a>
+    <div className="mx-auto my-32 flex max-w-lg flex-col items-center justify-center rounded-3xl border-4 border-white bg-royal px-8 py-16 sm:w-full">
+      <div className="flex w-full flex-col items-center">
+        <h1 className="mb-4 w-full text-center text-2xl font-bold text-white">{message}</h1>
+        <Button variant="submit">
+          <Link to={"/login"}>Se connecter</Link>
+        </Button>
+      </div>
     </div>
   )
 }
