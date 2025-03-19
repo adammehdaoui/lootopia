@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button"
 import { ActionFunctionArgs, json } from "@remix-run/node"
 import { Form, useActionData } from "@remix-run/react"
-import { useState } from "react"
-import axios from "axios"
+import { useEffect, useState } from "react"
+import { register } from "@/services/auth"
+import { useToast } from "@/hooks/use-toast"
 
 type ActionResponse = { message?: string; error?: string }
 
@@ -11,11 +12,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const email = formData.get("email")
   const password = formData.get("password")
 
-  const response = await axios.post(
-    "http://localhost:8080/auth/register",
-    { to: email, rawPassword: password },
-    { headers: { "Content-Type": "application/json" } }
-  )
+  if (!email || !password) {
+    return
+  }
+
+  const response = await register(email, password)
+
   if (response.status.valueOf() === 200) {
     return json<ActionResponse>({ message: "Un email de confirmation vous a été envoyé." })
   }
@@ -27,13 +29,31 @@ export default function Signup() {
   const actionData = useActionData<typeof action>()
   const [loading, setLoading] = useState(false)
 
+  const { toast } = useToast()
+
+  useEffect(() => {
+    toast({
+      title: "Erreur",
+      description: actionData?.error
+    })
+  }, [actionData?.error, toast])
+
+  const handleSubmit = () => {
+    setLoading(true)
+
+    toast({
+      title: "Succès",
+      description: "Votre email à ete envoyé"
+    })
+  }
+
   return (
     <div className="mx-auto my-32 flex max-w-lg flex-col items-center justify-center rounded-3xl border-4 border-white bg-royal p-8 sm:w-full sm:px-4">
       <h1 className="pb-8 text-2xl font-bold text-white">Inscription</h1>
       <Form
         method="post"
         className="flex w-full max-w-xs flex-col justify-center gap-4"
-        onSubmit={() => setLoading(true)}
+        onSubmit={handleSubmit}
       >
         <input
           type="email"
@@ -51,8 +71,6 @@ export default function Signup() {
         />
         <Button variant="submit">{loading ? "Envoi..." : "S'inscrire"}</Button>
       </Form>
-      {actionData?.message && <p className="text-green-600">{actionData.message}</p>}
-      {actionData?.error && <p className="text-red-600">{actionData.error}</p>}
     </div>
   )
 }

@@ -1,8 +1,8 @@
-import axios from "axios"
+import axiosClient from "@/lib/client"
 
 export const confirm = async (code: string, mail: string) => {
-  const result = await axios.post(
-    "http://localhost:8080/auth/activate",
+  const result = await axiosClient.post(
+    "/auth/activate",
     { activationCode: code, mail },
     {
       headers: { "Content-Type": "application/json" }
@@ -10,4 +10,14 @@ export const confirm = async (code: string, mail: string) => {
   )
 
   return result.data
+}
+
+export const register = async (email: FormDataEntryValue, password: FormDataEntryValue) => {
+  return await axiosClient.post(
+    "/auth/register",
+    { to: email, rawPassword: password },
+    {
+      headers: { "Content-Type": "application/json" }
+    }
+  )
 }

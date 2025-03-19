@@ -4,6 +4,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/reac
 import Footer from "@/components/layout/footer"
 import Navbar from "@/components/layout/navbar"
 import "./tailwind.css"
+import { Toaster } from "./components/ui/toaster"
 
 export const links: LinksFunction = () => [
   {
@@ -29,6 +30,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Navbar />
         {children}
         <Footer />
+        <Toaster />
 
         <ScrollRestoration />
         <Scripts />
