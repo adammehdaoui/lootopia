@@ -26,9 +26,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="h-fit bg-deep">
+      <body className="bg-deep">
         <Navbar />
-        {children}
+        <main className="h-screen">{children}</main>
         <Footer />
         <ScrollRestoration />
         <Scripts />
