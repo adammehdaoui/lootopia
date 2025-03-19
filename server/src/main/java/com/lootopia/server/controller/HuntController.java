@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/hunt")
+@RequestMapping("/hunts")
 public class HuntController {
 
     private final HuntService huntService;
