@@ -87,11 +87,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body className="bg-deep">
         <Navbar connected={connected} />
         <QueryClientProvider client={queryClient}>
-          <div className="min-h-screen">{children}</div>
+          <main className="min-h-screen">{children}</main>
         </QueryClientProvider>
-
-        <Navbar />
-        {children}
         <Footer />
         <Toaster />
         <ScrollRestoration />
