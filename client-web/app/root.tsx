@@ -3,8 +3,10 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/reac
 
 import Footer from "@/components/layout/footer"
 import Navbar from "@/components/layout/navbar"
-import "./tailwind.css"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import React, { useState } from "react"
 import { Toaster } from "./components/ui/toaster"
+import "./tailwind.css"
 
 export const links: LinksFunction = () => [
   {
@@ -18,6 +20,8 @@ export const links: LinksFunction = () => [
 ]
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const [queryClient] = useState(() => new QueryClient())
+
   return (
     <html lang="en" className="font-montserrat">
       <head>
@@ -28,8 +32,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body className="bg-deep">
         <Navbar />
-        <main className="h-screen">{children}</main>
+        <QueryClientProvider client={queryClient}>
+          <div className="min-h-screen">{children}</div>
+        </QueryClientProvider>
         <Footer />
+        <Toaster />
+
         <ScrollRestoration />
         <Scripts />
       </body>
