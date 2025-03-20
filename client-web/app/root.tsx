@@ -1,15 +1,11 @@
+import { ErrorHandler } from "@/components/custom/error"
 import Footer from "@/components/layout/footer"
 import Navbar from "@/components/layout/navbar"
-import { ErrorHandler } from "@/handlers/error-handler"
 import { auth, requireDisconnect } from "@/services/auth/auth"
 import { connectedRoutes } from "@/utils/connectedRoutes"
 import { disconnectRoutes } from "@/utils/disconnectRoutes"
-import {
-  redirect,
-  type LinksFunction,
-  type LoaderFunction,
-  type LoaderFunctionArgs
-} from "@remix-run/node"
+import type { LinksFunction } from "@remix-run/node"
+import { redirect, type LoaderFunction, type LoaderFunctionArgs } from "@remix-run/node"
 import {
   Links,
   Meta,
