@@ -41,7 +41,7 @@ export default function Index() {
 
       <div className="h-1 w-full bg-gradient-to-r from-yellow-400 to-red-500"></div>
 
-      <h2 className="mt-10 pb-10 text-center text-3xl font-bold md:text-4xl">Popular Hunts 🔍</h2>
+      <h2 className="mt-10 pb-10 text-center text-3xl font-bold md:text-4xl">Featured hunts 🔍</h2>
 
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 pb-16 md:grid-cols-2 lg:grid-cols-3">
         {[...Array(6)].map((_, index) => (

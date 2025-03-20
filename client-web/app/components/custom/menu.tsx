@@ -4,20 +4,24 @@ import {
   NavigationMenuItem,
   NavigationMenuList
 } from "@/components/ui/navigation-menu"
-import { Link } from "@remix-run/react"
+import { NavLink } from "@remix-run/react"
 
 export default function Menu() {
   return (
     <NavigationMenu className="ml-3 lg:ml-10">
       <NavigationMenuList className="flex space-x-3">
         <NavigationMenuItem className="whitespace-nowrap">
-          <Link to="/">
+          <NavLink to="/">
             <img src="/assets/logo.png" alt="Lootopia Logo" className="max-h-24 max-w-24" />
-          </Link>
+          </NavLink>
         </NavigationMenuItem>
         <div className="hidden space-x-3 lg:flex">
           <NavigationMenuItem>
-            <Button variant="navigation">Hunts list</Button>
+            <Button asChild variant="navigation">
+              <NavLink to="/hunts" viewTransition>
+                Hunts
+              </NavLink>
+            </Button>
           </NavigationMenuItem>
           <NavigationMenuItem>
             <Button variant="navigation">Marketplace</Button>

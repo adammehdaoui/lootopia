@@ -8,7 +8,7 @@ export default function Footer() {
     <div className="flex flex-col rounded-t-xl bg-royal p-8 text-white md:p-16">
       <div className="flex justify-center gap-8 md:flex-row md:gap-24">
         <span className="flex flex-col gap-4">
-          <p className="py-4 font-bold">Réseaux sociaux</p>
+          <p className="py-4 font-bold">Social network</p>
           <Link to="/" className="flex items-center gap-2 duration-300 hover:scale-110">
             Facebook <LuFacebook />
           </Link>
@@ -29,21 +29,21 @@ export default function Footer() {
           </a>
         </span>
         <span className="flex flex-col gap-4">
-          <p className="py-4 font-bold">Comment ça marche ?</p>
+          <p className="py-4 font-bold">How to ?</p>
           <a href="/" className="duration-300 hover:scale-110">
-            FAQ
+            Answers
           </a>
           <a href="/" className="duration-300 hover:scale-110">
-            Guide d&apos;utilisation
+            Guides
           </a>
           <a href="/" className="duration-300 hover:scale-110">
-            Avis des utilisateurs
+            Reviews
           </a>
         </span>
       </div>
       <span className="flex items-center justify-center gap-6 pt-8 md:flex-row">
         <p className="text-center font-semibold md:text-left">
-          © 2025 Lootopia, Inc. Tous droits réservés
+          © 2025 Lootopia, Inc. All rights reserved.
         </p>
         <div className="flex justify-center gap-2 md:justify-start">
           <a href="/" className="hover:underline">

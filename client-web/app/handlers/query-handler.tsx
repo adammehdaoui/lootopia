@@ -1,10 +1,11 @@
+import { HuntListSkeleton } from "@/components/custom/hunt-list-skeleton"
 import React from "react"
 
 export function QueryHandler(props: QueryHandlerProps) {
   const { isPending, error, children } = props
 
   if (isPending) {
-    return <div>is pending</div>
+    return <HuntListSkeleton />
   }
 
   if (error) {
