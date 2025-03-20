@@ -15,6 +15,7 @@ import {
   useLoaderData,
   type MetaFunction
 } from "@remix-run/react"
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React, { useState } from "react"
 import { Toaster } from "./components/ui/toaster"
