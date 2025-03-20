@@ -7,7 +7,5 @@ export default function Hunts() {
     queryFn: hunts
   })
 
-  console.log(data)
-
   return <></>
 }

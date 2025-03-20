@@ -37,7 +37,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </QueryClientProvider>
         <Footer />
         <Toaster />
-
         <ScrollRestoration />
         <Scripts />
       </body>
