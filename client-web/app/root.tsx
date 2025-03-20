@@ -1,9 +1,9 @@
 import type { LinksFunction } from "@remix-run/node"
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react"
 
-import { ErrorHandler } from "@/components/custom/error"
 import Footer from "@/components/layout/footer"
 import Navbar from "@/components/layout/navbar"
+import { ErrorHandler } from "@/handlers/error-handler"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React, { useState } from "react"
 import { Toaster } from "./components/ui/toaster"
