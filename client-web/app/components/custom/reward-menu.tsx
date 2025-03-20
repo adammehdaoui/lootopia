@@ -18,7 +18,7 @@ export default function RewardMenu() {
             <span>999 | +</span>
           </Button>
         </NavigationMenuItem>
-        <Link to={"/register"} className="flex justify-end">
+        <Link to={"/login"} className="flex justify-end">
           <FaUser className="ml-4 h-6 w-6 text-white duration-300 hover:text-slate-500" />
         </Link>
 
