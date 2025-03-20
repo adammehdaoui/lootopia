@@ -7,5 +7,7 @@ export const hunts = async (): Promise<Hunt[]> => {
     headers: { "Content-Type": "application/json" }
   })
 
+  console.log(result.data)
+
   return huntsListSchema.parse(result.data)
 }

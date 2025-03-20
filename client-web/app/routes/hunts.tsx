@@ -7,5 +7,11 @@ export default function Hunts() {
     queryFn: hunts
   })
 
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
+
+  console.log(data)
+
   return <></>
 }
