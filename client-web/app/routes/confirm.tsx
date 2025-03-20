@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { confirm } from "@/services/auth"
-import { useSearchParams } from "@remix-run/react"
-import { Link } from "@remix-run/react"
-
+import { useSearchParams, Link } from "@remix-run/react"
 import { useEffect, useState } from "react"
 
 export default function Confirm() {

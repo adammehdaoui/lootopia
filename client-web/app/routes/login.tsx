@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Form } from "@remix-run/react"
-import { Link } from "@remix-run/react"
+import { Form, Link } from "@remix-run/react"
 
 export default function Login() {
   return (
