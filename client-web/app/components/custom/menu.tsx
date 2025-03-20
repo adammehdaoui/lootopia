@@ -10,9 +10,9 @@ export default function Menu() {
   return (
     <NavigationMenu className="ml-3 lg:ml-10">
       <NavigationMenuList className="flex space-x-3">
-        <NavigationMenuItem className="whitespace-nowrap pr-5">
-          <Link to={"/"}>
-            <h1 className="font-biorhyme text-2xl font-bold text-white">Lootopia</h1>
+        <NavigationMenuItem className="whitespace-nowrap">
+          <Link to="/">
+            <img src="/assets/logo.png" alt="Lootopia Logo" className="max-h-24 max-w-24" />
           </Link>
         </NavigationMenuItem>
         <div className="hidden space-x-3 lg:flex">

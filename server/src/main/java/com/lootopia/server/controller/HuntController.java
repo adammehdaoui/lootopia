@@ -1,10 +1,11 @@
 package com.lootopia.server.controller;
 
-import com.lootopia.server.dto.HuntDto;
+import com.lootopia.server.dto.HuntLikeDto;
 import com.lootopia.server.service.HuntService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,8 +21,8 @@ public class HuntController {
     }
 
     @GetMapping("/popularity")
-    public ResponseEntity<List<HuntDto>> findAllByPopularity() {
-        return ResponseEntity.ok(huntService.findAllByPopularity());
+    public ResponseEntity<List<HuntLikeDto>> findAllByPopularity(@RequestParam String memberId) {
+        return ResponseEntity.ok(huntService.findAllByPopularity(memberId));
     }
 
 }

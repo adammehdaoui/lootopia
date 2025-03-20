@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -15,21 +14,21 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Role {
-
+@Table(name = "hunt_like", uniqueConstraints = {
+        @UniqueConstraint(name = "uc_hunt_like", columnNames = {"hunt_id", "member_id"})
+})
+public class HuntLike {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "hunt_id", nullable = false)
+    private Hunt hunt;
 
-    @OneToMany
-    @ToString.Exclude
-    private Collection<Member> members;
-
-    @ManyToMany
-    @ToString.Exclude
-    private Collection<Privilege> privileges;
+    @ManyToOne
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
 
     @Override
     public final boolean equals(Object o) {
@@ -38,8 +37,8 @@ public class Role {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Role role = (Role) o;
-        return getId() != null && Objects.equals(getId(), role.getId());
+        HuntLike huntLike = (HuntLike) o;
+        return getId() != null && Objects.equals(getId(), huntLike.getId());
     }
 
     @Override

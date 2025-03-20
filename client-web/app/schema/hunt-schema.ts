@@ -6,8 +6,16 @@ export const huntSchema = z.object({
   description: z.string().nullable(),
   latitude: z.number(),
   longitude: z.number(),
-  startTime: z.string().nullable(),
-  endTime: z.string().nullable()
+  startTime: z.string(),
+  endTime: z.string()
+})
+
+export const huntLikeSchema = z.object({
+  huntDto: huntSchema,
+  likedBy: z.boolean(),
+  likeCount: z.number()
 })
 
 export const huntsListSchema = z.array(huntSchema)
+
+export const huntsLikeListSchema = z.array(huntLikeSchema)

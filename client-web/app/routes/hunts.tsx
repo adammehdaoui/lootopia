@@ -12,7 +12,7 @@ export default function Hunts() {
   return (
     <QueryHandler isPending={isPending} error={error}>
       <div className="mt-16 flex flex-wrap justify-center gap-5 pb-20">
-        {data?.map((hunt) => <HuntCard hunt={hunt} key={hunt.id} />)}
+        {data?.map((hunt) => <HuntCard hunt={hunt} key={hunt.huntDto.id} />)}
       </div>
     </QueryHandler>
   )

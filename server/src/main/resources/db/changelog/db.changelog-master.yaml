@@ -1,1 +1,8 @@
-databaseChangeLog: []
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: adammehdaoui (generated)
+      changes:
+        - sqlFile:
+            path: seed/seed.sql
+            relativeToChangelogFile: true

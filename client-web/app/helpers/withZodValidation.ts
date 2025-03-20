@@ -2,7 +2,7 @@ import { ZodError, ZodSchema } from "zod"
 
 export const withZodValidation =
   <T>(schema: ZodSchema<T>) =>
-  async (promise: Promise<Result<T>>) => {
+  async <E>(promise: Promise<Result<E>>) => {
     try {
       const result = await promise
 
