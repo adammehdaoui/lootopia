@@ -11,7 +11,7 @@ export function HuntCard(props: HuntCardProps) {
   const live = currentTime < hunt.huntDto.endTime && currentTime > hunt.huntDto.startTime
 
   return (
-    <div className="flex h-card w-card cursor-pointer flex-col overflow-hidden rounded-lg bg-white shadow-md transition-all duration-100 hover:scale-105">
+    <div className="flex h-card w-card cursor-pointer flex-col overflow-hidden rounded-lg bg-white shadow-md transition-all duration-300 hover:scale-105">
       <img
         src={`${faker.image.url()}?random=${Math.random()}`}
         alt="location"
