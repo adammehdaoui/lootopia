@@ -1,10 +1,11 @@
 package com.lootopia.server.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
@@ -12,8 +13,8 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@ToString
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "hunt_like", uniqueConstraints = {
         @UniqueConstraint(name = "uc_hunt_like", columnNames = {"hunt_id", "member_id"})
 })
@@ -22,13 +23,20 @@ public class HuntLike {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "hunt_id", nullable = false)
+    @JsonIgnore
     private Hunt hunt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "member_id", nullable = false)
+    @JsonIgnore
     private Member member;
+
+    public HuntLike(Member currentMember, Hunt currentHunt) {
+        this.member = currentMember;
+        this.hunt = currentHunt;
+    }
 
     @Override
     public final boolean equals(Object o) {

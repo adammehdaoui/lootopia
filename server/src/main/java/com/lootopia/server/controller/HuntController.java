@@ -1,12 +1,12 @@
 package com.lootopia.server.controller;
 
 import com.lootopia.server.dto.HuntLikeDto;
+import com.lootopia.server.dto.HuntLikeViewDto;
+import com.lootopia.server.dto.LikeDto;
 import com.lootopia.server.service.HuntService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,8 +21,18 @@ public class HuntController {
     }
 
     @GetMapping("/popularity")
-    public ResponseEntity<List<HuntLikeDto>> findAllByPopularity(@RequestParam String memberId) {
+    public ResponseEntity<List<HuntLikeViewDto>> findAllByPopularity(@RequestParam String memberId) {
         return ResponseEntity.ok(huntService.findAllByPopularity(memberId));
+    }
+
+    @PostMapping("/like")
+    public ResponseEntity<Object> likeHunt(@RequestBody LikeDto likeDto) {
+        try {
+            HuntLikeDto huntLikeDto = huntService.like(likeDto.memberId(), likeDto.huntId());
+            return ResponseEntity.status(HttpStatus.CREATED).body(huntLikeDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
 }

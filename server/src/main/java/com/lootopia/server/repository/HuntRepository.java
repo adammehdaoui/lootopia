@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface HuntRepository extends JpaRepository<Hunt, Long> {
 
+    Hunt findById(String id);
+
     List<Hunt> findAllByOrderByLikesDesc();
 
 }
