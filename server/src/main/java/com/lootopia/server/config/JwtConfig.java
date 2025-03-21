@@ -7,7 +7,9 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Configuration
 public class JwtConfig {
-    @Value("${jwt.secret}") // Récupère la clé depuis app.local.yml
+
+    @Value("${jwt.secret}")
     private String secretKey;
 
 }
+

@@ -48,7 +48,7 @@ public class AuthService {
         Member member = memberRepository.findByEmail(email);
 
         if (member == null) {
-            LOGGER.error("User not found");
+            LOGGER.error("User not found for activation");
             throw new AccountNotFoundException("User not found");
         }
 
@@ -73,7 +73,7 @@ public class AuthService {
         Member member = memberRepository.findByEmail(email);
 
         if (member == null) {
-            LOGGER.error("Utilisateur non trouvé");
+            LOGGER.error("User not found for login");
             return null;
         }
 
@@ -82,8 +82,9 @@ public class AuthService {
             return null;
         }
 
-        // Génération d'un token JWT via l'instance injectée
-        return jwtUtils.generateToken(email);
+        CustomUserDetails customUserDetails = new CustomUserDetails(member);
+
+        return jwtUtils.generateToken(customUserDetails);
     }
 
 }
