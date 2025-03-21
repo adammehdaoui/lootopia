@@ -1,3 +1,4 @@
+import { Live } from "@/components/custom/live"
 import type { HuntLike } from "@/model/hunt"
 import { faker } from "@faker-js/faker"
 import { Heart } from "lucide-react"
@@ -28,11 +29,7 @@ export function HuntCard(props: HuntCardProps) {
 
           <div className="flex justify-center space-x-5">
             <h3 className="font-biorhyme text-xl font-semibold">{hunt.huntDto.description}</h3>
-            <span className="mt-3">
-              {live && (
-                <span className="duration-800 flex h-2 w-2 animate-ping rounded-full bg-red-500" />
-              )}
-            </span>
+            <span className="mt-3">{live && <Live />}</span>
           </div>
           <span>{hunt.huntDto.description}</span>
         </div>
