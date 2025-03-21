@@ -1,15 +1,15 @@
 import { withZodValidation } from "@/helpers/withZodValidation"
 import axiosClient from "@/lib/client"
-import { registerSchema } from "@/schema/register-schema"
+import { authSchema } from "@/schema/auth-schema"
 
 export const confirm = async (code: string, mail: string) => {
-  const result = await axiosClient.post("/auth/activate", { activationCode: code, mail })
-
-  return result.data
+  return withZodValidation(authSchema)(
+    axiosClient.post("/auth/activate", { activationCode: code, mail })
+  )
 }
 
 export const register = async (email: FormDataEntryValue, password: FormDataEntryValue) => {
-  return withZodValidation(registerSchema)(
+  return withZodValidation(authSchema)(
     axiosClient.post("/auth/register", { to: email, rawPassword: password })
   )
 }

@@ -2,50 +2,39 @@ import { Spinner } from "@/components/custom/spinner"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
 import { register } from "@/services/auth/auth"
-import { ActionFunction, ActionFunctionArgs, data } from "@remix-run/node"
+import { ActionFunctionArgs } from "@remix-run/node"
 import { Form, useActionData } from "@remix-run/react"
 import { useEffect, useState } from "react"
-
-type ActionResponse = { message?: string; error?: string }
-
-export const action: ActionFunction = async ({ request }: ActionFunctionArgs) => {
-  const formData = await request.formData()
-  const email = formData.get("email")
-  const password = formData.get("password")
-
-  if (!email || !password) {
-    return
-  }
-
-  const response = await register(email, password)
-
-  if (response.status.valueOf() === 200) {
-    return data<ActionResponse>({ message: "Un email de confirmation vous a été envoyé." })
-  }
-
-  return data<ActionResponse>({ error: "Erreur lors de l'inscription." }, { status: 400 })
-}
 
 export default function Signup() {
   const actionData = useActionData<typeof action>()
   const [loading, setLoading] = useState(false)
-
   const { toast } = useToast()
 
   useEffect(() => {
-    actionData?.error &&
+    console.table(actionData)
+
+    if (actionData?.sent) {
+      setLoading(false)
+      return
+    }
+
+    if (actionData?.error) {
+      setLoading(false)
       toast({
-        title: "Erreur",
-        description: actionData?.error
+        title: "Uh oh! Something went wrong.",
+        description: actionData.error,
+        variant: "destructive"
       })
-  }, [actionData?.error, toast])
+    }
+  }, [actionData, actionData?.error, actionData?.sent, toast])
 
   const handleSubmit = () => {
     setLoading(true)
 
     toast({
-      title: "Success",
-      description: "Check your emails"
+      title: "An email has been sent",
+      description: "Check your inbox to confirm your email address"
     })
   }
 
@@ -76,3 +65,23 @@ export default function Signup() {
     </div>
   )
 }
+
+export const action = async ({ request }: ActionFunctionArgs): Promise<ActionResponse> => {
+  const formData = await request.formData()
+  const email = formData.get("email")
+  const password = formData.get("password")
+
+  if (!email || !password) {
+    return { error: "Missing email or password", sent: false }
+  }
+
+  try {
+    await register(email, password)
+
+    return { sent: true }
+  } catch (error: unknown) {
+    return { error: error as string, sent: false }
+  }
+}
+
+type ActionResponse = { error?: string; sent: boolean }
