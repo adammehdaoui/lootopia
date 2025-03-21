@@ -8,7 +8,7 @@ export function ErrorHandler(props: ErrorHandlerProps) {
   const { title, description } = getErrorTexts(error, routeError)
 
   return (
-    <div className="mt-20 flex w-full justify-center font-bold text-white">
+    <div className="mt-20 flex w-full flex-col items-center justify-center space-y-1 font-bold text-white">
       <h1>{title}</h1>
       <span>{description}</span>
     </div>

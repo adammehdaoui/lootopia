@@ -11,13 +11,13 @@ export default function Footer() {
           <p className="py-4 font-bold">Social networks</p>
           <Link
             to="/"
-            className="hover:scale-110cursor-pointer flex items-center gap-2 duration-300"
+            className="flex cursor-pointer items-center gap-2 duration-300 hover:scale-110"
           >
             Facebook <LuFacebook />
           </Link>
           <Link
             to="/"
-            className="hover:scale-110cursor-pointer flex items-center gap-2 duration-300"
+            className="flex cursor-pointer items-center gap-2 duration-300 hover:scale-110"
           >
             Twitter <LuTwitter />
           </Link>

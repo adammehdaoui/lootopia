@@ -1,3 +1,4 @@
+import { Spinner } from "@/components/custom/spinner"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
 import { register } from "@/services/auth/auth"
@@ -43,7 +44,7 @@ export default function Signup() {
     setLoading(true)
 
     toast({
-      title: "Sucess",
+      title: "Success",
       description: "Check your emails"
     })
   }
@@ -70,7 +71,7 @@ export default function Signup() {
           required
           className="w-full rounded-md border-2 border-white bg-deep p-2 text-white"
         />
-        <Button variant="submit">{loading ? "Envoi..." : "S'inscrire"}</Button>
+        <Button variant="submit">Submit {loading && <Spinner />}</Button>
       </Form>
     </div>
   )
