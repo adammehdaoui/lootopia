@@ -17,6 +17,7 @@ import {
 } from "@remix-run/react"
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import React, { useState } from "react"
 import { Toaster } from "./components/ui/toaster"
 import "./tailwind.css"
@@ -70,8 +71,17 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient())
   const { connected } = useLoaderData<typeof loader>()
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: false
+          }
+        }
+      })
+  )
 
   return (
     <html lang="en" className="font-montserrat">
@@ -85,6 +95,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Navbar connected={connected} />
         <QueryClientProvider client={queryClient}>
           <main className="min-h-screen">{children}</main>
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
         <Footer />
         <Toaster />

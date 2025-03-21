@@ -11,7 +11,7 @@ export default function Menu() {
     <NavigationMenu className="ml-3 lg:ml-10">
       <NavigationMenuList className="flex space-x-3">
         <NavigationMenuItem className="whitespace-nowrap">
-          <NavLink to="/">
+          <NavLink to="/" className="cursor-pointer">
             <img src="/assets/logo.png" alt="Lootopia Logo" className="max-h-24 max-w-24" />
           </NavLink>
         </NavigationMenuItem>

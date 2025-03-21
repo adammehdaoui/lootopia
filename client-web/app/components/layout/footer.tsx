@@ -9,34 +9,49 @@ export default function Footer() {
       <div className="flex justify-center gap-8 md:flex-row md:gap-24">
         <span className="flex flex-col gap-4">
           <p className="py-4 font-bold">Social networks</p>
-          <Link to="/" className="flex items-center gap-2 duration-300 hover:scale-110">
+          <Link
+            to="/"
+            className="hover:scale-110cursor-pointer flex items-center gap-2 duration-300"
+          >
             Facebook <LuFacebook />
           </Link>
-          <Link to="/" className="flex items-center gap-2 duration-300 hover:scale-110">
+          <Link
+            to="/"
+            className="hover:scale-110cursor-pointer flex items-center gap-2 duration-300"
+          >
             Twitter <LuTwitter />
           </Link>
-          <Link to="/" className="flex items-center gap-2 duration-300 hover:scale-110">
+          <Link
+            to="/"
+            className="flex cursor-pointer items-center gap-2 duration-300 hover:scale-110"
+          >
             Instagram <LuInstagram />
           </Link>
         </span>
         <span className="flex flex-col gap-4">
           <p className="py-4 font-bold">Download app</p>
-          <a href="/" className="flex items-center gap-2 duration-300 hover:scale-110">
+          <a
+            href="/"
+            className="flex cursor-pointer items-center gap-2 duration-300 hover:scale-110"
+          >
             Apple Store <AiOutlineApple size={25} />
           </a>
-          <a href="/" className="flex items-center gap-2 duration-300 hover:scale-110">
+          <a
+            href="/"
+            className="flex cursor-pointer items-center gap-2 duration-300 hover:scale-110"
+          >
             Play Store <IoLogoGooglePlaystore size={20} />
           </a>
         </span>
         <span className="flex flex-col gap-4">
           <p className="py-4 font-bold">How to ?</p>
-          <a href="/" className="duration-300 hover:scale-110">
+          <a href="/" className="cursor-pointer duration-300 hover:scale-110">
             Answers
           </a>
-          <a href="/" className="duration-300 hover:scale-110">
+          <a href="/" className="cursor-pointer duration-300 hover:scale-110">
             Guides
           </a>
-          <a href="/" className="duration-300 hover:scale-110">
+          <a href="/" className="cursor-pointer duration-300 hover:scale-110">
             Reviews
           </a>
         </span>
@@ -46,17 +61,17 @@ export default function Footer() {
           © 2025 Lootopia, Inc. All rights reserved.
         </p>
         <div className="flex justify-center gap-2 md:justify-start">
-          <a href="/" className="hover:underline">
+          <a href="/" className="cursor-pointer hover:underline">
             Contact
           </a>
           <p>·</p>
 
-          <a href="/" className="hover:underline">
+          <a href="/" className="cursor-pointer hover:underline">
             Privacy Policy
           </a>
           <p>·</p>
 
-          <a href="/" className="hover:underline">
+          <a href="/" className="cursor-pointer hover:underline">
             Legal Notice
           </a>
         </div>

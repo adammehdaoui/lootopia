@@ -18,9 +18,10 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         navigation:
           "bg-deep text-white border-2 border-white w-56 hover:w-72 hover:bg-slate-500 transition-all duration-500 cursor-pointer",
-        submit: "bg-deep text-white border-2 border-white w-56  hover:bg-slate-500 mx-auto",
-        drawer: "bg-white",
-        crown: "bg-white"
+        submit:
+          "bg-deep text-white border-2 border-white w-56  hover:bg-slate-500 mx-auto cursor-pointer",
+        drawer: "bg-white cursor-pointer",
+        crown: "bg-white cursor-pointer"
       },
       size: {
         default: "h-9 px-4 py-2",
