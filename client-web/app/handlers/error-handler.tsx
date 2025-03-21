@@ -1,12 +1,19 @@
 import { isRouteErrorResponse, useRouteError } from "@remix-run/react"
 
-export function ErrorHandler() {
-  const error = useRouteError()
+export function ErrorHandler(props: ErrorHandlerProps) {
+  const routeError = useRouteError()
+  const { error } = props
 
-  const errorTitle = isRouteErrorResponse(error)
-    ? `${error.status} ${error.statusText}`
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
+
+  const errorTitle = isRouteErrorResponse(routeError)
+    ? `${routeError.status} ${routeError.statusText}`
     : "Unknown error"
-  const errorDescription = isRouteErrorResponse(error) ? error.data : "An unknown error occurred."
+  const errorDescription = isRouteErrorResponse(routeError)
+    ? routeError.data
+    : "An unknown error occurred."
 
   return (
     <div className="mt-20 flex w-full justify-center space-x-3 font-bold text-white">
@@ -14,4 +21,8 @@ export function ErrorHandler() {
       <span>{errorDescription}</span>
     </div>
   )
+}
+
+type ErrorHandlerProps = {
+  error?: Error
 }

@@ -17,7 +17,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         navigation:
-          "bg-deep text-white border-2 border-white w-56 hover:w-72 hover:bg-slate-500 transition-all duration-500",
+          "bg-deep text-white border-2 border-white w-56 hover:w-72 hover:bg-slate-500 transition-all duration-500 cursor-pointer",
         submit: "bg-deep text-white border-2 border-white w-56  hover:bg-slate-500 mx-auto",
         drawer: "bg-white",
         crown: "bg-white"

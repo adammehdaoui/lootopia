@@ -43,14 +43,14 @@ export default function Signup() {
     setLoading(true)
 
     toast({
-      title: "Succès",
-      description: "Votre email à ete envoyé"
+      title: "Sucess",
+      description: "Check your emails"
     })
   }
 
   return (
     <div className="mx-auto my-32 flex max-w-lg flex-col items-center justify-center rounded-3xl border-4 border-white bg-royal p-8 sm:w-full sm:px-4">
-      <h1 className="pb-8 text-2xl font-bold text-white">Inscription</h1>
+      <h1 className="pb-8 text-2xl font-bold text-white">Register</h1>
       <Form
         method="post"
         className="flex w-full max-w-xs flex-col justify-center gap-4"

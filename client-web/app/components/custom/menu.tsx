@@ -24,10 +24,18 @@ export default function Menu() {
             </Button>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Button variant="navigation">Marketplace</Button>
+            <Button asChild variant="navigation">
+              <NavLink to="/" viewTransition>
+                Marketplace
+              </NavLink>
+            </Button>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Button variant="navigation">Leaderboard</Button>
+            <Button asChild variant="navigation">
+              <NavLink to="/" viewTransition>
+                Leaderboard
+              </NavLink>
+            </Button>
           </NavigationMenuItem>
         </div>
       </NavigationMenuList>

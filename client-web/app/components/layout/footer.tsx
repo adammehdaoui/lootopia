@@ -8,7 +8,7 @@ export default function Footer() {
     <div className="flex flex-col rounded-t-xl bg-royal p-8 text-white md:p-16">
       <div className="flex justify-center gap-8 md:flex-row md:gap-24">
         <span className="flex flex-col gap-4">
-          <p className="py-4 font-bold">Social network</p>
+          <p className="py-4 font-bold">Social networks</p>
           <Link to="/" className="flex items-center gap-2 duration-300 hover:scale-110">
             Facebook <LuFacebook />
           </Link>

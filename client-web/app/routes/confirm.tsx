@@ -27,7 +27,7 @@ export default function Confirm() {
       <div className="flex w-full flex-col items-center">
         <h1 className="mb-4 w-full text-center text-2xl font-bold text-white">{message}</h1>
         <Button variant="submit">
-          <Link to={"/login"}>Se connecter</Link>
+          <Link to={"/login"}>Login</Link>
         </Button>
       </div>
     </div>

@@ -10,7 +10,7 @@ export function HuntCard(props: HuntCardProps) {
   const live = currentTime < hunt.huntDto.endTime && currentTime > hunt.huntDto.startTime
 
   return (
-    <div className="flex h-card w-card flex-col overflow-hidden rounded-lg bg-white shadow-md transition-all duration-100 hover:scale-105">
+    <div className="flex h-card w-card cursor-pointer flex-col overflow-hidden rounded-lg bg-white shadow-md transition-all duration-100 hover:scale-105">
       <img
         src={`${faker.image.url()}?random=${Math.random()}`}
         alt="location"
@@ -22,7 +22,7 @@ export function HuntCard(props: HuntCardProps) {
         <div className="flex flex-col space-y-5">
           <div className="flex justify-between">
             <button>
-              <Heart size={25} className="duration-500 hover:scale-125" />
+              <Heart size={25} className="cursor-pointer duration-500 hover:scale-125" />
             </button>
           </div>
 
