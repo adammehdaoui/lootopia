@@ -7,7 +7,6 @@ import com.lootopia.server.utils.JwtUtils;
 import com.lootopia.server.utils.PasswordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.AccountNotFoundException;
@@ -17,10 +16,12 @@ import java.util.UUID;
 public class AuthService {
 
     private final MemberRepository memberRepository;
+    private final JwtUtils jwtUtils;
     Logger LOGGER = LoggerFactory.getLogger(AuthService.class);
 
-    public AuthService(MemberRepository memberRepository) {
+    public AuthService(MemberRepository memberRepository, JwtUtils jwtUtils) {
         this.memberRepository = memberRepository;
+        this.jwtUtils = jwtUtils;
     }
 
     public CustomUserDetails askForRegister(UUID uuid, String email, String rawPassword) {
@@ -67,10 +68,6 @@ public class AuthService {
 
         return new CustomUserDetails(member);
     }
-
-
-    @Autowired
-    private JwtUtils jwtUtils; // Injection de JwtUtils
 
     public String login(String email, String rawPassword) {
         Member member = memberRepository.findByEmail(email);

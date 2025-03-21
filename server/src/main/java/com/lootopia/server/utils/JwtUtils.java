@@ -3,7 +3,6 @@ package com.lootopia.server.utils;
 import com.lootopia.server.config.JwtConfig;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -12,8 +11,12 @@ import java.util.Date;
 public class JwtUtils {
     private static final long EXPIRATION_TIME = 86400000; // 24h
 
-    @Autowired
-    private JwtConfig jwtConfig;
+    private final JwtConfig jwtConfig;
+
+    public JwtUtils(JwtConfig jwtConfig) {
+        this.jwtConfig = jwtConfig;
+    }
+
 
     public String generateToken(String email) {
         return Jwts.builder()
