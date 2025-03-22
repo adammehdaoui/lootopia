@@ -1,11 +1,9 @@
 import { Live } from "@/components/custom/live"
 import type { HuntLike } from "@/model/hunt"
-import { faker } from "@faker-js/faker"
 import { Heart } from "lucide-react"
 
 export function HuntCard(props: HuntCardProps) {
   const { hunt } = props
-
   const currentTime = new Date().toISOString()
 
   const live = currentTime < hunt.huntDto.endTime && currentTime > hunt.huntDto.startTime
@@ -13,11 +11,11 @@ export function HuntCard(props: HuntCardProps) {
   return (
     <div className="flex h-card w-card cursor-pointer flex-col overflow-hidden rounded-lg bg-white shadow-md transition-all duration-300 hover:scale-105">
       <img
-        src={`${faker.image.url()}?random=${Math.random()}`}
+        src="https://i.imgur.com/qUDZvR4.jpeg"
         alt="location"
         width={600}
         height={400}
-        className="h-64 w-full object-cover"
+        className={`h-64 w-full object-cover`}
       />
       <div className="mt-5 flex flex-1 flex-col justify-between p-5">
         <div className="flex flex-col space-y-5">

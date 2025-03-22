@@ -18,7 +18,7 @@ import {
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
-import React from "react"
+import React, { useState } from "react"
 import { Toaster } from "./components/ui/toaster"
 import "./tailwind.css"
 
@@ -77,7 +77,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            retry: false
+            retry: false,
+            staleTime: 6 * 1000
           }
         }
       })

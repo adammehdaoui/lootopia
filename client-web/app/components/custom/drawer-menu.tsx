@@ -11,6 +11,7 @@ import {
   DrawerTrigger
 } from "@/components/ui/drawer"
 import { NavigationMenu, NavigationMenuList } from "@/components/ui/navigation-menu"
+import { NavLink } from "@remix-run/react"
 
 import { RxHamburgerMenu } from "react-icons/rx"
 
@@ -24,8 +25,8 @@ export default function DrawerMenu(props: DrawerMenuProps) {
           <DrawerTrigger className="text-white">
             <RxHamburgerMenu className="h-6 w-6 text-white duration-300 hover:text-slate-500" />
           </DrawerTrigger>
-          <DrawerContent>
-            <DrawerHeader>
+          <DrawerContent className="flex w-full flex-col items-center justify-center">
+            <DrawerHeader className="mt-3 flex flex-col items-center justify-center">
               <DrawerTitle>Menu</DrawerTitle>
               <DrawerDescription>All you can do on the app</DrawerDescription>
             </DrawerHeader>
