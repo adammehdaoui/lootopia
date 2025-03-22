@@ -32,10 +32,11 @@ export default function Signup() {
   const { toast } = useToast()
 
   useEffect(() => {
-    toast({
-      title: "Erreur",
-      description: actionData?.error
-    })
+    actionData?.error &&
+      toast({
+        title: "Erreur",
+        description: actionData?.error
+      })
   }, [actionData?.error, toast])
 
   const handleSubmit = () => {
