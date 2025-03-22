@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Form, useActionData } from "@remix-run/react"
+import { Form, Link, useActionData } from "@remix-run/react"
 import { json, redirect } from "@remix-run/node"
 import { login } from "@/services/auth"
 
@@ -52,6 +52,9 @@ export default function Login() {
         />
         <Button variant="submit">Se connecter</Button>
       </Form>
+      <Link to={"/register"} className="mt-4 text-white underline">
+        <p>Vous n&apos;avez pas de compte ? Inscrivez vous</p>
+      </Link>
     </div>
   )
 }
