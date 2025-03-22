@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button"
-import { Form, Link, useActionData } from "@remix-run/react"
-import { json, redirect } from "@remix-run/node"
 import { login } from "@/services/auth"
+import { authCookie } from "@/services/cookies.server"
+import { json, redirect } from "@remix-run/node"
+import { Form, Link, useActionData } from "@remix-run/react"
 
 export const action = async ({ request }: { request: Request }) => {
   const formData = await request.formData()
@@ -17,7 +18,7 @@ export const action = async ({ request }: { request: Request }) => {
 
     return redirect("/", {
       headers: {
-        "Set-Cookie": `token=${token}; HttpOnly; Path=/; Secure`
+        "Set-Cookie": await authCookie.serialize(token)
       }
     })
   } catch (error) {
