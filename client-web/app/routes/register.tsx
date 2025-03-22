@@ -19,6 +19,8 @@ export const action = async ({ request }: ActionFunctionArgs): Promise<ActionRes
 
     return { sent: true }
   } catch (error: unknown) {
+    console.error(error)
+
     return { error: error as string, sent: false }
   }
 }
@@ -29,16 +31,7 @@ export default function Signup() {
   const { toast } = useToast()
 
   useEffect(() => {
-    if (!(navigation.state === "idle" && actionData)) return
-
-    if (actionData.sent) {
-      toast({
-        title: "Success",
-        description: "An email has been sent, check your inbox to confirm your email address"
-      })
-
-      return
-    }
+    if (!actionData) return
 
     if (actionData.error) {
       toast({
@@ -46,10 +39,15 @@ export default function Signup() {
         description: `${actionData.error}`,
         variant: "destructive"
       })
-
-      console.log("error")
     }
   }, [navigation.state, actionData, toast])
+
+  const onSubmit = (): void => {
+    toast({
+      title: "Success",
+      description: "An email has been sent, check your inbox to confirm your email address"
+    })
+  }
 
   return (
     <div className="mx-auto my-32 flex max-w-lg flex-col items-center justify-center rounded-3xl border-4 border-white bg-royal p-8 sm:w-full sm:px-4">
@@ -60,16 +58,18 @@ export default function Signup() {
           name="email"
           placeholder="Email"
           required
-          className="w-full rounded-md border-2 border-white bg-deep p-2 text-white"
+          className="w-full cursor-text rounded-md border-2 border-white bg-deep p-2 text-white"
         />
         <input
           type="password"
           name="password"
           placeholder="Mot de passe"
           required
-          className="w-full rounded-md border-2 border-white bg-deep p-2 text-white"
+          className="w-full cursor-text rounded-md border-2 border-white bg-deep p-2 text-white"
         />
-        <Button variant="submit">Submit</Button>
+        <Button onClick={onSubmit} variant="submit">
+          Submit
+        </Button>
       </Form>
     </div>
   )
