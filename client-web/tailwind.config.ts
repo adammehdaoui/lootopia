@@ -75,9 +75,9 @@ export default {
         card: "400px"
       },
       cursor: {
-        default: 'url("/assets/pointers/pointer32.png"), default',
-        pointer: 'url("/assets/links/link32.png"), pointer',
-        text: 'url("/assets/text/text32.png"), text'
+        default: 'url("/public/assets/pointers/pointer32.png"), default',
+        pointer: 'url("/public/assets/links/link32.png"), pointer',
+        text: 'url("/public/assets/text/text32.png"), text'
       }
     }
   },
