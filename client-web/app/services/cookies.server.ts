@@ -9,7 +9,7 @@ export const authCookie = createCookie("token", {
 export async function getTokenFromCookie(request: Request) {
   const cookieHeader = request.headers.get("Cookie")
 
-  const token = await authCookie.parse(cookieHeader)
+  const token = (await authCookie.parse(cookieHeader)) || {}
 
   return token
 }
