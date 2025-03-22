@@ -5,11 +5,3 @@ export const authCookie = createCookie("token", {
   path: "/",
   sameSite: "lax"
 })
-
-export async function getTokenFromCookie(request: Request) {
-  const cookieHeader = request.headers.get("Cookie")
-
-  const token = (await authCookie.parse(cookieHeader)) || {}
-
-  return token
-}
