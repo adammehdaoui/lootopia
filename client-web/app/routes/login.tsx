@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { login } from "@/services/auth"
 import { authCookie } from "@/services/cookies.server"
-import { json, redirect } from "@remix-run/node"
+import { data, redirect } from "@remix-run/node"
 import { Form, Link, useActionData } from "@remix-run/react"
 import { useToast } from "@/hooks/use-toast"
 import { useEffect } from "react"
@@ -14,7 +14,7 @@ export const action = async ({ request }: { request: Request }) => {
   const password = formData.get("password")
 
   if (!email || !password) {
-    return json<ActionResponse>({ error: "Email et mot de passe requis" }, { status: 400 })
+    return data<ActionResponse>({ error: "Email et mot de passe requis" }, { status: 400 })
   }
 
   try {
@@ -26,7 +26,7 @@ export const action = async ({ request }: { request: Request }) => {
       }
     })
   } catch (error) {
-    return json<ActionResponse>({ error: "Identifiants incorrects" }, { status: 401 })
+    return data<ActionResponse>({ error: "Identifiants incorrects" }, { status: 401 })
   }
 }
 

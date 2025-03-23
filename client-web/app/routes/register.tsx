@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { ActionFunctionArgs, json } from "@remix-run/node"
+import { ActionFunctionArgs, data } from "@remix-run/node"
 import { Form, useActionData } from "@remix-run/react"
 import { useEffect, useState } from "react"
 import { register } from "@/services/auth"
@@ -19,10 +19,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const response = await register(email, password)
 
   if (response.status.valueOf() === 200) {
-    return json<ActionResponse>({ message: "Un email de confirmation vous a été envoyé." })
+    return data<ActionResponse>({ message: "Un email de confirmation vous a été envoyé." })
   }
 
-  return json<ActionResponse>({ error: "Erreur lors de l'inscription." }, { status: 400 })
+  return data<ActionResponse>({ error: "Erreur lors de l'inscription." }, { status: 400 })
 }
 
 export default function Signup() {
