@@ -19,7 +19,7 @@ export default function DrawerMenu() {
       <NavigationMenuList>
         <Drawer>
           <DrawerTrigger className="text-white">
-            <RxHamburgerMenu />
+            <RxHamburgerMenu className="h-6 w-6 text-white duration-300 hover:text-slate-500" />
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader>
