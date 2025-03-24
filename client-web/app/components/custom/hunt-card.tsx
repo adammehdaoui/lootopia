@@ -24,9 +24,8 @@ export function HuntCard(props: HuntCardProps) {
               <Heart size={25} className="cursor-pointer duration-500 hover:scale-125" />
             </button>
           </div>
-
           <div className="flex justify-center space-x-5">
-            <h3 className="font-biorhyme text-xl font-semibold">{hunt.huntDto.description}</h3>
+            <h3 className="font-biorhyme text-xl font-semibold">{hunt.huntDto.name}</h3>
             <span className="mt-3">{live && <Live />}</span>
           </div>
           <span>{hunt.huntDto.description}</span>

@@ -63,7 +63,7 @@ export default function Signup() {
         <input
           type="password"
           name="password"
-          placeholder="Mot de passe"
+          placeholder="Password"
           required
           className="w-full cursor-text rounded-md border-2 border-white bg-deep p-2 text-white"
         />
