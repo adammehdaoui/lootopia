@@ -1,10 +1,18 @@
-import type { LinksFunction } from "@remix-run/node"
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react"
-
 import Footer from "@/components/layout/footer"
 import Navbar from "@/components/layout/navbar"
 import { ErrorHandler } from "@/handlers/error-handler"
+import { requireAuth } from "@/services/auth/auth"
+import { connectedRoutes } from "@/utils/connectedRoutes"
+import {
+  data,
+  type LinksFunction,
+  type LoaderFunction,
+  type LoaderFunctionArgs,
+  redirect
+} from "@remix-run/node"
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReasonPhrases, StatusCodes } from "http-status-codes"
 import React, { useState } from "react"
 import { Toaster } from "./components/ui/toaster"
 import "./tailwind.css"
@@ -19,6 +27,29 @@ export const links: LinksFunction = () => [
     rel: "stylesheet"
   }
 ]
+
+export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
+  const currentUrl = new URL(args.request.url)
+  const currentRoute = currentUrl.pathname
+
+  if (!connectedRoutes.includes(currentRoute)) {
+    return data({
+      message: `${ReasonPhrases.ACCEPTED}: You have access to this route`,
+      status: StatusCodes.ACCEPTED
+    })
+  }
+
+  try {
+    await requireAuth(args)
+    return data({
+      message: `${ReasonPhrases.OK}: You have access to this route`,
+      status: StatusCodes.OK
+    })
+  } catch {
+    console.error("Unauthorized")
+    return redirect("/login")
+  }
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient())

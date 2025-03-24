@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button"
-import { ActionFunctionArgs, data } from "@remix-run/node"
+import { useToast } from "@/hooks/use-toast"
+import { register } from "@/services/auth/auth"
+import { ActionFunction, ActionFunctionArgs, data } from "@remix-run/node"
 import { Form, useActionData } from "@remix-run/react"
 import { useEffect, useState } from "react"
-import { register } from "@/services/auth"
-import { useToast } from "@/hooks/use-toast"
 
 type ActionResponse = { message?: string; error?: string }
 
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const action: ActionFunction = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData()
   const email = formData.get("email")
   const password = formData.get("password")

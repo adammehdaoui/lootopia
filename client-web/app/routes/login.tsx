@@ -1,20 +1,27 @@
 import { Button } from "@/components/ui/button"
-import { login } from "@/services/auth"
-import { authCookie } from "@/services/cookies.server"
-import { data, redirect } from "@remix-run/node"
-import { Form, Link, useActionData } from "@remix-run/react"
 import { useToast } from "@/hooks/use-toast"
+import { login } from "@/services/auth/auth"
+import { authCookie } from "@/services/auth/cookies"
+import { ActionFunction, ActionFunctionArgs, data, redirect } from "@remix-run/node"
+import { Form, Link, useActionData } from "@remix-run/react"
+import { ReasonPhrases, StatusCodes } from "http-status-codes"
 import { useEffect } from "react"
 
-type ActionResponse = { message?: string; error?: string }
+type ActionResponse = {
+  message: string
+  status: StatusCodes
+}
 
-export const action = async ({ request }: { request: Request }) => {
+export const action: ActionFunction = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData()
   const email = formData.get("email")
   const password = formData.get("password")
 
   if (!email || !password) {
-    return data<ActionResponse>({ error: "Email et mot de passe requis" }, { status: 400 })
+    return data<ActionResponse>({
+      message: `${ReasonPhrases.BAD_REQUEST}: Email et mot de passe requis`,
+      status: StatusCodes.BAD_REQUEST
+    })
   }
 
   try {
@@ -26,7 +33,10 @@ export const action = async ({ request }: { request: Request }) => {
       }
     })
   } catch (error) {
-    return data<ActionResponse>({ error: "Identifiants incorrects" }, { status: 401 })
+    return data<ActionResponse>({
+      message: `${ReasonPhrases.UNAUTHORIZED}: Identifiants incorrects`,
+      status: StatusCodes.UNAUTHORIZED
+    })
   }
 }
 
@@ -35,10 +45,12 @@ export default function Login() {
   const { toast } = useToast()
 
   useEffect(() => {
-    if (actionData?.error) {
+    if (!actionData) return
+
+    if (actionData.status !== StatusCodes.OK) {
       toast({
         title: "Échec",
-        description: actionData.error,
+        description: actionData.message,
         variant: "destructive"
       })
     }
