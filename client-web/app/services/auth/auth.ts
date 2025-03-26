@@ -48,7 +48,7 @@ export const login = async (email: FormDataEntryValue, password: FormDataEntryVa
 export const logout = async () => {
   return redirect("/login", {
     headers: {
-      "Set-Cookie": await authCookie.serialize(null, { maxAge: 0 })
+      "Set-Cookie": await authCookie.serialize(null, { maxAge: -1 })
     }
   })
 }
