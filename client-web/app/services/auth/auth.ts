@@ -70,3 +70,13 @@ export async function requireAuth({ request }: LoaderFunctionArgs) {
 
   return token
 }
+
+export async function requireDisconnect({ request }: LoaderFunctionArgs) {
+  const cookieHeader = request.headers.get("Cookie")
+
+  const token = await authCookie.parse(cookieHeader)
+
+  if (token) {
+    throw new Error("You are already connected")
+  }
+}

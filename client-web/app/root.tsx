@@ -1,8 +1,9 @@
 import Footer from "@/components/layout/footer"
 import Navbar from "@/components/layout/navbar"
 import { ErrorHandler } from "@/handlers/error-handler"
-import { requireAuth } from "@/services/auth/auth"
+import { requireAuth, requireDisconnect } from "@/services/auth/auth"
 import { connectedRoutes } from "@/utils/connectedRoutes"
+import { disconnectRoutes } from "@/utils/disconnectRoutes"
 import {
   data,
   type LinksFunction,
@@ -32,7 +33,23 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
   const currentUrl = new URL(args.request.url)
   const currentRoute = currentUrl.pathname
 
-  if (!connectedRoutes.includes(currentRoute)) {
+  if (!connectedRoutes.includes(currentRoute) && !disconnectRoutes.includes(currentRoute)) {
+    return data({
+      message: `${ReasonPhrases.ACCEPTED}: You have access to this route`,
+      status: StatusCodes.ACCEPTED
+    })
+  }
+
+  if (disconnectRoutes.includes(currentRoute)) {
+    console.log("Disconnecting")
+
+    try {
+      await requireDisconnect(args)
+    } catch {
+      console.error("Already connected")
+      return redirect("/")
+    }
+
     return data({
       message: `${ReasonPhrases.ACCEPTED}: You have access to this route`,
       status: StatusCodes.ACCEPTED
