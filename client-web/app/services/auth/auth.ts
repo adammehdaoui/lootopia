@@ -1,6 +1,7 @@
 import axiosClient from "@/lib/client"
+import { test } from "@/services/test"
 import { redirect, type LoaderFunctionArgs } from "@remix-run/node"
-import { isAxiosError } from "axios"
+import { HttpStatusCode, isAxiosError } from "axios"
 import { authCookie } from "./cookies"
 
 export const confirm = async (code: string, mail: string) => {
@@ -25,18 +26,6 @@ export const register = async (email: FormDataEntryValue, password: FormDataEntr
   )
 }
 
-export async function requireAuth({ request }: LoaderFunctionArgs) {
-  const cookieHeader = request.headers.get("Cookie")
-
-  const token = await authCookie.parse(cookieHeader)
-
-  if (!token) {
-    throw new Error("Unauthorized, token not found")
-  }
-
-  return token
-}
-
 export const login = async (email: FormDataEntryValue, password: FormDataEntryValue) => {
   try {
     const response = await axiosClient.post(
@@ -59,7 +48,25 @@ export const login = async (email: FormDataEntryValue, password: FormDataEntryVa
 export const logout = async () => {
   return redirect("/login", {
     headers: {
-      "Set-Cookie": await authCookie.serialize("", { maxAge: 0 })
+      "Set-Cookie": await authCookie.serialize(null, { maxAge: 0 })
     }
   })
+}
+
+export async function requireAuth({ request }: LoaderFunctionArgs) {
+  const cookieHeader = request.headers.get("Cookie")
+
+  const token = await authCookie.parse(cookieHeader)
+
+  if (!token) {
+    throw new Error("Unauthorized, token not found")
+  }
+
+  const response = await test(token)
+
+  if (response.status === HttpStatusCode.Unauthorized) {
+    throw new Error("Unauthorized, invalid token")
+  }
+
+  return token
 }

@@ -8,7 +8,12 @@ public class TestController {
 
     @GetMapping
     public String hello() {
-        return "Hello World";
+        return "You are connected to the server!";
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+        return "You are connected to the server!";
     }
 
 }

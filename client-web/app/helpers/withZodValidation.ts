@@ -6,8 +6,6 @@ export const withZodValidation =
     try {
       const result = await promise
 
-      console.log(result.data)
-
       const data = schema.parse(result.data)
 
       return data

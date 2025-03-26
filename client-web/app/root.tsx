@@ -41,6 +41,7 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
 
   try {
     await requireAuth(args)
+
     return data({
       message: `${ReasonPhrases.OK}: You have access to this route`,
       status: StatusCodes.OK
