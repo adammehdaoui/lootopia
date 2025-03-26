@@ -50,3 +50,7 @@ typings/
 # Secrets
 
 .env
+
+# Visual Studio Code
+
+.vscode/

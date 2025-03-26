@@ -48,7 +48,7 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter {
         String token = extractToken(request);
 
         if (token != null && jwtUtils.validateToken(token)) {
-            LOGGER.info("Valid token");
+            LOGGER.info("Valid token {}", token);
 
             Claims claims = jwtUtils.getClaimsFromToken(token);
             String email = claims.getSubject();
@@ -71,7 +71,14 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter {
         if (header == null || header.isBlank() || !header.startsWith("Bearer ")) {
             return null;
         }
-        return header.substring(7);
+
+        String plainToken = header.substring(7);
+
+        LOGGER.info("Plain token {}", header);
+
+        LOGGER.info("Extracted token {}", plainToken);
+
+        return plainToken;
     }
 
 }
