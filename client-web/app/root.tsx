@@ -1,19 +1,17 @@
 import Footer from "@/components/layout/footer"
 import Navbar from "@/components/layout/navbar"
 import { ErrorHandler } from "@/handlers/error-handler"
-import { requireAuth, requireDisconnect } from "@/services/auth/auth"
+import { auth, requireDisconnect } from "@/services/auth/auth"
 import { connectedRoutes } from "@/utils/connectedRoutes"
 import { disconnectRoutes } from "@/utils/disconnectRoutes"
 import {
-  data,
   type LinksFunction,
   type LoaderFunction,
   type LoaderFunctionArgs,
   redirect
 } from "@remix-run/node"
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react"
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "@remix-run/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { ReasonPhrases, StatusCodes } from "http-status-codes"
 import React, { useState } from "react"
 import { Toaster } from "./components/ui/toaster"
 import "./tailwind.css"
@@ -33,16 +31,14 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
   const currentUrl = new URL(args.request.url)
   const currentRoute = currentUrl.pathname
 
-  if (!connectedRoutes.includes(currentRoute) && !disconnectRoutes.includes(currentRoute)) {
-    return data({
-      message: `${ReasonPhrases.ACCEPTED}: You have access to this route`,
-      status: StatusCodes.ACCEPTED
-    })
+  const connectedRoute = connectedRoutes.includes(currentRoute)
+  const disconnectedRoute = disconnectRoutes.includes(currentRoute)
+
+  if (!connectedRoute && !disconnectedRoute) {
+    return auth(args, false)
   }
 
-  if (disconnectRoutes.includes(currentRoute)) {
-    console.log("Disconnecting")
-
+  if (disconnectedRoute) {
     try {
       await requireDisconnect(args)
     } catch {
@@ -50,27 +46,16 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
       return redirect("/")
     }
 
-    return data({
-      message: `${ReasonPhrases.ACCEPTED}: You have access to this route`,
-      status: StatusCodes.ACCEPTED
-    })
+    return auth(args, false)
   }
 
-  try {
-    await requireAuth(args)
-
-    return data({
-      message: `${ReasonPhrases.OK}: You have access to this route`,
-      status: StatusCodes.OK
-    })
-  } catch {
-    console.error("Unauthorized")
-    return redirect("/login")
-  }
+  auth(args, true)
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient())
+  const { connected } = useLoaderData<typeof loader>()
+  console.log("connected", connected)
 
   return (
     <html lang="en" className="font-montserrat">
@@ -81,7 +66,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="bg-deep">
-        <Navbar />
+        <Navbar connected={connected} />
         <QueryClientProvider client={queryClient}>
           <div className="min-h-screen">{children}</div>
         </QueryClientProvider>

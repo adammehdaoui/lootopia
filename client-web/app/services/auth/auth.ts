@@ -1,8 +1,33 @@
 import axiosClient from "@/lib/client"
 import { test } from "@/services/test"
-import { redirect, type LoaderFunctionArgs } from "@remix-run/node"
+import { data, redirect, type LoaderFunctionArgs } from "@remix-run/node"
 import { HttpStatusCode, isAxiosError } from "axios"
+import { ReasonPhrases, StatusCodes } from "http-status-codes"
 import { authCookie } from "./cookies"
+
+export const auth = async (args: LoaderFunctionArgs, withRedirect: boolean) => {
+  try {
+    await requireAuth(args)
+    return data({
+      message: withRedirect
+        ? `${ReasonPhrases.OK}: You have access to this route`
+        : `${ReasonPhrases.ACCEPTED}: You have access to this route`,
+      status: withRedirect ? StatusCodes.OK : StatusCodes.ACCEPTED,
+      connected: true
+    })
+  } catch {
+    if (withRedirect) {
+      console.error("Unauthorized")
+      return redirect("/login")
+    }
+
+    return data({
+      message: `${ReasonPhrases.ACCEPTED}: You have access to this route`,
+      status: StatusCodes.ACCEPTED,
+      connected: false
+    })
+  }
+}
 
 export const confirm = async (code: string, mail: string) => {
   const result = await axiosClient.post(
@@ -35,10 +60,10 @@ export const login = async (email: FormDataEntryValue, password: FormDataEntryVa
         headers: { "Content-Type": "application/json" }
       }
     )
-    return response.data // Contient le token
+    return response.data
   } catch (error: unknown) {
     if (isAxiosError(error) && error.response) {
-      throw error.response.data // On récupère l'erreur de l'API
+      throw error.response.data
     } else {
       throw { error: "Une erreur est survenue" }
     }

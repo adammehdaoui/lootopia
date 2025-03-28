@@ -1,15 +1,17 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import Logout from "@/components/custom/logout"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList
 } from "@/components/ui/navigation-menu"
-import { AvatarFallback } from "@radix-ui/react-avatar"
 import { Link } from "@remix-run/react"
 import { Crown } from "lucide-react"
 
-export default function RewardMenu() {
+export default function RewardMenu(props: RewardMenuProps) {
+  const { connected } = props
+
   return (
     <NavigationMenu>
       <NavigationMenuList className="flex space-x-5">
@@ -20,9 +22,12 @@ export default function RewardMenu() {
           </Button>
         </NavigationMenuItem>
         <NavigationMenuItem>
+          {connected && <Logout className="hidden lg:flex" />}
+        </NavigationMenuItem>
+        <NavigationMenuItem>
           <Link to={"/login"} className="flex justify-end">
             <Avatar>
-              <AvatarImage src="/public/assets/fallback.jpg" />
+              <AvatarImage src="/assets/fallback.jpg" />
               <AvatarFallback>LOO</AvatarFallback>
             </Avatar>
           </Link>
@@ -30,4 +35,8 @@ export default function RewardMenu() {
       </NavigationMenuList>
     </NavigationMenu>
   )
+}
+
+type RewardMenuProps = {
+  connected: boolean
 }
