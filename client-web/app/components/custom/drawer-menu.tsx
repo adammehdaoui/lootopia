@@ -1,3 +1,4 @@
+import Logout from "@/components/custom/logout"
 import { Button } from "@/components/ui/button"
 import {
   Drawer,
@@ -13,13 +14,15 @@ import { NavigationMenu, NavigationMenuList } from "@/components/ui/navigation-m
 
 import { RxHamburgerMenu } from "react-icons/rx"
 
-export default function DrawerMenu() {
+export default function DrawerMenu(props: DrawerMenuProps) {
+  const { connected } = props
+
   return (
     <NavigationMenu className="flex lg:hidden">
       <NavigationMenuList>
         <Drawer>
           <DrawerTrigger className="text-white">
-            <RxHamburgerMenu />
+            <RxHamburgerMenu className="h-6 w-6 text-white duration-300 hover:text-slate-500" />
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader>
@@ -30,10 +33,15 @@ export default function DrawerMenu() {
               <Button variant="drawer">Hunts List</Button>
               <Button variant="drawer">Marketplace</Button>
               <Button variant="drawer">Leaderboard</Button>
+              {connected && (
+                <Button variant="drawer" asChild>
+                  <Logout />
+                </Button>
+              )}
             </div>
             <DrawerFooter>
-              <DrawerClose>
-                <Button variant="navigation">Cancel</Button>
+              <DrawerClose asChild>
+                <Button variant="outline">Cancel</Button>
               </DrawerClose>
             </DrawerFooter>
           </DrawerContent>
@@ -41,4 +49,8 @@ export default function DrawerMenu() {
       </NavigationMenuList>
     </NavigationMenu>
   )
+}
+
+type DrawerMenuProps = {
+  connected: boolean
 }

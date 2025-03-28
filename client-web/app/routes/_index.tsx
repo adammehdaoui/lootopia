@@ -23,7 +23,7 @@ export default function Index() {
           hidden rewards. Are you ready for the challenge?
         </p>
         <a
-          href="/signup"
+          href="/admin"
           className="mt-6 inline-block rounded-lg bg-yellow-400 px-6 py-3 font-bold transition-all hover:bg-yellow-500"
         >
           Start Your Adventure 🚀

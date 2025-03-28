@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button"
-import { ActionFunctionArgs, json } from "@remix-run/node"
+import { useToast } from "@/hooks/use-toast"
+import { register } from "@/services/auth/auth"
+import { ActionFunction, ActionFunctionArgs, data } from "@remix-run/node"
 import { Form, useActionData } from "@remix-run/react"
 import { useEffect, useState } from "react"
-import { register } from "@/services/auth"
-import { useToast } from "@/hooks/use-toast"
 
 type ActionResponse = { message?: string; error?: string }
 
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const action: ActionFunction = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData()
   const email = formData.get("email")
   const password = formData.get("password")
@@ -19,10 +19,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const response = await register(email, password)
 
   if (response.status.valueOf() === 200) {
-    return json<ActionResponse>({ message: "Un email de confirmation vous a été envoyé." })
+    return data<ActionResponse>({ message: "Un email de confirmation vous a été envoyé." })
   }
 
-  return json<ActionResponse>({ error: "Erreur lors de l'inscription." }, { status: 400 })
+  return data<ActionResponse>({ error: "Erreur lors de l'inscription." }, { status: 400 })
 }
 
 export default function Signup() {
@@ -32,10 +32,11 @@ export default function Signup() {
   const { toast } = useToast()
 
   useEffect(() => {
-    toast({
-      title: "Erreur",
-      description: actionData?.error
-    })
+    actionData?.error &&
+      toast({
+        title: "Erreur",
+        description: actionData?.error
+      })
   }, [actionData?.error, toast])
 
   const handleSubmit = () => {

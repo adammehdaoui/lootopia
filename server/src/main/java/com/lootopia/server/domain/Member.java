@@ -29,4 +29,10 @@ public class Member {
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<Role> roles;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private Collection<Hunt> owned;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Collection<Hunt> likes;
+
 }

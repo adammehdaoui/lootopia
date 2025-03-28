@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button"
-import { confirm } from "@/services/auth"
-import { useSearchParams } from "@remix-run/react"
-import { Link } from "@remix-run/react"
-
+import { confirm } from "@/services/auth/auth"
+import { Link, useSearchParams } from "@remix-run/react"
 import { useEffect, useState } from "react"
 
 export default function Confirm() {
@@ -18,7 +16,7 @@ export default function Confirm() {
           setMessage(data.message || "Compte activé ! Vous pouvez vous connecter.")
         })
         .catch((error) => {
-          console.log("error", error)
+          console.error("error", error)
           setMessage("Erreur d'activation.")
         })
     }

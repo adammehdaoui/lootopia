@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.security.auth.login.AccountNotFoundException;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -50,6 +51,24 @@ public class AuthController {
         } catch (AccountNotFoundException a) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(a.getMessage());
         }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Object> login(@RequestBody Map<String, String> credentials) {
+        String email = credentials.get("email");
+        String password = credentials.get("password");
+
+        if (email == null || password == null) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Email et mot de passe requis"));
+        }
+
+        String token = authService.login(email, password);
+
+        if (token == null) {
+            return ResponseEntity.status(401).body(Map.of("error", "Identifiants invalides"));
+        }
+
+        return ResponseEntity.ok(Map.of("token", token));
     }
 
 }

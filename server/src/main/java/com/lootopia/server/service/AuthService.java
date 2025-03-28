@@ -3,6 +3,7 @@ package com.lootopia.server.service;
 import com.lootopia.server.domain.Member;
 import com.lootopia.server.repository.MemberRepository;
 import com.lootopia.server.security.CustomUserDetails;
+import com.lootopia.server.utils.JwtUtils;
 import com.lootopia.server.utils.PasswordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +16,12 @@ import java.util.UUID;
 public class AuthService {
 
     private final MemberRepository memberRepository;
+    private final JwtUtils jwtUtils;
     Logger LOGGER = LoggerFactory.getLogger(AuthService.class);
 
-    public AuthService(MemberRepository memberRepository) {
+    public AuthService(MemberRepository memberRepository, JwtUtils jwtUtils) {
         this.memberRepository = memberRepository;
+        this.jwtUtils = jwtUtils;
     }
 
     public CustomUserDetails askForRegister(UUID uuid, String email, String rawPassword) {
@@ -45,7 +48,7 @@ public class AuthService {
         Member member = memberRepository.findByEmail(email);
 
         if (member == null) {
-            LOGGER.error("User not found");
+            LOGGER.error("User not found for activation");
             throw new AccountNotFoundException("User not found");
         }
 
@@ -64,6 +67,24 @@ public class AuthService {
         memberRepository.save(member);
 
         return new CustomUserDetails(member);
+    }
+
+    public String login(String email, String rawPassword) {
+        Member member = memberRepository.findByEmail(email);
+
+        if (member == null) {
+            LOGGER.error("User not found for login");
+            return null;
+        }
+
+        if (!PasswordUtils.verifyPassword(rawPassword, member.getPassword())) {
+            LOGGER.error("Mot de passe incorrect");
+            return null;
+        }
+
+        CustomUserDetails customUserDetails = new CustomUserDetails(member);
+
+        return jwtUtils.generateToken(customUserDetails);
     }
 
 }
