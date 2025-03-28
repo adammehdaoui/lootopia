@@ -16,7 +16,7 @@ export default function Confirm() {
           setMessage(data.message || "Compte activé ! Vous pouvez vous connecter.")
         })
         .catch((error) => {
-          console.log("error", error)
+          console.error("error", error)
           setMessage("Erreur d'activation.")
         })
     }

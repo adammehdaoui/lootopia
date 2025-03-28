@@ -55,7 +55,6 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
 export function Layout({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient())
   const { connected } = useLoaderData<typeof loader>()
-  console.log("connected", connected)
 
   return (
     <html lang="en" className="font-montserrat">
