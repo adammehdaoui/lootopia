@@ -1,4 +1,4 @@
-import NavItem from "@/app/(components)/nav-item";
+import NavItem from "@/components/nav-item";
 import { Slot } from "expo-router";
 import { StyleSheet, View } from "react-native";
 

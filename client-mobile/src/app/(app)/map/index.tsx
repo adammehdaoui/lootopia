@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
-export default function () {
+export default function Map() {
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null
   );
