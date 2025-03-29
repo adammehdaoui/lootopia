@@ -1,7 +1,10 @@
 import axiosClient from "@/lib/client";
 import { isAxiosError } from "axios";
 
-export const handleSignIn = async (email: string, password: string) => {
+export const handleSignIn = async (
+  email: string,
+  password: string
+): Promise<SignInResponse> => {
   console.log("handleSignIn", email, password);
 
   try {
@@ -10,20 +13,18 @@ export const handleSignIn = async (email: string, password: string) => {
       password,
     });
 
-    console.log("response", response);
-
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      console.error(
-        "Error during sign-in:",
-        error.code,
-        error.message,
-        error.name
-      );
-      throw new Error(error.response?.data.message || "Sign-in failed");
+      console.error("Axios error", error);
+      throw new Error(error.message);
     }
 
+    console.error("Unknown error", error);
     throw error;
   }
+};
+
+type SignInResponse = {
+  token: string;
 };
