@@ -1,4 +1,5 @@
 import { useStorageState } from "@/hooks/use-storage-state";
+import { handleSignIn } from "@/services/handle-sign-in";
 import { createContext, useContext } from "react";
 
 const AuthContext = createContext<AuthContextArgs>({
@@ -7,13 +8,6 @@ const AuthContext = createContext<AuthContextArgs>({
   session: null,
   loading: true,
 });
-
-type AuthContextArgs = {
-  signIn: () => void;
-  signOut: () => void;
-  session?: string | null;
-  loading: boolean;
-};
 
 export function useSession() {
   const value = useContext(AuthContext);
@@ -29,7 +23,11 @@ export function useSession() {
 export function SessionProvider({ children }: { children: React.ReactNode }) {
   const [[loading, session], setSession] = useStorageState("session");
 
-  const signIn = () => {
+  const signIn = async (email: string, password: string) => {
+    const response = await handleSignIn(email, password);
+
+    console.log("response", response);
+
     setSession("session");
   };
 
@@ -43,3 +41,10 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     </AuthContext.Provider>
   );
 }
+
+type AuthContextArgs = {
+  signIn: (email: string, password: string) => void;
+  signOut: () => void;
+  session?: string | null;
+  loading: boolean;
+};
