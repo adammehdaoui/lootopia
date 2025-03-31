@@ -28,8 +28,6 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   const signIn = async (email: string, password: string) => {
     const response = await handleSignIn(email, password);
 
-    console.log("response", response);
-
     if (response.token) {
       setSession(response.token);
 

@@ -5,12 +5,20 @@ import { auth, requireDisconnect } from "@/services/auth/auth"
 import { connectedRoutes } from "@/utils/connectedRoutes"
 import { disconnectRoutes } from "@/utils/disconnectRoutes"
 import {
+  redirect,
   type LinksFunction,
   type LoaderFunction,
-  type LoaderFunctionArgs,
-  redirect
+  type LoaderFunctionArgs
 } from "@remix-run/node"
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "@remix-run/react"
+import {
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+  type MetaFunction
+} from "@remix-run/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React, { useState } from "react"
 import { Toaster } from "./components/ui/toaster"
@@ -24,6 +32,18 @@ export const links: LinksFunction = () => [
   {
     href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap",
     rel: "stylesheet"
+  }
+]
+
+export const meta: MetaFunction = () => [
+  { title: "Lootopia" },
+  {
+    property: "og:title",
+    content: "Lootopia"
+  },
+  {
+    name: "description",
+    content: "Lootopia is a web3 game that allows players to earn rewards through AR gameplay."
   }
 ]
 

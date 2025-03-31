@@ -1,10 +1,12 @@
 import { useSession } from "@/contexts/auth-context";
+import { Image } from "expo-image";
 import { Controller, useForm } from "react-hook-form";
 import {
-  Button,
   SafeAreaView,
   StyleSheet,
+  Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -13,17 +15,24 @@ type FormData = {
   password: string;
 };
 
-export default function Index() {
+export default function Login() {
   const { signIn } = useSession();
   const { control, handleSubmit } = useForm<FormData>();
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
     signIn(data.email, data.password);
   };
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.presentation}>
+        <Image
+          source={require("../../assets/images/icon.png")}
+          cachePolicy="memory"
+          style={styles.image}
+        />
+        <Text style={styles.title}>Lootopia</Text>
+      </View>
       <View style={styles.formContainer}>
         <Controller
           name="email"
@@ -34,8 +43,8 @@ export default function Index() {
               placeholder="Email"
               value={field.value}
               style={styles.input}
-              placeholderTextColor="#aaa"
               onChangeText={field.onChange}
+              placeholderTextColor="#FFF"
             />
           )}
         />
@@ -48,13 +57,18 @@ export default function Index() {
               placeholder="Password"
               value={field.value}
               style={styles.input}
-              placeholderTextColor="#aaa"
               secureTextEntry
               onChangeText={field.onChange}
+              placeholderTextColor="#FFF"
             />
           )}
         />
-        <Button title="Submit" onPress={handleSubmit(onSubmit)} color="#fff" />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit(onSubmit)}
+        >
+          <Text style={styles.buttonText}>Log in</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -65,12 +79,27 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#222",
+    backgroundColor: "#101D3B",
+  },
+  presentation: {
+    flexDirection: "column",
+    justifyContent: "center",
+    marginBottom: 50,
+  },
+  title: {
+    color: "#FFFFFF",
+    fontFamily: "BioRhyme",
+    fontSize: 30,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    marginLeft: 20,
   },
   formContainer: {
     width: "80%",
     padding: 20,
-    backgroundColor: "#333",
+    backgroundColor: "#142247",
     borderRadius: 10,
     shadowColor: "#000",
     shadowOpacity: 0.3,
@@ -80,10 +109,24 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    backgroundColor: "#444",
-    color: "#fff",
+    backgroundColor: "#101D3B",
+    color: "#FFF",
     paddingHorizontal: 10,
     borderRadius: 5,
     marginBottom: 15,
+    fontFamily: "Montserrat",
+  },
+  button: {
+    borderWidth: 1,
+    borderColor: "#FFF",
+    padding: 5,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontFamily: "Montserrat",
   },
 });

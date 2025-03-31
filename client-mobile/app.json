@@ -1,22 +1,18 @@
 {
   "expo": {
-    "name": "client-mobile",
-    "slug": "client-mobile",
+    "name": "Lootopia",
+    "slug": "Lootopia",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "client-mobile",
+    "scheme": "Lootopia",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
         "NsLocationUsageDescription": "This app requires access to your location.",
-        "UIBackgroundModes": [
-          "location",
-          "fetch",
-          "remote-notification"
-        ],
+        "UIBackgroundModes": ["location", "fetch", "remote-notification"],
         "NSLocationWhenInUseUsageDescription": "This app requires access to your location when open.",
         "NSPhotoLibraryUsageDescription": "$(PRODUCT_NAME) would like to read photos for AR experiences.",
         "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos",
@@ -46,7 +42,7 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#142247"
         }
       ],
       [
@@ -70,7 +66,16 @@
           "isAndroidBackgroundLocationEnabled": true
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/BioRhyme-VariableFont_wdth,wght.ttf",
+            "./assets/fonts/Montserrat-VariableFont_wght.ttf"
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

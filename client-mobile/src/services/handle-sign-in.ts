@@ -1,5 +1,5 @@
 import axiosClient from "@/lib/client";
-import { isAxiosError } from "axios";
+import { HttpStatusCode, isAxiosError } from "axios";
 
 export const handleSignIn = async (
   email: string,
@@ -13,18 +13,19 @@ export const handleSignIn = async (
       password,
     });
 
-    return response.data;
+    return { token: response.data, status: HttpStatusCode.Ok };
   } catch (error) {
     if (isAxiosError(error)) {
-      console.error("Axios error", error);
-      throw new Error(error.message);
+      console.log("Axios error", error);
+      return { token: undefined, status: HttpStatusCode.InternalServerError };
     }
 
-    console.error("Unknown error", error);
-    throw error;
+    console.log("Unknown error", error);
+    return { token: undefined, status: HttpStatusCode.ImATeapot };
   }
 };
 
 type SignInResponse = {
-  token: string;
+  token: string | undefined;
+  status: HttpStatusCode;
 };
