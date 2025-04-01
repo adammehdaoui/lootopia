@@ -50,7 +50,7 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
     return auth(args, false)
   }
 
-  auth(args, true)
+  return auth(args, true)
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {

@@ -9,7 +9,7 @@ export function ErrorHandler() {
   const errorDescription = isRouteErrorResponse(error) ? error.data : "An unknown error occurred."
 
   return (
-    <div className="mt-20 flex w-full justify-center font-bold text-white">
+    <div className="mt-20 flex w-full justify-center space-x-3 font-bold text-white">
       <h1>{errorTitle}</h1>
       <span>{errorDescription}</span>
     </div>
