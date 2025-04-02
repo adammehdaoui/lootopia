@@ -15,6 +15,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import React, { useState } from "react"
 import { Toaster } from "./components/ui/toaster"
 import "./tailwind.css"
+import { useTheme } from "./hooks/use-theme"
 
 export const links: LinksFunction = () => [
   {
@@ -56,8 +57,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient())
   const { connected } = useLoaderData<typeof loader>()
 
+  const { theme } = useTheme()
+
   return (
-    <html lang="en" className="font-montserrat">
+    <html lang="en" className={`font-montserrat theme-${theme}`}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

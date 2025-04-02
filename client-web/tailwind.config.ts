@@ -29,6 +29,11 @@ export default {
         foreground: "hsl(var(--foreground))",
         royal: "#142247",
         deep: "#101D3B",
+        sakura: {
+          light: "#fce4ec",
+          DEFAULT: "#f48fb1",
+          dark: "#c2185b"
+        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))"
@@ -76,5 +81,12 @@ export default {
       }
     }
   },
-  plugins: [require("tailwindcss-animate")]
+  plugins: [
+    require("tailwindcss-animate"),
+    function ({ addVariant }: { addVariant: (name: string, value: string) => void }) {
+      addVariant("theme-light", "&.theme-light")
+      addVariant("theme-dark", "&.theme-dark")
+      addVariant("theme-sakura", "&.theme-sakura")
+    }
+  ]
 } satisfies Config
