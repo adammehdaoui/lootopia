@@ -12,7 +12,7 @@ Undefined template 'std::char_traits<unsigned char>'
 
 ## Solution
 
-Downgrade Xcode to 16.2 because with can't upgrade react native to
+Downgrade Xcode to 16.2 because we can't upgrade react native to
 0.76.9 because of viro react peer dependency.
 
 How to downgrade Xcode:
