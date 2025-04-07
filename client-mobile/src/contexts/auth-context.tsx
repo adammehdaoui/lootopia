@@ -2,6 +2,7 @@ import { useStorageState } from "@/hooks/use-storage-state";
 import { handleSignIn } from "@/services/handle-sign-in";
 import { useRouter } from "expo-router";
 import { createContext, useContext } from "react";
+import { toast } from "sonner-native";
 
 const AuthContext = createContext<AuthContextArgs>({
   signIn: () => {},
@@ -33,6 +34,8 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
 
       return router.navigate("/home");
     }
+
+    toast.error("Invalid email or password");
   };
 
   const signOut = () => {
