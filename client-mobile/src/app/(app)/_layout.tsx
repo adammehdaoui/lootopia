@@ -1,13 +1,21 @@
 import NavItem from "@/components/nav-item";
-import { Slot } from "expo-router";
+import { useSession } from "@/contexts/auth-context";
+import { Slot, useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
 export default function Layout() {
+  const { session } = useSession();
+  const router = useRouter();
+
+  if (!session) {
+    return router.replace("/");
+  }
+
   return (
     <View style={styles.container}>
       <Slot />
       <View style={styles.navbar}>
-        <NavItem href="/" icon="home-outline" label="Home" />
+        <NavItem href="/home" icon="home-outline" label="Home" />
         <NavItem href="/chest" icon="cube-outline" label="Chest" />
         <NavItem href="/map" icon="map-outline" label="Map" />
       </View>
@@ -27,6 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#222",
     paddingVertical: 10,
     paddingBottom: 40,
+    paddingTop: 20,
     position: "absolute",
     bottom: 0,
     width: "100%",

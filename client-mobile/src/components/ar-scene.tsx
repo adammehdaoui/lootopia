@@ -15,8 +15,8 @@ export function ARScene() {
     <ViroARScene onTrackingUpdated={onInitialized}>
       <ViroAmbientLight color="#FFFFFF" />
       <Viro3DObject
-        source={require("../../../../assets/3d/chest/chest.obj")}
-        resources={[require("../../../../assets/3d/chest/chest.mtl")]}
+        source={require("../../assets/3d/chest/chest.obj")}
+        resources={[require("../../assets/3d/chest/chest.mtl")]}
         type="OBJ"
         scale={[0.5, 0.5, 0.5]}
         position={[0, 0, -1]}

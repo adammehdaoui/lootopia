@@ -3,6 +3,9 @@ import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Toaster } from "sonner-native";
 
 export default function Layout() {
   const [loaded, error] = useFonts({
@@ -20,8 +23,13 @@ export default function Layout() {
   }
 
   return (
-    <SessionProvider>
-      <Slot />
-    </SessionProvider>
+    <SafeAreaProvider>
+      <GestureHandlerRootView>
+        <SessionProvider>
+          <Slot />
+          <Toaster />
+        </SessionProvider>
+      </GestureHandlerRootView>
+    </SafeAreaProvider>
   );
 }

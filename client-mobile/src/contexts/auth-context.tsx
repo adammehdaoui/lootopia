@@ -37,6 +37,8 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = () => {
     setSession(null);
+
+    return router.replace("/");
   };
 
   return (

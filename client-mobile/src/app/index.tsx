@@ -1,5 +1,7 @@
 import { useSession } from "@/contexts/auth-context";
+import { ErrorMessage } from "@hookform/error-message";
 import { Image } from "expo-image";
+import { useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import {
   SafeAreaView,
@@ -16,8 +18,21 @@ type FormData = {
 };
 
 export default function Login() {
-  const { signIn } = useSession();
-  const { control, handleSubmit } = useForm<FormData>();
+  const { session, loading, signIn } = useSession();
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<FormData>();
+  const router = useRouter();
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (session) {
+    router.replace("/home");
+  }
 
   const onSubmit = (data: FormData) => {
     signIn(data.email, data.password);
@@ -38,6 +53,13 @@ export default function Login() {
           name="email"
           defaultValue=""
           control={control}
+          rules={{
+            required: true,
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Email is invalid",
+            },
+          }}
           render={({ field }) => (
             <TextInput
               placeholder="Email"
@@ -48,10 +70,23 @@ export default function Login() {
             />
           )}
         />
+        {errors.email && (
+          <ErrorMessage
+            errors={errors}
+            name="email"
+            render={({ message }) => (
+              <Text style={styles.error}>{message}</Text>
+            )}
+          />
+        )}
+
         <Controller
           name="password"
           defaultValue=""
           control={control}
+          rules={{
+            required: true,
+          }}
           render={({ field }) => (
             <TextInput
               placeholder="Password"
@@ -63,6 +98,16 @@ export default function Login() {
             />
           )}
         />
+        {errors.password && (
+          <ErrorMessage
+            errors={errors}
+            name="password"
+            render={() => (
+              <Text style={styles.error}>Password is required</Text>
+            )}
+          />
+        )}
+
         <TouchableOpacity
           style={styles.button}
           onPress={handleSubmit(onSubmit)}
@@ -106,6 +151,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
     elevation: 5,
+    marginBottom: 60,
   },
   input: {
     height: 50,
@@ -128,5 +174,9 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     fontFamily: "Montserrat",
+  },
+  error: {
+    color: "red",
+    marginBottom: 10,
   },
 });

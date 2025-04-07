@@ -1,17 +1,26 @@
 import { ARScene } from "@/components/ar-scene";
 import { ViroARSceneNavigator } from "@reactvision/react-viro";
-import React from "react";
+import { useFocusEffect } from "expo-router";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 
 export default function ChestAR() {
+  const [showAR, setShowAR] = useState(true);
+
+  useFocusEffect(() => {
+    return () => {
+      setShowAR(false);
+    };
+  });
+
   return (
-    <ViroARSceneNavigator
-      autofocus={true}
-      initialScene={{
-        scene: ARScene,
-      }}
-      style={styles.f1}
-    />
+    showAR && (
+      <ViroARSceneNavigator
+        autofocus={true}
+        initialScene={{ scene: ARScene }}
+        style={styles.f1}
+      />
+    )
   );
 }
 
