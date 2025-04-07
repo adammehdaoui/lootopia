@@ -5,7 +5,6 @@ node_modules/
 
 # Expo
 .expo/
-ios/
 android/
 dist/
 web-build/
@@ -33,6 +32,7 @@ yarn-error.*
 
 # local env files
 .env*.local
+.env
 
 # typescript
 *.tsbuildinfo
@@ -82,4 +82,15 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-# @end expo-cli
+# Xcode
+ios/build/
+ios/DerivedData/
+ios/*.xcuserstate
+ios/*.xcworkspace/xcuserdata/
+
+# CocoaPods
+ios/Pods/
+ios/.DS_Store
+
+# Temp & Cache
+ios/*.lock
