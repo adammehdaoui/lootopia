@@ -6,11 +6,12 @@ import {
   NavigationMenuItem,
   NavigationMenuList
 } from "@/components/ui/navigation-menu"
+import { useSession } from "@/contexts/auth-context"
 import { Link } from "@remix-run/react"
 import { Crown } from "lucide-react"
 
-export default function RewardMenu(props: RewardMenuProps) {
-  const { connected } = props
+export default function RewardMenu() {
+  const { connected } = useSession()
 
   return (
     <NavigationMenu>
@@ -35,8 +36,4 @@ export default function RewardMenu(props: RewardMenuProps) {
       </NavigationMenuList>
     </NavigationMenu>
   )
-}
-
-type RewardMenuProps = {
-  connected: boolean
 }

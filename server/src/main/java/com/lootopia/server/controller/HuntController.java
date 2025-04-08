@@ -28,7 +28,7 @@ public class HuntController {
     @PostMapping("/like")
     public ResponseEntity<Object> likeHunt(@RequestBody LikeDto likeDto) {
         try {
-            HuntLikeDto huntLikeDto = huntService.like(likeDto.memberId(), likeDto.huntId());
+            HuntLikeDto huntLikeDto = huntService.like(likeDto.memberId(), likeDto.email());
             return ResponseEntity.status(HttpStatus.CREATED).body(huntLikeDto);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());

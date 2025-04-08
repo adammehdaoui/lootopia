@@ -15,7 +15,7 @@ export function HuntCard(props: HuntCardProps) {
         alt="location"
         width={600}
         height={400}
-        className={`h-64 w-full object-cover`}
+        className="h-64 w-full object-cover"
       />
       <div className="mt-5 flex flex-1 flex-col justify-between p-5">
         <div className="flex flex-col space-y-5">

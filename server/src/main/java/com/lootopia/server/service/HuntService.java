@@ -54,10 +54,18 @@ public class HuntService {
                 .toList();
     }
 
-    public HuntLikeDto like(String memberId, String huntId) {
-        Member currentMember = memberRepository.findById(memberId);
+    public HuntLikeDto like(String email, String huntId) {
+        Member currentMember = memberRepository.findByEmail(email);
+
+        if (currentMember == null) {
+            throw new IllegalArgumentException("Member not found");
+        }
 
         Hunt currentHunt = huntRepository.findById(huntId);
+
+        if (currentHunt == null) {
+            throw new IllegalArgumentException("Hunt not found");
+        }
 
         HuntLike like = new HuntLike(currentMember, currentHunt);
 

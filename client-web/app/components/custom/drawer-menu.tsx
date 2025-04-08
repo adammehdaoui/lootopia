@@ -11,12 +11,12 @@ import {
   DrawerTrigger
 } from "@/components/ui/drawer"
 import { NavigationMenu, NavigationMenuList } from "@/components/ui/navigation-menu"
-import { NavLink } from "@remix-run/react"
+import { useSession } from "@/contexts/auth-context"
 
 import { RxHamburgerMenu } from "react-icons/rx"
 
-export default function DrawerMenu(props: DrawerMenuProps) {
-  const { connected } = props
+export default function DrawerMenu() {
+  const { connected } = useSession()
 
   return (
     <NavigationMenu className="flex lg:hidden">
@@ -50,8 +50,4 @@ export default function DrawerMenu(props: DrawerMenuProps) {
       </NavigationMenuList>
     </NavigationMenu>
   )
-}
-
-type DrawerMenuProps = {
-  connected: boolean
 }

@@ -1,5 +1,6 @@
 import Footer from "@/components/layout/footer"
 import Navbar from "@/components/layout/navbar"
+import { AuthProvider } from "@/contexts/auth-context"
 import { ErrorHandler } from "@/handlers/error-handler"
 import { auth, requireDisconnect } from "@/services/auth/auth"
 import { connectedRoutes } from "@/utils/connectedRoutes"
@@ -85,7 +86,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         }
       })
   )
-  const { connected } = useLoaderData<typeof loader>()
+  const { connected, username } = useLoaderData<typeof loader>()
+
+  const authProviderProps = {
+    connected,
+    username
+  }
+
+  console.log(connected, username)
 
   return (
     <html lang="en" className="font-montserrat">
@@ -96,10 +104,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="cursor-default bg-deep">
-        <Navbar connected={connected} />
+        <Navbar />
         <QueryClientProvider client={queryClient}>
-          <main className="min-h-screen">{children}</main>
-          <ReactQueryDevtools initialIsOpen={false} />
+          <AuthProvider {...authProviderProps}>
+            <main className="min-h-screen">{children}</main>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </AuthProvider>
         </QueryClientProvider>
         <Footer />
         <Toaster />

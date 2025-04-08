@@ -3,17 +3,25 @@ import { test } from "@/services/test"
 import { data, redirect, type LoaderFunctionArgs } from "@remix-run/node"
 import { HttpStatusCode, isAxiosError } from "axios"
 import { ReasonPhrases, StatusCodes } from "http-status-codes"
+import { jwtDecode, JwtPayload } from "jwt-decode"
 import { authCookie } from "./cookies"
 
 export const auth = async (args: LoaderFunctionArgs, withRedirect: boolean) => {
   try {
-    await requireAuth(args)
+    const token = await requireAuth(args)
+    const username = jwtDecode<JwtPayload>(token).sub
+
+    if (!username) {
+      throw new Error("Username not found in token")
+    }
+
     return data({
       message: withRedirect
         ? `${ReasonPhrases.OK}: You have access to this route`
         : `${ReasonPhrases.ACCEPTED}: You have access to this route`,
       status: withRedirect ? StatusCodes.OK : StatusCodes.ACCEPTED,
-      connected: true
+      connected: true,
+      username
     })
   } catch {
     if (withRedirect) {
@@ -24,7 +32,8 @@ export const auth = async (args: LoaderFunctionArgs, withRedirect: boolean) => {
     return data({
       message: `${ReasonPhrases.ACCEPTED}: You have access to this route`,
       status: StatusCodes.ACCEPTED,
-      connected: false
+      connected: false,
+      username: null
     })
   }
 }
