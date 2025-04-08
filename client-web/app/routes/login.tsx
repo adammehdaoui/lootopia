@@ -20,7 +20,7 @@ export const action: ActionFunction = async ({ request }: ActionFunctionArgs) =>
 
   if (!email || !password) {
     return data<ActionResponse>({
-      message: `${ReasonPhrases.BAD_REQUEST}: Email et mot de passe requis`,
+      message: `${ReasonPhrases.BAD_REQUEST}: Email and password are required`,
       status: StatusCodes.BAD_REQUEST
     })
   }
@@ -35,7 +35,7 @@ export const action: ActionFunction = async ({ request }: ActionFunctionArgs) =>
     })
   } catch (error) {
     return data<ActionResponse>({
-      message: `${ReasonPhrases.UNAUTHORIZED}: Identifiants incorrects`,
+      message: `${ReasonPhrases.UNAUTHORIZED}: Incorrect email or password`,
       status: StatusCodes.UNAUTHORIZED
     })
   }
@@ -50,7 +50,7 @@ export default function Login() {
 
     if (actionData.status !== StatusCodes.OK) {
       toast({
-        title: "Échec",
+        title: "Error",
         description: actionData.message,
         variant: "destructive"
       })

@@ -25,7 +25,7 @@ export default function RewardMenu(props: RewardMenuProps) {
           {connected && <Logout className="hidden lg:flex" />}
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link to={"/login"} className="flex justify-end">
+          <Link to="/login" className="flex justify-end">
             <Avatar>
               <AvatarImage src="/assets/fallback.jpg" />
               <AvatarFallback>LOO</AvatarFallback>

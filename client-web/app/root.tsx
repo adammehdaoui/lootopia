@@ -1,11 +1,15 @@
-import { ErrorHandler } from "@/components/custom/error"
 import Footer from "@/components/layout/footer"
 import Navbar from "@/components/layout/navbar"
+import { ErrorHandler } from "@/handlers/error-handler"
 import { auth, requireDisconnect } from "@/services/auth/auth"
 import { connectedRoutes } from "@/utils/connectedRoutes"
 import { disconnectRoutes } from "@/utils/disconnectRoutes"
-import type { LinksFunction } from "@remix-run/node"
-import { redirect, type LoaderFunction, type LoaderFunctionArgs } from "@remix-run/node"
+import {
+  redirect,
+  type LinksFunction,
+  type LoaderFunction,
+  type LoaderFunctionArgs
+} from "@remix-run/node"
 import {
   Links,
   Meta,
@@ -15,7 +19,6 @@ import {
   useLoaderData,
   type MetaFunction
 } from "@remix-run/react"
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import React, { useState } from "react"
@@ -71,7 +74,6 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const { connected } = useLoaderData<typeof loader>()
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -83,6 +85,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         }
       })
   )
+  const { connected } = useLoaderData<typeof loader>()
 
   return (
     <html lang="en" className="font-montserrat">
@@ -92,7 +95,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="bg-deep">
+      <body className="cursor-default bg-deep">
         <Navbar connected={connected} />
         <QueryClientProvider client={queryClient}>
           <main className="min-h-screen">{children}</main>
