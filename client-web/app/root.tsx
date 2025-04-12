@@ -86,14 +86,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         }
       })
   )
-  const { connected, username } = useLoaderData<typeof loader>()
+  const { connected, username, token } = useLoaderData<typeof loader>()
 
   const authProviderProps = {
     connected,
-    username
+    username,
+    token
   }
-
-  console.log(connected, username)
 
   return (
     <html lang="en" className="font-montserrat">
@@ -104,15 +103,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="cursor-default bg-deep">
-        <Navbar />
         <QueryClientProvider client={queryClient}>
           <AuthProvider {...authProviderProps}>
+            <Navbar />
             <main className="min-h-screen">{children}</main>
             <ReactQueryDevtools initialIsOpen={false} />
+            <Footer />
+            <Toaster />
           </AuthProvider>
         </QueryClientProvider>
-        <Footer />
-        <Toaster />
         <ScrollRestoration />
         <Scripts />
       </body>

@@ -9,4 +9,6 @@ public interface HuntLikeRepository extends JpaRepository<HuntLike, Long> {
 
     Boolean existsHuntLikeByMemberIdAndHuntId(String memberId, String huntId);
 
+    HuntLike findByMemberIdAndHuntId(String memberId, String huntId);
+
 }

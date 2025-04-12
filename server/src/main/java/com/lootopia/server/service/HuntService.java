@@ -10,6 +10,8 @@ import com.lootopia.server.mapper.HuntMapper;
 import com.lootopia.server.repository.HuntLikeRepository;
 import com.lootopia.server.repository.HuntRepository;
 import com.lootopia.server.repository.MemberRepository;
+import com.lootopia.server.utils.JwtUtils;
+import io.jsonwebtoken.Claims;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,35 +29,49 @@ public class HuntService {
 
     private final HuntLikeMapper huntLikeMapper;
 
+    private final JwtUtils jwtUtils;
+
     public HuntService(
             HuntRepository huntRepository,
             MemberRepository memberRepository,
             HuntLikeRepository huntLikeRepository,
             HuntMapper huntMapper,
-            HuntLikeMapper huntLikeMapper) {
+            HuntLikeMapper huntLikeMapper,
+            JwtUtils jwtUtils
+    ) {
         this.huntRepository = huntRepository;
         this.memberRepository = memberRepository;
         this.huntLikeRepository = huntLikeRepository;
         this.huntMapper = huntMapper;
         this.huntLikeMapper = huntLikeMapper;
+        this.jwtUtils = jwtUtils;
     }
 
-    public List<HuntLikeViewDto> findAllByPopularity(String memberId) {
+    private Member getMemberFromToken(String token) {
+        String plainToken = jwtUtils.extractToken(token);
+        Claims claims = jwtUtils.getClaimsFromToken(plainToken);
+        return memberRepository.findByEmail(claims.getSubject());
+    }
+
+    public List<HuntLikeViewDto> findAllByPopularity(String token) {
         List<Hunt> hunts = huntRepository.findAllByOrderByLikesDesc();
+        String plainToken = jwtUtils.extractToken(token);
+        Claims claims = jwtUtils.getClaimsFromToken(plainToken);
+        Member currentMember = memberRepository.findByEmail(claims.getSubject());
 
         return hunts.stream()
                 .map(
                         hunt -> {
                             Long likeCount = huntLikeRepository.countHuntLikeByHuntId(hunt.getId());
-                            Boolean likedBy = huntLikeRepository.existsHuntLikeByMemberIdAndHuntId(memberId, hunt.getId());
+                            Boolean likedBy = huntLikeRepository.existsHuntLikeByMemberIdAndHuntId(currentMember.getId(), hunt.getId());
 
                             return new HuntLikeViewDto(huntMapper.toDto(hunt), likedBy, likeCount);
                         })
                 .toList();
     }
 
-    public HuntLikeDto like(String email, String huntId) {
-        Member currentMember = memberRepository.findByEmail(email);
+    public HuntLikeDto like(String token, String huntId) {
+        Member currentMember = getMemberFromToken(token);
 
         if (currentMember == null) {
             throw new IllegalArgumentException("Member not found");
@@ -67,11 +83,44 @@ public class HuntService {
             throw new IllegalArgumentException("Hunt not found");
         }
 
+        boolean alreadyLiked = huntLikeRepository.existsHuntLikeByMemberIdAndHuntId(
+                currentMember.getId(),
+                currentHunt.getId()
+        );
+
+        if (alreadyLiked) {
+            throw new IllegalArgumentException("Hunt already liked");
+        }
+
         HuntLike like = new HuntLike(currentMember, currentHunt);
 
         HuntLike huntLikeResponse = huntLikeRepository.save(like);
 
         return huntLikeMapper.toDto(huntLikeResponse);
+    }
+
+    public HuntLikeDto unLike(String token, String huntId) {
+        Member currentMember = getMemberFromToken(token);
+
+        if (currentMember == null) {
+            throw new IllegalArgumentException("Member not found");
+        }
+
+        Hunt currentHunt = huntRepository.findById(huntId);
+
+        if (currentHunt == null) {
+            throw new IllegalArgumentException("Hunt not found");
+        }
+
+        HuntLike huntLike = huntLikeRepository.findByMemberIdAndHuntId(currentMember.getId(), currentHunt.getId());
+
+        if (huntLike == null) {
+            throw new IllegalArgumentException("Hunt not liked");
+        }
+
+        huntLikeRepository.delete(huntLike);
+
+        return huntLikeMapper.toDto(huntLike);
     }
 
 }

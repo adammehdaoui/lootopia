@@ -23,6 +23,7 @@ public class CorsConfig {
         config.setAllowedOrigins(List.of(frontend));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowCredentials(true);
+        config.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
 
         source.registerCorsConfiguration("/**", config);
         return source;

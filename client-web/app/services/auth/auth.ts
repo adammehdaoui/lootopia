@@ -21,7 +21,8 @@ export const auth = async (args: LoaderFunctionArgs, withRedirect: boolean) => {
         : `${ReasonPhrases.ACCEPTED}: You have access to this route`,
       status: withRedirect ? StatusCodes.OK : StatusCodes.ACCEPTED,
       connected: true,
-      username
+      username,
+      token
     })
   } catch {
     if (withRedirect) {
@@ -33,7 +34,8 @@ export const auth = async (args: LoaderFunctionArgs, withRedirect: boolean) => {
       message: `${ReasonPhrases.ACCEPTED}: You have access to this route`,
       status: StatusCodes.ACCEPTED,
       connected: false,
-      username: null
+      username: null,
+      token: null
     })
   }
 }

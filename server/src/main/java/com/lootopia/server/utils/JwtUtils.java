@@ -4,6 +4,7 @@ import com.lootopia.server.security.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class JwtUtils {
@@ -64,6 +66,22 @@ public class JwtUtils {
 
             return false;
         }
+    }
+
+    public String extractToken(String token) throws MalformedJwtException {
+        Objects.requireNonNull(token);
+
+        if (token.isBlank() || !token.startsWith("Bearer ")) {
+            throw new MalformedJwtException("Invalid token");
+        }
+
+        String plainToken = token.substring(7);
+
+        LOGGER.info("Plain token {}", token);
+
+        LOGGER.info("Extracted token {}", plainToken);
+
+        return plainToken;
     }
 
     private SecretKey getSigningKey() {

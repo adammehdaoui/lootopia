@@ -1,12 +1,17 @@
 import { HuntCard } from "@/components/custom/hunt-card"
+import { useSession } from "@/contexts/auth-context"
 import { QueryHandler } from "@/handlers/query-handler"
 import { hunts } from "@/services/hunts"
 import { useQuery } from "@tanstack/react-query"
 
 export default function Hunts() {
+  const { token } = useSession()
+
   const { isPending, error, data } = useQuery({
     queryKey: ["hunts"],
-    queryFn: hunts
+    queryFn: async () => {
+      return await hunts(token)
+    }
   })
 
   return (

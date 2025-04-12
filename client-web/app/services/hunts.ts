@@ -1,11 +1,26 @@
 import { withZodValidation } from "@/helpers/withZodValidation"
 import axiosClient from "@/lib/client"
-import type { HuntLike } from "@/model/hunt"
-import { huntsLikeListSchema } from "@/schema/hunt-schema"
+import type { HuntLike, LikeResponse } from "@/model/hunt"
+import { huntsLikeListSchema, likeResponseSchema } from "@/schema/hunt-schema"
 
-export const hunts = async (): Promise<HuntLike[]> => {
+export const hunts = async (token: string | null): Promise<HuntLike[]> => {
+  if (!token) {
+    throw new Error("Token is required to fetch hunts")
+  }
+
   return withZodValidation(huntsLikeListSchema)(
-    axiosClient.get("/hunts/popularity?memberId=62ab98f9-ca06-4649-a814-c558691451b1")
-    // current user - temporary hardcoded
+    axiosClient.get("/hunts/popularity", { headers: { Authorization: `${token}` } })
+  )
+}
+
+export const like = async (huntId: string, token: string): Promise<LikeResponse> => {
+  return withZodValidation(likeResponseSchema)(
+    axiosClient.post(`/hunts/${huntId}/like`, {}, { headers: { Authorization: `${token}` } })
+  )
+}
+
+export const unlike = async (huntId: string, token: string): Promise<LikeResponse> => {
+  return withZodValidation(likeResponseSchema)(
+    axiosClient.delete(`/hunts/${huntId}/like`, { headers: { Authorization: `${token}` } })
   )
 }

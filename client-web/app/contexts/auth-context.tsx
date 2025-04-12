@@ -2,7 +2,8 @@ import { createContext, useContext } from "react"
 
 const AuthContext = createContext<AuthContextArgs>({
   connected: false,
-  username: null
+  username: null,
+  token: null
 })
 
 export function useSession() {
@@ -16,14 +17,17 @@ export function useSession() {
 }
 
 export function AuthProvider(props: AuthProviderProps) {
-  const { children, connected, username } = props
+  const { children, connected, username, token } = props
 
-  return <AuthContext.Provider value={{ connected, username }}>{children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider value={{ connected, username, token }}>{children}</AuthContext.Provider>
+  )
 }
 
 type AuthContextArgs = {
   connected: boolean
   username: string | null
+  token: string | null
 }
 
 type AuthProviderProps = {

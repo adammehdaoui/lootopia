@@ -27,8 +27,8 @@ export default function RewardMenu() {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link to="/login" className="flex justify-end">
-            <Avatar>
-              <AvatarImage src="/assets/fallback.jpg" />
+            <Avatar className="cursor-pointer">
+              <AvatarImage src="/assets/fallback.png" />
               <AvatarFallback>LOO</AvatarFallback>
             </Avatar>
           </Link>
