@@ -5,7 +5,7 @@ import { useTheme } from "@/hooks/use-theme"
 
 export default function Navbar(props: NavbarProps) {
   const { connected } = props
-  const { theme, toggleTheme } = useTheme()
+  //const { theme, toggleTheme } = useTheme()
 
   return (
     <div className="sticky top-0 z-10 flex items-center justify-between rounded-b-xl bg-royal px-8 py-4">

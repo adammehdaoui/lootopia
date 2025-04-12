@@ -4,13 +4,13 @@ type Theme = "light" | "dark" | "sakura"
 
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(() => {
-    return (localStorage.getItem("theme") as Theme) || "light"
+    return (window.localStorage.getItem("theme") as Theme) || "light"
   })
 
   useEffect(() => {
     document.documentElement.classList.remove("light", "dark", "sakura")
     document.documentElement.classList.add(theme)
-    localStorage.setItem("theme", theme)
+    window.localStorage.setItem("theme", theme)
   }, [theme])
 
   const toggleTheme = () => {
