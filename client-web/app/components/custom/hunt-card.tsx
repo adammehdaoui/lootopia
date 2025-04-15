@@ -6,7 +6,7 @@ import type { HuntLike } from "@/model/hunt"
 import { like as likeFunction, unlike as unlikeFunction } from "@/services/hunts"
 import { useMutation } from "@tanstack/react-query"
 import { Heart } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export function HuntCard(props: HuntCardProps) {
   const { toast } = useToast()
@@ -14,7 +14,17 @@ export function HuntCard(props: HuntCardProps) {
   const { hunt } = props
   const [like, setLike] = useState(hunt.likedBy)
   const [likeCount, setLikeCount] = useState(hunt.likeCount)
+  const [likeText, setLikeText] = useState(hunt.likeCount <= 1 ? "like" : "likes")
   const currentTime = new Date().toISOString()
+
+  useEffect(() => {
+    if (likeCount <= 1) {
+      setLikeText("like")
+      return
+    }
+
+    setLikeText("likes")
+  }, [likeCount])
 
   const likeMutation = useMutation({
     mutationFn: async ({ huntId, currentToken }: LikeMutationArgs) => {
@@ -90,7 +100,9 @@ export function HuntCard(props: HuntCardProps) {
                   />
                 )}
               </button>
-              <span>{likeCount} likes</span>
+              <span>
+                {likeCount} {likeText}
+              </span>
             </div>
             <span className="items flex-center">{live && <Live />}</span>
           </div>
