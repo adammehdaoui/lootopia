@@ -55,7 +55,9 @@ export function HuntCard(props: HuntCardProps) {
   const live = currentTime < hunt.huntDto.endTime && currentTime > hunt.huntDto.startTime
 
   const handleLike = (huntId: string, token: string) => {
-    setLike((like) => !like)
+    const newLikeValue = !like
+
+    setLike(newLikeValue)
 
     const likeArgs = {
       huntId,
@@ -64,7 +66,7 @@ export function HuntCard(props: HuntCardProps) {
 
     likeMutation.mutate(likeArgs)
 
-    if (like) {
+    if (newLikeValue) {
       setLikeCount((likeCount) => likeCount - 1)
       return
     }
