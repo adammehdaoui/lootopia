@@ -73,6 +73,11 @@ export default {
       },
       width: {
         card: "400px"
+      },
+      cursor: {
+        default: 'url("/assets/pointers/pointer32.png"), default',
+        pointer: 'url("/assets/links/link32.png"), pointer',
+        text: 'url("/assets/text/text32.png"), text'
       }
     }
   },

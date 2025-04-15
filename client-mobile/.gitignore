@@ -94,3 +94,6 @@ ios/.DS_Store
 
 # Temp & Cache
 ios/*.lock
+# @end expo-cli
+
+.env

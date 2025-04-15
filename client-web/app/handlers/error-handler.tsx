@@ -1,17 +1,20 @@
-import { isRouteErrorResponse, useRouteError } from "@remix-run/react"
+import { getErrorTexts } from "@/helpers/getErrorTexts"
+import { ErrorResponse, useRouteError } from "@remix-run/react"
 
-export function ErrorHandler() {
-  const error = useRouteError()
+export function ErrorHandler(props: ErrorHandlerProps) {
+  const { error } = props
+  const routeError = useRouteError() as ErrorResponse | undefined
 
-  const errorTitle = isRouteErrorResponse(error)
-    ? `${error.status} ${error.statusText}`
-    : "Unknown error"
-  const errorDescription = isRouteErrorResponse(error) ? error.data : "An unknown error occurred."
+  const { title, description } = getErrorTexts(error, routeError)
 
   return (
-    <div className="mt-20 flex w-full justify-center space-x-3 font-bold text-white">
-      <h1>{errorTitle}</h1>
-      <span>{errorDescription}</span>
+    <div className="mt-20 flex w-full flex-col items-center justify-center space-y-1 font-bold text-white">
+      <h1>{title}</h1>
+      <span>{description}</span>
     </div>
   )
+}
+
+type ErrorHandlerProps = {
+  error?: Error | string
 }

@@ -4,26 +4,49 @@ import {
   NavigationMenuItem,
   NavigationMenuList
 } from "@/components/ui/navigation-menu"
-import { Link } from "@remix-run/react"
+import { useToast } from "@/hooks/use-toast"
+import { NavLink } from "@remix-run/react"
 
 export default function Menu() {
+  const { toast } = useToast()
+
+  const handleClickOnWIP = () => {
+    toast({
+      title: "Work in progress",
+      description: "This feature is not available yet.",
+      variant: "default"
+    })
+  }
+
   return (
     <NavigationMenu className="ml-3 lg:ml-10">
-      <NavigationMenuList className="flex space-x-3">
-        <NavigationMenuItem className="whitespace-nowrap pr-5">
-          <Link to={"/"}>
-            <h1 className="font-biorhyme text-2xl font-bold text-white">Lootopia</h1>
-          </Link>
+      <NavigationMenuList className="flex space-x-10">
+        <NavigationMenuItem className="whitespace-nowrap">
+          <NavLink to="/" className="cursor-pointer">
+            <img src="/assets/logo.png" alt="Lootopia Logo" className="max-h-24 max-w-24" />
+          </NavLink>
         </NavigationMenuItem>
         <div className="hidden space-x-3 lg:flex">
           <NavigationMenuItem>
-            <Button variant="navigation">Hunts list</Button>
+            <Button asChild variant="navigation">
+              <NavLink to="/hunts" viewTransition>
+                Popular hunts
+              </NavLink>
+            </Button>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Button variant="navigation">Marketplace</Button>
+            <Button asChild variant="navigation" onClick={handleClickOnWIP}>
+              <NavLink to="/" viewTransition>
+                Marketplace
+              </NavLink>
+            </Button>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Button variant="navigation">Leaderboard</Button>
+            <Button asChild variant="navigation" onClick={handleClickOnWIP}>
+              <NavLink to="/" viewTransition>
+                Leaderboard
+              </NavLink>
+            </Button>
           </NavigationMenuItem>
         </div>
       </NavigationMenuList>

@@ -1,14 +1,16 @@
+import { HuntListSkeleton } from "@/components/custom/hunt-list-skeleton"
+import { ErrorHandler } from "@/handlers/error-handler"
 import React from "react"
 
 export function QueryHandler(props: QueryHandlerProps) {
   const { isPending, error, children } = props
 
   if (isPending) {
-    return <div>is pending</div>
+    return <HuntListSkeleton />
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>
+    return <ErrorHandler error={error} />
   }
 
   return children

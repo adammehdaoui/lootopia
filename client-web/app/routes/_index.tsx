@@ -29,19 +29,17 @@ export default function Index() {
           Start Your Adventure 🚀
         </a>
 
-        <div className="mt-10">
-          <iframe
-            className="w-full max-w-80 rounded-lg shadow-lg"
-            src="https://www.youtube.com/embed/fQvpDfFjjPo?autoplay=1&mute=1"
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          ></iframe>
-        </div>
+        <iframe
+          className="mt-10 w-full max-w-80 rounded-lg shadow-lg"
+          src="https://www.youtube.com/embed/fQvpDfFjjPo?autoplay=1&mute=1"
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        ></iframe>
       </section>
 
       <div className="h-1 w-full bg-gradient-to-r from-yellow-400 to-red-500"></div>
 
-      <h2 className="mt-10 pb-10 text-center text-3xl font-bold md:text-4xl">Popular Hunts 🔍</h2>
+      <h2 className="mt-10 pb-10 text-center text-3xl font-bold md:text-4xl">Featured hunts 🔍</h2>
 
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 pb-16 md:grid-cols-2 lg:grid-cols-3">
         {[...Array(6)].map((_, index) => (

@@ -6,11 +6,12 @@ import {
   NavigationMenuItem,
   NavigationMenuList
 } from "@/components/ui/navigation-menu"
+import { useSession } from "@/contexts/auth-context"
 import { Link } from "@remix-run/react"
 import { Crown } from "lucide-react"
 
-export default function RewardMenu(props: RewardMenuProps) {
-  const { connected } = props
+export default function RewardMenu() {
+  const { connected } = useSession()
 
   return (
     <NavigationMenu>
@@ -25,9 +26,9 @@ export default function RewardMenu(props: RewardMenuProps) {
           {connected && <Logout className="hidden lg:flex" />}
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link to={"/login"} className="flex justify-end">
-            <Avatar>
-              <AvatarImage src="/assets/fallback.jpg" />
+          <Link to="/login" className="flex justify-end">
+            <Avatar className="cursor-pointer">
+              <AvatarImage src="/assets/fallback.png" />
               <AvatarFallback>LOO</AvatarFallback>
             </Avatar>
           </Link>
@@ -35,8 +36,4 @@ export default function RewardMenu(props: RewardMenuProps) {
       </NavigationMenuList>
     </NavigationMenu>
   )
-}
-
-type RewardMenuProps = {
-  connected: boolean
 }

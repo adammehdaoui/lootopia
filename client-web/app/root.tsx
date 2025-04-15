@@ -1,5 +1,6 @@
 import Footer from "@/components/layout/footer"
 import Navbar from "@/components/layout/navbar"
+import { AuthProvider } from "@/contexts/auth-context"
 import { ErrorHandler } from "@/handlers/error-handler"
 import { auth, requireDisconnect } from "@/services/auth/auth"
 import { connectedRoutes } from "@/utils/connectedRoutes"
@@ -20,6 +21,7 @@ import {
   type MetaFunction
 } from "@remix-run/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import React, { useState } from "react"
 import { Toaster } from "./components/ui/toaster"
 import "./tailwind.css"
@@ -73,8 +75,24 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient())
-  const { connected } = useLoaderData<typeof loader>()
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: false,
+            staleTime: 6 * 1000
+          }
+        }
+      })
+  )
+  const { connected, username, token } = useLoaderData<typeof loader>()
+
+  const authProviderProps = {
+    connected,
+    username,
+    token
+  }
 
   return (
     <html lang="en" className="font-montserrat">
@@ -84,13 +102,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="bg-deep">
-        <Navbar connected={connected} />
+      <body className="cursor-default bg-deep">
         <QueryClientProvider client={queryClient}>
-          <div className="min-h-screen">{children}</div>
+          <AuthProvider {...authProviderProps}>
+            <Navbar />
+            <main className="min-h-screen">{children}</main>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <Footer />
+            <Toaster />
+          </AuthProvider>
         </QueryClientProvider>
-        <Footer />
-        <Toaster />
         <ScrollRestoration />
         <Scripts />
       </body>
