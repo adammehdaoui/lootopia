@@ -6,7 +6,7 @@ export function HuntListSkeleton() {
       {[...Array(10)].map((_, i) => (
         <Skeleton
           key={i}
-          className="rounder-full h-card w-card animate-pulse bg-slate-600 opacity-80 duration-700"
+          className="h-card w-card animate-pulse rounded-full bg-slate-600 opacity-80 duration-700"
         />
       ))}
     </div>
