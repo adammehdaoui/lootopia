@@ -28,7 +28,7 @@ public class MemberController {
         try {
             Response<BlockBlobItem> response = memberService.uploadAvatar(token, file);
 
-            if (response.getStatusCode() != HttpStatus.OK.value()) {
+            if (response.getStatusCode() != HttpStatus.CREATED.value()) {
                 throw new AzureUploadException(response.getHeaders().toString());
             }
 

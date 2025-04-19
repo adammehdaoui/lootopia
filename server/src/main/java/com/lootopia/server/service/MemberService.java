@@ -2,6 +2,7 @@ package com.lootopia.server.service;
 
 import com.azure.core.http.rest.Response;
 import com.azure.core.util.Context;
+import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.models.BlockBlobItem;
 import com.azure.storage.blob.options.BlobParallelUploadOptions;
 import com.lootopia.server.config.AzureConfig;
@@ -26,7 +27,8 @@ public class MemberService {
         this.authService = authService;
     }
 
-    public Response<BlockBlobItem> uploadAvatar(String token, MultipartFile file) throws IOException, IllegalArgumentException {
+    public Response<BlockBlobItem> uploadAvatar(String token, MultipartFile file) throws IOException,
+            IllegalArgumentException {
         Member member = authService.getMemberFromToken(token);
 
         if (member == null) {
@@ -39,7 +41,11 @@ public class MemberService {
         Duration timeout = Duration.ofSeconds(10);
         Context context = new Context(String.format("%s-avatar", member.getUsername()), file.getOriginalFilename());
 
-        return azureConfig.getAzureClient().uploadWithResponse(options, timeout, context);
+        String blobName = String.format("avatar-%s", member.getId());
+
+        BlobClient blobClient = azureConfig.getAzureClient().getBlobClient(blobName);
+
+        return blobClient.uploadWithResponse(options, timeout, context);
     }
 
 }

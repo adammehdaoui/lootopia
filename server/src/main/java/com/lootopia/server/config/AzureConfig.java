@@ -1,21 +1,22 @@
 package com.lootopia.server.config;
 
-import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
-import com.azure.storage.blob.BlobServiceClient;
-import com.azure.storage.blob.BlobServiceClientBuilder;
+import com.azure.storage.blob.BlobContainerClientBuilder;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConfigurationProperties(prefix = "azure.storage")
 @Getter
+@Setter
 public class AzureConfig {
 
-    private BlobClient azureClient;
+    private BlobContainerClient azureClient;
     private String endpoint;
+    private String container;
     private String sasToken;
 
     @PostConstruct
@@ -24,18 +25,20 @@ public class AzureConfig {
             throw new IllegalArgumentException("Azure Storage endpoint must be provided");
         }
 
+        if (container == null || container.isEmpty()) {
+            throw new IllegalArgumentException("Azure Storage container name must be provided");
+        }
+
         if (sasToken == null || sasToken.isEmpty()) {
             throw new IllegalArgumentException("Azure Storage SAS token must be provided");
         }
 
-        BlobServiceClient azureServiceClient = new BlobServiceClientBuilder()
-                .endpoint(endpoint)
+        String containerEndpoint = String.format("%s/%s", endpoint, container);
+
+        azureClient = new BlobContainerClientBuilder()
+                .endpoint(containerEndpoint)
                 .sasToken(sasToken)
                 .buildClient();
-
-        BlobContainerClient blobContainerClient = azureServiceClient.getBlobContainerClient("main");
-
-        azureClient = blobContainerClient.getBlobClient("main");
 
         boolean exists = azureClient.exists();
 
@@ -43,6 +46,5 @@ public class AzureConfig {
             throw new IllegalArgumentException("Blob client does not exist (check container configuration)");
         }
     }
-
 
 }
