@@ -18,7 +18,7 @@ import java.util.UUID;
 public class MailService {
 
     JavaMailSender emailSender;
-    Logger LOGGER = LoggerFactory.getLogger(MailService.class);
+    Logger logger = LoggerFactory.getLogger(MailService.class);
 
     @Value("${mail.domain}")
     private String username;
@@ -71,7 +71,7 @@ public class MailService {
             emailSender.send(message);
 
         } catch (MessagingException e) {
-            LOGGER.error("""
+            logger.error("""
                     Error while sending email: {}
                     """, e.getMessage());
         }
