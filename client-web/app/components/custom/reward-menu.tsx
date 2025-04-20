@@ -26,7 +26,7 @@ export default function RewardMenu() {
           {connected && <Logout className="hidden lg:flex" />}
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link to="/login" className="flex justify-end">
+          <Link to="/profile" className="flex justify-end">
             <Avatar className="cursor-pointer">
               <AvatarImage src="/assets/fallback.png" />
               <AvatarFallback>LOO</AvatarFallback>

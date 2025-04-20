@@ -74,7 +74,7 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
   return auth(args, true)
 }
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({ children }: { readonly children: React.ReactNode }) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
