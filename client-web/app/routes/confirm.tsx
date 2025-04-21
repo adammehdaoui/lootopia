@@ -26,11 +26,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       status: StatusCodes.ACCEPTED
     })
   } catch (error) {
-    console.error("Error during account confirmation:", error)
-    throw new Response(
-      `${ReasonPhrases.INTERNAL_SERVER_ERROR}: account not activated, please try again later`,
-      { status: StatusCodes.INTERNAL_SERVER_ERROR }
-    )
+    console.error("Confirm account error: ", error)
+
+    return data({
+      message: `${ReasonPhrases.INTERNAL_SERVER_ERROR}: account not activated, please try again later`,
+      status: StatusCodes.INTERNAL_SERVER_ERROR
+    })
   }
 }
 

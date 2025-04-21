@@ -12,8 +12,7 @@ export const meta: MetaFunction = () => {
 }
 
 export default function Index() {
-  // temporary ids for the hunts
-  const ids = ["hunt1", "hunt2", "hunt3", "hunt4", "hunt5", "hunt6"]
+  const ids = [Array(10)].map((_, index) => `hunt${index + 1}`)
 
   return (
     <div className="text-white">

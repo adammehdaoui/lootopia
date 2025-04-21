@@ -41,42 +41,24 @@ export const auth = async (args: LoaderFunctionArgs, withRedirect: boolean) => {
 }
 
 export const confirm = async (code: string, mail: string) => {
-  const result = await axiosClient.post(
-    "/auth/activate",
-    { activationCode: code, mail },
-    {
-      headers: { "Content-Type": "application/json" }
-    }
-  )
+  const result = await axiosClient.post("/auth/activate", { activationCode: code, mail })
 
   return result.data
 }
 
 export const register = async (email: FormDataEntryValue, password: FormDataEntryValue) => {
-  return await axiosClient.post(
-    "/auth/register",
-    { to: email, rawPassword: password },
-    {
-      headers: { "Content-Type": "application/json" }
-    }
-  )
+  return await axiosClient.post("/auth/register", { to: email, rawPassword: password })
 }
 
 export const login = async (email: FormDataEntryValue, password: FormDataEntryValue) => {
   try {
-    const response = await axiosClient.post(
-      "/auth/login",
-      { email, password },
-      {
-        headers: { "Content-Type": "application/json" }
-      }
-    )
+    const response = await axiosClient.post("/auth/login", { email, password })
     return response.data
   } catch (error: unknown) {
     if (isAxiosError(error) && error.response) {
       throw error.response.data
     } else {
-      throw { error: "Une erreur est survenue" }
+      throw new Error("Une erreur est survenue")
     }
   }
 }
@@ -89,7 +71,7 @@ export const logout = async () => {
   })
 }
 
-export async function requireAuth({ request }: LoaderFunctionArgs) {
+export async function requireAuth({ request }: { request: Request }) {
   const cookieHeader = request.headers.get("Cookie")
 
   const token = await authCookie.parse(cookieHeader)
