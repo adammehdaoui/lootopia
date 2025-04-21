@@ -40,4 +40,15 @@ public class MemberController {
         }
     }
 
+    @GetMapping("/avatar")
+    public ResponseEntity<Object> getAvatar(@RequestHeader("Authorization") String token) {
+        try {
+            String avatarUrl = memberService.getAvatar(token);
+
+            return ResponseEntity.status(HttpStatus.OK).body(avatarUrl);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
 }

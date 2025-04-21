@@ -41,11 +41,33 @@ public class MemberService {
         Duration timeout = Duration.ofSeconds(10);
         Context context = new Context(String.format("%s-avatar", member.getUsername()), file.getOriginalFilename());
 
-        String blobName = String.format("avatar-%s", member.getId());
+        String blobName = getBlobName(member.getId());
 
         BlobClient blobClient = azureConfig.getAzureClient().getBlobClient(blobName);
 
         return blobClient.uploadWithResponse(options, timeout, context);
+    }
+
+    public String getAvatar(String token) {
+        Member member = authService.getMemberFromToken(token);
+
+        if (member == null) {
+            throw new IllegalArgumentException("Member not found");
+        }
+
+        String blobName = getBlobName(member.getId());
+
+        BlobClient blobClient = azureConfig.getAzureClient().getBlobClient(blobName);
+
+        if (Boolean.FALSE.equals(blobClient.exists())) {
+            throw new IllegalArgumentException("Blob not found");
+        }
+
+        return blobClient.getBlobUrl();
+    }
+
+    private String getBlobName(String memberId) {
+        return String.format("avatar-%s", memberId);
     }
 
 }

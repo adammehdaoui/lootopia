@@ -1,6 +1,6 @@
 import { withZodValidation } from "@/helpers/withZodValidation"
 import axiosClient from "@/lib/client"
-import { avatarSchema } from "@/schema/avatar-schema"
+import { avatarSchema, avatarUrl } from "@/schema/avatar-schema"
 
 export const uploadAvatar = async (file: FormDataEntryValue, token: string) => {
   const formData = new FormData()
@@ -8,5 +8,11 @@ export const uploadAvatar = async (file: FormDataEntryValue, token: string) => {
 
   return withZodValidation(avatarSchema)(
     axiosClient.post("/members/avatar", formData, { headers: { Authorization: token } })
+  )
+}
+
+export const getAvatar = async (token: string) => {
+  return withZodValidation(avatarUrl)(
+    axiosClient.get("/members/avatar", { headers: { Authorization: token } })
   )
 }

@@ -30,3 +30,5 @@ export const avatarSchema = z.object({
     etag: z.string()
   })
 })
+
+export const avatarUrl = z.string()
