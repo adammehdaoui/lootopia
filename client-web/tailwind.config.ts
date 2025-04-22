@@ -29,6 +29,7 @@ export default {
         foreground: "hsl(var(--foreground))",
         royal: "#142247",
         deep: "#101D3B",
+        light: "#BDBBE1D9",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))"

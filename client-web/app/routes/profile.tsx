@@ -1,14 +1,17 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import AvatarHandler from "@/components/custom/avatar-handler"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
+import { useSession } from "@/contexts/auth-context"
 import { useToast } from "@/hooks/use-toast"
 import { requireAuth } from "@/services/auth/auth"
 import { uploadAvatar } from "@/services/avatar"
 import { ActionFunction, ActionFunctionArgs, data } from "@remix-run/node"
-import { Form } from "@remix-run/react"
+import { Form, useActionData } from "@remix-run/react"
+import { useQueryClient } from "@tanstack/react-query"
 import { ReasonPhrases, StatusCodes } from "http-status-codes"
+import { useEffect } from "react"
 
 type ActionResponse = {
   message: string
@@ -52,7 +55,25 @@ export const action: ActionFunction = async ({ request }: ActionFunctionArgs) =>
 }
 
 export default function Profile() {
+  const data = useActionData<typeof action>()
+  const { username, id } = useSession()
+  const queryClient = useQueryClient()
   const { toast } = useToast()
+
+  useEffect(() => {
+    if (data?.status === StatusCodes.OK) {
+      queryClient.invalidateQueries({ queryKey: ["avatar"] })
+    }
+
+    if (!data) return
+
+    toast({
+      title: "Success",
+      description:
+        data?.status === StatusCodes.OK ? "Avatar uploaded successfully" : "Error uploading avatar",
+      variant: data?.status === StatusCodes.OK ? "default" : "destructive"
+    })
+  }, [data, queryClient, toast])
 
   const handleClickOnWIP = () => {
     toast({
@@ -63,56 +84,64 @@ export default function Profile() {
   }
 
   return (
-    <div className="flex justify-center">
-      <div className="flex w-1/2 flex-col items-center justify-center space-y-20 pt-16 text-white">
-        <div className="flex w-full flex-col justify-start space-y-8">
-          <h2 className="text-xl font-bold">Change your profile</h2>
+    <div className="to-light flex min-h-screen justify-center bg-gradient-to-tl from-deep via-royal">
+      <div className="flex w-full max-w-xl flex-col items-center justify-center space-y-16 text-white">
+        <div className="flex w-full flex-col space-y-8">
+          <h2 className="text-center text-2xl font-extrabold tracking-tight">
+            Change your profile
+          </h2>
 
-          <div className="mx-auto flex w-full max-w-xl items-center justify-between rounded-xl bg-royal px-8 py-5">
-            <div className="flex space-x-3">
-              <Avatar className="ml-3 cursor-pointer">
-                <AvatarImage src="/assets/fallback.png" />
-                <AvatarFallback>LOO</AvatarFallback>
-              </Avatar>
-              <div className="-mt-1 flex flex-col">
-                <h3 className="text-md font-bold">Adam Reis</h3>
-                <span className="text-gray-200">adamokuton</span>
+          <div className="ring-light flex flex-col items-center justify-between space-x-5 space-y-5 rounded-2xl bg-deep px-10 py-7 shadow-lg ring-1">
+            <div className="flex items-center space-x-4">
+              <AvatarHandler />
+              <div className="flex flex-col">
+                <h3 className="text-lg font-semibold">{username}</h3>
+                <span className="text-xs text-gray-300">{id}</span>
               </div>
             </div>
-            <Form method="post" encType="multipart/form-data" className="w-1/2">
+            <Form
+              method="post"
+              encType="multipart/form-data"
+              className="flex w-full flex-col items-end gap-2 py-5"
+            >
               <Input
                 type="file"
                 name="file"
-                placeholder="Change your avatar"
-                className="text-white"
+                className="file:bg-light text-white file:rounded-lg file:border-none file:text-sm file:text-white"
                 required
               />
-              <Button variant="submit">Upload</Button>
+              <Button variant="submit" className="bg-light transition hover:bg-royal">
+                Upload
+              </Button>
             </Form>
           </div>
         </div>
 
-        <Separator />
+        <Separator className="bg-indigo-700/30" />
 
-        <button className="flex w-full flex-col justify-start space-y-8" onClick={handleClickOnWIP}>
-          <h2 className="text-xl font-bold">Bio</h2>
+        <button
+          className="group flex w-full cursor-pointer flex-col space-y-2"
+          onClick={handleClickOnWIP}
+        >
+          <h2 className="flex items-center gap-2 text-lg font-bold">Bio</h2>
           <Input
             disabled
             placeholder="This feature is a work in progress"
+            className="bg-gray-800/50 text-gray-400 ring-indigo-500 transition group-hover:ring-2"
             onClick={handleClickOnWIP}
           />
         </button>
 
-        <Separator />
+        <Separator className="bg-indigo-700/30" />
 
-        <button className="flex w-full flex-col justify-start space-y-8" onClick={handleClickOnWIP}>
-          <h2 className="text-xl font-bold">Gender</h2>
-          <Select>
-            <SelectTrigger className="w-1/2">
+        <div className="flex w-full flex-col space-y-2">
+          <h2 className="flex items-center gap-2 text-lg font-bold">Gender</h2>
+          <Select disabled>
+            <SelectTrigger className="w-1/2 bg-gray-800/50 text-gray-400">
               <SelectValue placeholder="Gender" />
             </SelectTrigger>
           </Select>
-        </button>
+        </div>
       </div>
     </div>
   )

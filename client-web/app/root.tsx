@@ -86,11 +86,12 @@ export function Layout({ children }: { readonly children: React.ReactNode }) {
         }
       })
   )
-  const { connected, username, token } = useLoaderData<typeof loader>()
+  const { connected, username, id, token } = useLoaderData<typeof loader>()
 
   const authProviderProps = {
     connected,
     username,
+    id,
     token
   }
 

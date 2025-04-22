@@ -21,7 +21,7 @@ import java.util.Objects;
 @Component
 public class JwtUtils {
     private static final long EXPIRATION_TIME = 86400000;
-    Logger LOGGER = LoggerFactory.getLogger(JwtUtils.class);
+    Logger logger = LoggerFactory.getLogger(JwtUtils.class);
     @Value("${jwt.secret}")
     private String secretKey;
 
@@ -32,6 +32,7 @@ public class JwtUtils {
 
         String token = Jwts.builder()
                 .subject(customUserDetails.getUsername())
+                .claim("id", customUserDetails.getId())
                 .claim("roles", roles)
                 .issuedAt(new Date())
                 .expiration(new Date(new Date().getTime() + EXPIRATION_TIME))
@@ -62,7 +63,7 @@ public class JwtUtils {
             parser.parse(token);
             return true;
         } catch (Exception e) {
-            LOGGER.error("Invalid token");
+            logger.error("Invalid token");
 
             return false;
         }
@@ -77,9 +78,9 @@ public class JwtUtils {
 
         String plainToken = token.substring(7);
 
-        LOGGER.info("Plain token {}", token);
+        logger.info("Plain token {}", token);
 
-        LOGGER.info("Extracted token {}", plainToken);
+        logger.info("Extracted token {}", plainToken);
 
         return plainToken;
     }

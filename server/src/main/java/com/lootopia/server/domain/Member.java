@@ -35,6 +35,9 @@ public class Member {
 
     private String activationCode;
 
+    @Column(unique = true)
+    private String avatar;
+
     @OneToMany(fetch = FetchType.LAZY)
     @ToString.Exclude
     private Collection<Role> roles;

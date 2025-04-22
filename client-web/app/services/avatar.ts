@@ -11,7 +11,11 @@ export const uploadAvatar = async (file: FormDataEntryValue, token: string) => {
   )
 }
 
-export const getAvatar = async (token: string) => {
+export const getAvatar = async (token: string | null) => {
+  if (!token) {
+    return null
+  }
+
   return withZodValidation(avatarUrl)(
     axiosClient.get("/members/avatar", { headers: { Authorization: token } })
   )

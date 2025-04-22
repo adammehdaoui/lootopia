@@ -1,15 +1,19 @@
 import axiosClient from "@/lib/client"
 import { test } from "@/services/test"
+import { CustomJwtPayload } from "@/types/custom-jwt-payload"
 import { data, redirect, type LoaderFunctionArgs } from "@remix-run/node"
 import { HttpStatusCode, isAxiosError } from "axios"
 import { ReasonPhrases, StatusCodes } from "http-status-codes"
-import { jwtDecode, JwtPayload } from "jwt-decode"
+import { jwtDecode } from "jwt-decode"
 import { authCookie } from "./cookies"
 
 export const auth = async (args: LoaderFunctionArgs, withRedirect: boolean) => {
   try {
     const token = await requireAuth(args)
-    const username = jwtDecode<JwtPayload>(token).sub
+    const payload = jwtDecode<CustomJwtPayload>(token)
+
+    const username = payload.sub
+    const id = payload.id
 
     if (!username) {
       throw new Error("Username not found in token")
@@ -22,6 +26,7 @@ export const auth = async (args: LoaderFunctionArgs, withRedirect: boolean) => {
       status: withRedirect ? StatusCodes.OK : StatusCodes.ACCEPTED,
       connected: true,
       username,
+      id,
       token
     })
   } catch {
@@ -34,6 +39,7 @@ export const auth = async (args: LoaderFunctionArgs, withRedirect: boolean) => {
       message: `${ReasonPhrases.ACCEPTED}: You have access to this route`,
       status: StatusCodes.ACCEPTED,
       connected: false,
+      id: null,
       username: null,
       token: null
     })
