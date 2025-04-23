@@ -17,10 +17,12 @@ export default function RewardMenu() {
     <NavigationMenu>
       <NavigationMenuList className="flex space-x-5">
         <NavigationMenuItem>
-          <Button variant="crown">
-            <Crown size={30} />
-            <span>999 | +</span>
-          </Button>
+          <Link to="/crown">
+            <Button variant="crown">
+              <Crown size={30} />
+              <span>999 | +</span>
+            </Button>
+          </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           {connected && <Logout className="hidden lg:flex" />}
