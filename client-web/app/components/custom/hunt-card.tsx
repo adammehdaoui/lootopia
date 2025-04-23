@@ -6,7 +6,7 @@ import type { HuntLike } from "@/model/hunt"
 import { like as likeFunction, unlike as unlikeFunction } from "@/services/hunts"
 import { useMutation } from "@tanstack/react-query"
 import { Heart } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 export function HuntCard(props: HuntCardProps) {
   const { toast } = useToast()
@@ -16,6 +16,10 @@ export function HuntCard(props: HuntCardProps) {
   const [likeCount, setLikeCount] = useState(hunt.likeCount)
   const [likeText, setLikeText] = useState(hunt.likeCount <= 1 ? "like" : "likes")
   const currentTime = new Date().toISOString()
+
+  const imgPath = useMemo(() => {
+    return Math.floor(Math.random() * 3)
+  }, [])
 
   useEffect(() => {
     if (likeCount <= 1) {
@@ -67,17 +71,17 @@ export function HuntCard(props: HuntCardProps) {
     likeMutation.mutate(likeArgs)
 
     if (newLikeValue) {
-      setLikeCount((likeCount) => likeCount - 1)
+      setLikeCount((likeCount) => likeCount + 1)
       return
     }
 
-    setLikeCount((likeCount) => likeCount + 1)
+    setLikeCount((likeCount) => likeCount - 1)
   }
 
   return (
     <div className="flex h-card w-card cursor-pointer flex-col overflow-hidden rounded-lg bg-white shadow-md transition-all duration-300 hover:scale-105">
       <img
-        src="https://i.imgur.com/qUDZvR4.jpeg"
+        src={`/assets/${imgPath}.jpg`}
         alt="location"
         width={600}
         height={400}
@@ -119,7 +123,7 @@ export function HuntCard(props: HuntCardProps) {
 }
 
 type HuntCardProps = {
-  hunt: HuntLike
+  readonly hunt: HuntLike
 }
 
 type LikeMutationArgs = {

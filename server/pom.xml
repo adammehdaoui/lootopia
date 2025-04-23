@@ -38,6 +38,10 @@
     <properties>
         <java.version>21</java.version>
         <spring-cloud-azure.version>5.19.0</spring-cloud-azure.version>
+        <spring-starter-mail.version>3.1.5</spring-starter-mail.version>
+        <jjwt.version>0.12.6</jjwt.version>
+        <sqlserver.version>12.8.1.jre11</sqlserver.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
     </properties>
 
     <dependencies>
@@ -72,7 +76,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
-            <version>3.1.5</version>
+            <version>${spring-starter-mail.version}</version>
         </dependency>
         <dependency>
             <groupId>com.azure.spring</groupId>
@@ -97,7 +101,7 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.12.6</version>
+            <version>${jjwt.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -108,7 +112,7 @@
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
-            <version>12.8.1.jre11</version>
+            <version>${sqlserver.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -123,7 +127,7 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.6.3</version>
+            <version>${mapstruct.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

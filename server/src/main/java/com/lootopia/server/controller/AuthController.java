@@ -5,7 +5,6 @@ import com.lootopia.server.dto.MailDto;
 import com.lootopia.server.security.CustomUserDetails;
 import com.lootopia.server.service.AuthService;
 import com.lootopia.server.service.MailService;
-import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,8 +30,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<CustomUserDetails> register(@RequestBody MailDto mailDto)
-            throws MessagingException {
+    public ResponseEntity<CustomUserDetails> register(@RequestBody MailDto mailDto) {
         UUID activationCode = mailService.sendMessage(mailDto.to());
         CustomUserDetails currentMember = authService
                 .askForRegister(activationCode, mailDto.to(), mailDto.rawPassword());

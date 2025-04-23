@@ -29,6 +29,8 @@ public class HuntService {
 
     private final HuntLikeMapper huntLikeMapper;
 
+    private final AuthService authService;
+
     private final JwtUtils jwtUtils;
 
     public HuntService(
@@ -37,6 +39,7 @@ public class HuntService {
             HuntLikeRepository huntLikeRepository,
             HuntMapper huntMapper,
             HuntLikeMapper huntLikeMapper,
+            AuthService authService,
             JwtUtils jwtUtils
     ) {
         this.huntRepository = huntRepository;
@@ -44,13 +47,8 @@ public class HuntService {
         this.huntLikeRepository = huntLikeRepository;
         this.huntMapper = huntMapper;
         this.huntLikeMapper = huntLikeMapper;
+        this.authService = authService;
         this.jwtUtils = jwtUtils;
-    }
-
-    private Member getMemberFromToken(String token) {
-        String plainToken = jwtUtils.extractToken(token);
-        Claims claims = jwtUtils.getClaimsFromToken(plainToken);
-        return memberRepository.findByEmail(claims.getSubject());
     }
 
     public List<HuntLikeViewDto> findAllByPopularity(String token) {
@@ -71,7 +69,7 @@ public class HuntService {
     }
 
     public HuntLikeDto like(String token, String huntId) {
-        Member currentMember = getMemberFromToken(token);
+        Member currentMember = authService.getMemberFromToken(token);
 
         if (currentMember == null) {
             throw new IllegalArgumentException("Member not found");
@@ -100,7 +98,7 @@ public class HuntService {
     }
 
     public HuntLikeDto unLike(String token, String huntId) {
-        Member currentMember = getMemberFromToken(token);
+        Member currentMember = authService.getMemberFromToken(token);
 
         if (currentMember == null) {
             throw new IllegalArgumentException("Member not found");

@@ -12,6 +12,8 @@ export const meta: MetaFunction = () => {
 }
 
 export default function Index() {
+  const ids = Array.from({ length: 10 }, (_, index) => `hunt${index + 1}`)
+
   return (
     <div className="text-white">
       <section className="flex flex-col items-center justify-center px-6 py-20 text-center">
@@ -28,13 +30,6 @@ export default function Index() {
         >
           Start Your Adventure 🚀
         </a>
-
-        <iframe
-          className="mt-10 w-full max-w-80 rounded-lg shadow-lg"
-          src="https://www.youtube.com/embed/fQvpDfFjjPo?autoplay=1&mute=1"
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        ></iframe>
       </section>
 
       <div className="h-1 w-full bg-gradient-to-r from-yellow-400 to-red-500"></div>
@@ -44,8 +39,8 @@ export default function Index() {
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 pb-16 md:grid-cols-2 lg:grid-cols-3">
         {[...Array(6)].map((_, index) => (
           <div
-            key={index}
-            className="rounded-lg bg-gray-800 p-6 text-center shadow-lg transition-transform hover:scale-105"
+            key={ids[index]}
+            className="cursor-pointer rounded-lg bg-gray-800 p-6 text-center shadow-lg transition-transform hover:scale-105"
           >
             <img
               src="/assets/logo.png"
