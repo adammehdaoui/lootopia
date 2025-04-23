@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => {
 }
 
 export default function Index() {
-  const ids = [Array(10)].map((_, index) => `hunt${index + 1}`)
+  const ids = Array.from({ length: 10 }, (_, index) => `hunt${index + 1}`)
 
   return (
     <div className="text-white">

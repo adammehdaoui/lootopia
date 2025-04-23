@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton"
 
 export function HuntListSkeleton() {
-  const ids = [...Array(10)].map((_, i) => i + 1)
+  const ids = Array.from({ length: 10 }, (_, index) => `hunt${index + 1}`)
 
   return (
     <div className="mt-16 flex flex-wrap justify-center gap-5 pb-20">

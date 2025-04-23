@@ -84,14 +84,14 @@ export default function Profile() {
   }
 
   return (
-    <div className="to-light flex min-h-screen justify-center bg-gradient-to-tl from-deep via-royal">
+    <div className="flex min-h-screen justify-center bg-gradient-to-tl from-deep via-royal to-light">
       <div className="flex w-full max-w-xl flex-col items-center justify-center space-y-16 text-white">
         <div className="flex w-full flex-col space-y-8">
           <h2 className="text-center text-2xl font-extrabold tracking-tight">
             Change your profile
           </h2>
 
-          <div className="ring-light flex flex-col items-center justify-between space-x-5 space-y-5 rounded-2xl bg-deep px-10 py-7 shadow-lg ring-1">
+          <div className="flex flex-col items-center justify-between space-x-5 space-y-5 rounded-2xl bg-deep px-10 py-7 shadow-lg ring-1 ring-light">
             <div className="flex items-center space-x-4">
               <AvatarHandler />
               <div className="flex flex-col">
@@ -107,7 +107,7 @@ export default function Profile() {
               <Input
                 type="file"
                 name="file"
-                className="file:bg-light text-white file:rounded-lg file:border-none file:text-sm file:text-white"
+                className="text-white file:rounded-lg file:border-none file:bg-light file:text-sm file:text-white"
                 required
               />
               <Button variant="submit" className="bg-light transition hover:bg-royal">
