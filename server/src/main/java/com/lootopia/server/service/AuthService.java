@@ -5,6 +5,7 @@ import com.lootopia.server.repository.MemberRepository;
 import com.lootopia.server.security.CustomUserDetails;
 import com.lootopia.server.utils.JwtUtils;
 import com.lootopia.server.utils.PasswordUtils;
+import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class AuthService {
 
     private final MemberRepository memberRepository;
     private final JwtUtils jwtUtils;
-    Logger LOGGER = LoggerFactory.getLogger(AuthService.class);
+    Logger logger = LoggerFactory.getLogger(AuthService.class);
 
     public AuthService(MemberRepository memberRepository, JwtUtils jwtUtils) {
         this.memberRepository = memberRepository;
@@ -28,7 +29,7 @@ public class AuthService {
         Member member = memberRepository.findByEmail(email);
 
         if (member != null) {
-            LOGGER.error("User already exists");
+            logger.error("User already exists");
             return new CustomUserDetails(member);
         }
 
@@ -48,17 +49,17 @@ public class AuthService {
         Member member = memberRepository.findByEmail(email);
 
         if (member == null) {
-            LOGGER.error("User not found for activation");
+            logger.error("User not found for activation");
             throw new AccountNotFoundException("User not found");
         }
 
         if (member.isActive()) {
-            LOGGER.warn("User already activated");
+            logger.warn("User already activated");
             return new CustomUserDetails(member);
         }
 
         if (!member.getActivationCode().equals(uuid.toString())) {
-            LOGGER.error("Activation code not matched");
+            logger.error("Activation code not matched");
             throw new AccountNotFoundException("Activation code not matched");
         }
 
@@ -69,16 +70,22 @@ public class AuthService {
         return new CustomUserDetails(member);
     }
 
+    public Member getMemberFromToken(String token) {
+        String plainToken = jwtUtils.extractToken(token);
+        Claims claims = jwtUtils.getClaimsFromToken(plainToken);
+        return memberRepository.findByEmail(claims.getSubject());
+    }
+
     public String login(String email, String rawPassword) {
         Member member = memberRepository.findByEmail(email);
 
         if (member == null) {
-            LOGGER.error("User not found for login");
+            logger.error("User not found for login");
             return null;
         }
 
         if (!PasswordUtils.verifyPassword(rawPassword, member.getPassword())) {
-            LOGGER.error("Mot de passe incorrect");
+            logger.error("Mot de passe incorrect");
             return null;
         }
 

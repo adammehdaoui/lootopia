@@ -1,1 +1,1 @@
-export const connectedRoutes = ["/admin", "/hunts"]
+export const connectedRoutes = ["/admin", "/hunts", "/profile"]

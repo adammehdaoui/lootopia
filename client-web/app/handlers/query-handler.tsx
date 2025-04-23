@@ -17,7 +17,7 @@ export function QueryHandler(props: QueryHandlerProps) {
 }
 
 type QueryHandlerProps = {
-  isPending: boolean
-  error: Error | null
-  children: React.ReactNode
+  readonly isPending: boolean
+  readonly error: Error | null
+  readonly children: React.ReactNode
 }

@@ -16,5 +16,5 @@ export function ErrorHandler(props: ErrorHandlerProps) {
 }
 
 type ErrorHandlerProps = {
-  error?: Error | string
+  readonly error?: Error | string
 }

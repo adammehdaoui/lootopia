@@ -1,5 +1,5 @@
+import AvatarHandler from "@/components/custom/avatar-handler"
 import Logout from "@/components/custom/logout"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
@@ -30,11 +30,8 @@ export default function RewardMenu() {
           {connected && <Logout className="hidden lg:flex" />}
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link to="/login" className="flex justify-end">
-            <Avatar className="cursor-pointer">
-              <AvatarImage src="/assets/fallback.png" />
-              <AvatarFallback>LOO</AvatarFallback>
-            </Avatar>
+          <Link to="/profile" className="flex justify-end">
+            <AvatarHandler />
           </Link>
         </NavigationMenuItem>
       </NavigationMenuList>

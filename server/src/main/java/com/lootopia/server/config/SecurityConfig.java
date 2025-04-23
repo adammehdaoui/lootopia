@@ -25,7 +25,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((requests) -> requests
+                .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/auth/**")
                         .permitAll()
                         .anyRequest()
@@ -34,10 +34,8 @@ public class SecurityConfig {
                 .addFilterAfter(
                         jwtAuthentificationFilter, BasicAuthenticationFilter.class
                 )
-                .cors((cors) -> {
-                    cors.configurationSource(corsConfig.corsConfigurationSource());
-                })
-                .csrf((csrf) -> csrf
+                .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
+                .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/**")
                 );
 

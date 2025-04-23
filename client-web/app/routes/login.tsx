@@ -34,6 +34,7 @@ export const action: ActionFunction = async ({ request }: ActionFunctionArgs) =>
       }
     })
   } catch (error) {
+    console.error("Login error: ", error)
     return data<ActionResponse>({
       message: `${ReasonPhrases.UNAUTHORIZED}: Incorrect email or password`,
       status: StatusCodes.UNAUTHORIZED

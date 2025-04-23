@@ -1,8 +1,9 @@
-import { createContext, useContext } from "react"
+import { createContext, useContext, useMemo } from "react"
 
 const AuthContext = createContext<AuthContextArgs>({
   connected: false,
   username: null,
+  id: null,
   token: null
 })
 
@@ -17,16 +18,25 @@ export function useSession() {
 }
 
 export function AuthProvider(props: AuthProviderProps) {
-  const { children, connected, username, token } = props
+  const { children, connected, username, id, token } = props
 
-  return (
-    <AuthContext.Provider value={{ connected, username, token }}>{children}</AuthContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      connected,
+      username,
+      id,
+      token
+    }),
+    [connected, username, id, token]
   )
+
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
 }
 
 type AuthContextArgs = {
   connected: boolean
   username: string | null
+  id: string | null
   token: string | null
 }
 

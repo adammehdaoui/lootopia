@@ -9,18 +9,18 @@ export const hunts = async (token: string | null): Promise<HuntLike[]> => {
   }
 
   return withZodValidation(huntsLikeListSchema)(
-    axiosClient.get("/hunts/popularity", { headers: { Authorization: `${token}` } })
+    axiosClient.get("/hunts/popularity", { headers: { Authorization: token } })
   )
 }
 
 export const like = async (huntId: string, token: string): Promise<LikeResponse> => {
   return withZodValidation(likeResponseSchema)(
-    axiosClient.post(`/hunts/${huntId}/like`, {}, { headers: { Authorization: `${token}` } })
+    axiosClient.post(`/hunts/${huntId}/like`, {}, { headers: { Authorization: token } })
   )
 }
 
 export const unlike = async (huntId: string, token: string): Promise<LikeResponse> => {
   return withZodValidation(likeResponseSchema)(
-    axiosClient.delete(`/hunts/${huntId}/like`, { headers: { Authorization: `${token}` } })
+    axiosClient.delete(`/hunts/${huntId}/like`, { headers: { Authorization: token } })
   )
 }
