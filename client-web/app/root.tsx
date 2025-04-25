@@ -25,6 +25,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import React, { useState } from "react"
 import { Toaster } from "./components/ui/toaster"
 import "./tailwind.css"
+import { CrownProvider } from "./contexts/crown-context"
 
 export const links: LinksFunction = () => [
   {
@@ -105,11 +106,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body className="cursor-default bg-deep">
         <QueryClientProvider client={queryClient}>
           <AuthProvider {...authProviderProps}>
-            <Navbar />
-            <main className="min-h-screen">{children}</main>
-            <ReactQueryDevtools initialIsOpen={false} />
-            <Footer />
-            <Toaster />
+            <CrownProvider>
+              <Navbar />
+              <main className="min-h-screen">{children}</main>
+              <ReactQueryDevtools initialIsOpen={false} />
+              <Footer />
+              <Toaster />
+            </CrownProvider>
           </AuthProvider>
         </QueryClientProvider>
         <ScrollRestoration />

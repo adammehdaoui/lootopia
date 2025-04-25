@@ -7,11 +7,13 @@ import {
   NavigationMenuList
 } from "@/components/ui/navigation-menu"
 import { useSession } from "@/contexts/auth-context"
+import { useCrowns } from "@/contexts/crown-context"
 import { Link } from "@remix-run/react"
 import { Crown } from "lucide-react"
 
 export default function RewardMenu() {
   const { connected } = useSession()
+  const { crownBalance } = useCrowns()
 
   return (
     <NavigationMenu>
@@ -20,7 +22,7 @@ export default function RewardMenu() {
           <Link to="/crown">
             <Button variant="crown">
               <Crown size={30} />
-              <span>999 | +</span>
+              <span>{crownBalance} | +</span>
             </Button>
           </Link>
         </NavigationMenuItem>
