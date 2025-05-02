@@ -1,0 +1,13 @@
+/* Ensure Leaflet controls appear above the modal */
+.leaflet-control {
+  z-index: 1 !important;
+}
+
+.leaflet-pane {
+  z-index: 0 !important;
+}
+
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 0 !important;
+}
