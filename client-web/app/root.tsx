@@ -1,3 +1,5 @@
+"use client"
+
 import Footer from "@/components/layout/footer"
 import Navbar from "@/components/layout/navbar"
 import { AuthProvider } from "@/contexts/auth-context"
@@ -22,7 +24,8 @@ import {
 } from "@remix-run/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
-import React, { useState } from "react"
+import type React from "react"
+import { useState } from "react"
 import { Toaster } from "./components/ui/toaster"
 import "./tailwind.css"
 import { CrownProvider } from "./contexts/crown-context"
@@ -34,6 +37,10 @@ export const links: LinksFunction = () => [
   },
   {
     href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap",
+    rel: "stylesheet"
+  },
+  {
+    href: "https://unpkg.com/leaflet@1.7.1/dist/leaflet.css",
     rel: "stylesheet"
   }
 ]
