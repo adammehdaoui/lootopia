@@ -3,13 +3,20 @@ import {
   ViroAmbientLight,
   ViroARScene,
   ViroTrackingReason,
+  ViroTrackingStateConstants,
 } from "@reactvision/react-viro";
-import React from "react";
 
 export function ARScene() {
-  function onInitialized(state: any, reason: ViroTrackingReason) {
-    console.log("onInitialized", state, reason);
-  }
+  const onInitialized = (
+    state: ViroTrackingStateConstants,
+    reason: ViroTrackingReason
+  ) => {
+    console.log("onInitialized", state.toLocaleString(), reason);
+  };
+
+  const handleClickOnChest = () => {
+    console.log("Coffre cliqué !");
+  };
 
   return (
     <ViroARScene onTrackingUpdated={onInitialized}>
@@ -20,6 +27,7 @@ export function ARScene() {
         type="OBJ"
         scale={[0.5, 0.5, 0.5]}
         position={[0, 0, -1]}
+        onClick={handleClickOnChest}
       />
     </ViroARScene>
   );

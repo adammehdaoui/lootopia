@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 });
 
 type NavItemProps = {
-  href: Href;
-  icon: keyof typeof Ionicons.glyphMap;
-  label: string;
+  readonly href: Href;
+  readonly icon: keyof typeof Ionicons.glyphMap;
+  readonly label: string;
 };
