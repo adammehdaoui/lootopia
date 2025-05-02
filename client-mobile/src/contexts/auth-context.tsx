@@ -22,7 +22,11 @@ export function useSession() {
   return value;
 }
 
-export function SessionProvider({ children }: { children: React.ReactNode }) {
+export function SessionProvider({
+  children,
+}: {
+  readonly children: React.ReactNode;
+}) {
   const [[loading, session], setSession] = useStorageState("session");
   const router = useRouter();
 

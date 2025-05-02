@@ -1,4 +1,6 @@
+import { Button } from "@/components/ui/button"
 import type { MetaFunction } from "@remix-run/node"
+import { Link } from "@remix-run/react"
 
 export const meta: MetaFunction = () => {
   return [
@@ -24,12 +26,12 @@ export default function Index() {
           A digital treasure-hunting experience where you solve clues, complete quests, and unlock
           hidden rewards. Are you ready for the challenge?
         </p>
-        <a
-          href="/admin"
+        <Button
           className="mt-6 inline-block rounded-lg bg-yellow-400 px-6 py-3 font-bold transition-all hover:bg-yellow-500"
+          asChild
         >
-          Start Your Adventure 🚀
-        </a>
+          <Link to="/">Start Your Adventure 🚀</Link>
+        </Button>
       </section>
 
       <div className="h-1 w-full bg-gradient-to-r from-yellow-400 to-red-500"></div>

@@ -13,7 +13,7 @@ export default function ChestAR() {
   );
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   f1: { flex: 1 },
   helloWorldTextStyle: {
     fontFamily: "Arial",
