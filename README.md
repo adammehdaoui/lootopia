@@ -58,6 +58,7 @@ Next, you have to explain how to use your project. You can create subsections un
 </a>
 
 <br>
+<br>
 
 <a href="https://github.com/louislagrange1">
   <img src="https://avatars.githubusercontent.com/u/115559521?v=4" width="100px;" alt="Fernanda Kipper Profile Picture"/>
