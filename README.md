@@ -37,7 +37,7 @@ Once the container is running, you can connect to the database using the followi
 
 You need to create your own `application-local.yml` file in the `server/src/main/resources` directory. You can use the `application-local.example.yml` file as a template.
 Make sure to set the correct database connection properties.
-You will need to ask current developers for the database, blob storage connections properties, as they are not included in the repository for security reasons.
+You will need to ask current developers for the database, blob storage connection properties, as they are not included in the repository for security reasons.
 
 To run the backend, you need to have Java and Maven installed. Once you have them set up, open IntelliJ IDEA and import the project as a Maven project. After that, you can install the required dependencies by running the following command in the terminal:
 
@@ -90,7 +90,7 @@ If you encounter any issues while running the project, go to the troubleshooting
 <br>
 
 <a href="https://github.com/louislagrange1">
-  <img src="https://avatars.githubusercontent.com/u/115559521?v=4" width="100px;" alt="Fernanda Kipper Profile Picture"/>
+  <img src="https://avatars.githubusercontent.com/u/115559521?v=4" width="100px;" alt="Louis Lagrange profile picture"/>
   <br>
   <b>Louis Lagrange</b>
 </a>
