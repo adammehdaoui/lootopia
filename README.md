@@ -33,7 +33,7 @@ Once the container is running, you can connect to the database using the followi
 
 # Running the backend
 
-You need to create your own `application-local.properties` file in the `server/src/main/resources` directory. You can use the `application-local.properties.example` file as a template.
+You need to create your own `application-local.yml` file in the `server/src/main/resources` directory. You can use the `application-local.example.yml` file as a template.
 Make sure to set the correct database connection properties.
 You will need to ask current developers for the database, blob storage connections properties, as they are not included in the repository for security reasons.
 
