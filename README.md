@@ -6,48 +6,74 @@
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/adammehdaoui/lootopia)](https://img.shields.io/github/issues-pr/adammehdaoui/lootopia)
 [![GitHub](https://img.shields.io/github/license/adammehdaoui/lootopia)](https://img.shields.io/github/license/adammehdaoui/lootopia)
 
-# Quick Start Demo
+# Running the project (for developers)
 
-![Demo Preview](https://picsum.photos/1920/1080)
+Prerequisites:
 
-I believe that you should bring value to the reader as soon as possible. You should be able to get the user up and running with your project with minimal friction.
+- [Node.js](https://nodejs.org/en/download/) (v18 or later)
+- [Java](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) (v21 or later, we usually use the microsoft build)
+- [Maven](https://maven.apache.org/download.cgi) (v3.9.9 or later)
+- [Docker](https://www.docker.com/products/docker-desktop) (v28.1.1 or later)
+- [IntelliJ IDEA](https://www.jetbrains.com/idea/download/) (v2025.1 or later)
+- [Xcode](https://code.visualstudio.com/download) (v16.3 or later, optional for frontend development)
 
-If you have a quickstart guide, this is where it should be.
+# Running the database
 
-Alternatively, you can add a demo to show what your project can do.
+To run the database, you need to have Docker installed. Once you have Docker set up, you can run the following command to start the SQL Server container:
 
-# Table of Contents
-
-This is a table of contents for your project. It helps the reader navigate through the README quickly.
-
-- [Project Title](#project-title)
-- [Quick Start Demo](#quick-start-demo)
-- [Table of Contents](#table-of-contents)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Development](#development)
-- [Contribute](#contribute)
-- [License](#license)
-
-# Installation
-
-[(Back to top)](#table-of-contents)
-
-> **Note**: For longer README files, I usually add a "Back to top" buttton as shown above. It makes it easy to navigate.
-
-This is where your installation instructions go.
-
-You can add snippets here that your readers can copy-paste with click:
-
-```shell
-gh repo clone navendu-pottekkat/awesome-readme
+```sh
+docker compose up -d
 ```
 
-# Usage
+Once the container is running, you can connect to the database using the following command:
 
-[(Back to top)](#table-of-contents)
+```sh
+/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P YourStrong!Passw0rd -C
+```
 
-Next, you have to explain how to use your project. You can create subsections under here to explain more clearly.
+# Running the backend
+
+You need to create your own `application-local.properties` file in the `server/src/main/resources` directory. You can use the `application-local.properties.example` file as a template.
+Make sure to set the correct database connection properties.
+You will need to ask current developers for the database, blob storage connections properties, as they are not included in the repository for security reasons.
+
+To run the backend, you need to have Java and Maven installed. Once you have them set up, open IntelliJ IDEA and import the project as a Maven project. After that, you can install the required dependencies by running the following command in the terminal:
+
+![IntelliJ install config](other/install-config.png)
+
+Then you can run the backend using the following confinguration in IntelliJ IDEA:
+
+![IntelliJ run config](other/run-config.png)
+
+# Running the frontend (web application)
+
+Before running the frontend, create a `.env` file in the `client-web` directory. You can use the `.env.example` file as a template to test app quickly.
+
+To run the frontend, you need to have Node.js installed. Once you have it set up, navigate to the `client-web` directory in your terminal and run the following commands:
+
+```sh
+npm install
+npm run dev
+```
+
+# Running the mobile application (mobile application)
+
+To run the mobile application, you need to have Node.js and Xcode installed. Once you have them set up, navigate to the `client-mobile` directory in your terminal and run the following commands:
+
+```sh
+npm run build
+```
+
+It will build the mobile application and generate the necessary files. After that, open Xcode and open the `client-mobile/ios` directory as a project. Then configure your iPhone as the target device.
+Then run the following command in the terminal and select your iPhone device to start the Expo app:
+
+```sh
+npm run ios-device
+```
+
+# Troubleshooting
+
+If you encounter any issues while running the project, go to the troubleshooting folder in the repository. There you will find solutions to common problems that developers face when running the project.
 
 # Contributors
 
