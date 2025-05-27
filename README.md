@@ -15,7 +15,7 @@ Prerequisites:
 - [Maven](https://maven.apache.org/download.cgi) (v3.9.9 or later)
 - [Docker](https://www.docker.com/products/docker-desktop) (v28.1.1 or later)
 - [IntelliJ IDEA](https://www.jetbrains.com/idea/download/) (v2025.1 or later)
-- [Xcode](https://code.visualstudio.com/download) (v16.3 or later, optional for frontend development)
+- [Xcode](https://developer.apple.com/xcode/) (v16.3 or later, optional for frontend development)
 
 # Running the database
 
