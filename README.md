@@ -1,7 +1,7 @@
 ![Lootopia](other/lootopia.png)
 
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/adammehdaoui/lootopia?include_prereleases)](https://img.shields.io/github/v/release/navendu-pottekkat/awesome-readme?include_prereleases)
-[![GitHub last commit](https://img.shields.io/github/last-commit/adammehdaoui/lootopia)](https://img.shields.io/github/last-commit/navendu-pottekkat/awesome-readme)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/adammehdaoui/lootopia?include_prereleases)](https://img.shields.io/github/v/release/adammehdaoui/lootopia?include_prereleases)
+[![GitHub last commit](https://img.shields.io/github/last-commit/adammehdaoui/lootopia)](https://img.shields.io/github/last-commit/adammehdaoui/lootopia)
 [![GitHub issues](https://img.shields.io/github/issues-raw/adammehdaoui/lootopia)](https://img.shields.io/github/issues-raw/adammehdaoui/lootopia)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/adammehdaoui/lootopia)](https://img.shields.io/github/issues-pr/adammehdaoui/lootopia)
 [![GitHub](https://img.shields.io/github/license/adammehdaoui/lootopia)](https://img.shields.io/github/license/adammehdaoui/lootopia)
