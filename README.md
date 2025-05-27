@@ -1,3 +1,5 @@
+# Lootopia, your ultimate video game AR app 💫
+
 ![Lootopia](other/lootopia.png)
 
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/adammehdaoui/lootopia?include_prereleases)](https://img.shields.io/github/v/release/adammehdaoui/lootopia?include_prereleases)
@@ -11,7 +13,7 @@
 Prerequisites:
 
 - [Node.js](https://nodejs.org/en/download/) (v18 or later)
-- [Java](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) (v21 or later, we usually use the microsoft build)
+- [Java](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html) (v21 or later, we usually use the microsoft build)
 - [Maven](https://maven.apache.org/download.cgi) (v3.9.9 or later)
 - [Docker](https://www.docker.com/products/docker-desktop) (v28.1.1 or later)
 - [IntelliJ IDEA](https://www.jetbrains.com/idea/download/) (v2025.1 or later)
