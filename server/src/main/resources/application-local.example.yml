@@ -1,0 +1,63 @@
+# Use this for local development only
+
+spring:
+  application:
+    name: lootopia-backend
+
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=lootopia;trustServerCertificate=true;
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: your-db-username
+    password: your-db-password
+
+  security:
+    user:
+      name: your-username
+      password: your-password
+
+  session:
+    jdbc:
+      initialize-schema: always
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: true
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    enabled: false
+
+azure:
+  storage:
+    endpoint: https://your-storage-account.blob.core.windows.net
+    container: avatars
+    sas_token: your-sas-token-here
+
+logging:
+  level:
+    web: DEBUG
+    org:
+      springframework:
+        context:
+          config: DEBUG
+        security: DEBUG
+
+mail:
+  host: smtp.example.com
+  port: 587
+  domain: your-email@example.com
+  password: your-mail-password
+
+jwt:
+  secret: your-jwt-secret
+
+routes:
+  admin: /admin
+
+cors:
+  allowed-origins: http://localhost:3000
+
+register:
+  confirm:
+    url: http://localhost:3000/confirm
