@@ -63,6 +63,7 @@ npm run dev
 To run the mobile application, you need to have Node.js and Xcode installed. Once you have them set up, navigate to the `client-mobile` directory in your terminal and run the following commands:
 
 ```sh
+npm install
 npm run build
 ```
 

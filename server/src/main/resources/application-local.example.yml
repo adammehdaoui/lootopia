@@ -6,6 +6,7 @@ spring:
 
   datasource:
     url: jdbc:sqlserver://localhost:1433;databaseName=lootopia;trustServerCertificate=true;
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     username: your-db-username
     password: your-db-password
 
