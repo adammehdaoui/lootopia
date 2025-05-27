@@ -41,7 +41,7 @@ To run the backend, you need to have Java and Maven installed. Once you have the
 
 ![IntelliJ install config](other/install-config.png)
 
-Then you can run the backend using the following confinguration in IntelliJ IDEA:
+Then you can run the backend using the following configuration in IntelliJ IDEA:
 
 ![IntelliJ run config](other/run-config.png)
 
