@@ -50,6 +50,10 @@ public class Member {
     @ToString.Exclude
     private Set<HuntLike> huntsLikes;
 
+    @OneToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    private Client client;
+    
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

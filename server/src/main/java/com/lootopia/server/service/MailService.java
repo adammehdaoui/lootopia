@@ -78,4 +78,5 @@ public class MailService {
 
         return generatedUUID;
     }
+
 }
