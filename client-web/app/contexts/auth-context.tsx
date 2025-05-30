@@ -4,7 +4,8 @@ const AuthContext = createContext<AuthContextArgs>({
   connected: false,
   username: null,
   id: null,
-  token: null
+  token: null,
+  stripe_public_key: null
 })
 
 export function useSession() {
@@ -18,16 +19,17 @@ export function useSession() {
 }
 
 export function AuthProvider(props: AuthProviderProps) {
-  const { children, connected, username, id, token } = props
+  const { children, connected, username, id, token, stripe_public_key } = props
 
   const contextValue = useMemo(
     () => ({
       connected,
       username,
       id,
-      token
+      token,
+      stripe_public_key
     }),
-    [connected, username, id, token]
+    [connected, username, id, token, stripe_public_key]
   )
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
@@ -38,6 +40,7 @@ type AuthContextArgs = {
   username: string | null
   id: string | null
   token: string | null
+  stripe_public_key: string | null
 }
 
 type AuthProviderProps = {

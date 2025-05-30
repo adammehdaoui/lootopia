@@ -12,6 +12,7 @@ import {
   type LoaderFunctionArgs
 } from "@remix-run/node"
 import {
+  data,
   Links,
   Meta,
   Outlet,
@@ -57,7 +58,14 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
   const disconnectedRoute = disconnectRoutes.includes(currentRoute)
 
   if (!connectedRoute && !disconnectedRoute) {
-    return auth(args, false)
+    const response = await auth(args, false)
+
+    return data({
+      ...response,
+      ENV: {
+        STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY
+      }
+    })
   }
 
   if (disconnectedRoute) {
@@ -68,10 +76,24 @@ export const loader: LoaderFunction = async (args: LoaderFunctionArgs) => {
       return redirect("/")
     }
 
-    return auth(args, false)
+    const response = await auth(args, false)
+
+    return data({
+      ...response,
+      ENV: {
+        STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY
+      }
+    })
   }
 
-  return auth(args, true)
+  const response = await auth(args, true)
+
+  return {
+    ...response,
+    ENV: {
+      STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY
+    }
+  }
 }
 
 export function Layout({ children }: { readonly children: React.ReactNode }) {
@@ -86,14 +108,18 @@ export function Layout({ children }: { readonly children: React.ReactNode }) {
         }
       })
   )
-  const { connected, username, id, token } = useLoaderData<typeof loader>()
+
+  const { connected, username, id, token, ENV } = useLoaderData<typeof loader>()
 
   const authProviderProps = {
     connected,
     username,
     id,
-    token
+    token,
+    stripe_public_key: ENV.STRIPE_PUBLIC_KEY
   }
+
+  console.log("Auth Provider Props: ", authProviderProps)
 
   return (
     <html lang="en" className="font-montserrat">
