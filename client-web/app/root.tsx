@@ -20,6 +20,7 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useLocation,
   type MetaFunction
 } from "@remix-run/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
@@ -95,6 +96,10 @@ export function Layout({ children }: { readonly children: React.ReactNode }) {
       })
   )
   const { connected, username, id, token } = useLoaderData<typeof loader>()
+  const location = useLocation()
+
+  // Check if current route is an admin route
+  const isAdminRoute = location.pathname.startsWith("/admin")
 
   const authProviderProps = {
     connected,
@@ -111,14 +116,14 @@ export function Layout({ children }: { readonly children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="cursor-default bg-deep">
+      <body className={isAdminRoute ? "bg-gray-50" : "cursor-default bg-deep"}>
         <QueryClientProvider client={queryClient}>
           <AuthProvider {...authProviderProps}>
             <CrownProvider>
-              <Navbar />
-              <main className="min-h-screen">{children}</main>
+              {!isAdminRoute && <Navbar />}
+              <main className={isAdminRoute ? "" : "min-h-screen"}>{children}</main>
               <ReactQueryDevtools initialIsOpen={false} />
-              <Footer />
+              {!isAdminRoute && <Footer />}
               <Toaster />
             </CrownProvider>
           </AuthProvider>
