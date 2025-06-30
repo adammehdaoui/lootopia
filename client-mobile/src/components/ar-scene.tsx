@@ -14,10 +14,6 @@ export function ARScene() {
     console.log("onInitialized", state.toLocaleString(), reason);
   };
 
-  const handleClickOnChest = () => {
-    console.log("Coffre cliqué !");
-  };
-
   return (
     <ViroARScene onTrackingUpdated={onInitialized}>
       <ViroAmbientLight color="#FFFFFF" />
@@ -27,7 +23,6 @@ export function ARScene() {
         type="OBJ"
         scale={[0.5, 0.5, 0.5]}
         position={[0, 0, -1]}
-        onClick={handleClickOnChest}
       />
     </ViroARScene>
   );
