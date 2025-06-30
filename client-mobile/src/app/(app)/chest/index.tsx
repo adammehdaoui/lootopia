@@ -2,14 +2,17 @@ import { ARScene } from "@/components/ar-scene";
 import { ViroARSceneNavigator } from "@reactvision/react-viro";
 import React from "react";
 import { StyleSheet } from "react-native";
+import { OptimizedHeavyScreen } from "react-navigation-heavy-screen";
 
 export default function ChestAR() {
   return (
-    <ViroARSceneNavigator
-      autofocus={true}
-      initialScene={{ scene: ARScene }}
-      style={styles.f1}
-    />
+    <OptimizedHeavyScreen>
+      <ViroARSceneNavigator
+        autofocus={true}
+        initialScene={{ scene: ARScene }}
+        style={styles.f1}
+      />
+    </OptimizedHeavyScreen>
   );
 }
 

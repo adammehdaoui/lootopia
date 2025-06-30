@@ -1,6 +1,6 @@
 import NavItem from "@/components/nav-item";
 import { useSession } from "@/contexts/auth-context";
-import { Slot, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
 export default function Layout() {
@@ -13,7 +13,6 @@ export default function Layout() {
 
   return (
     <View style={styles.container}>
-      <Slot />
       <View style={styles.navbar}>
         <NavItem href="/home" icon="home-outline" label="Home" />
         <NavItem href="/chest" icon="cube-outline" label="Chest" />
