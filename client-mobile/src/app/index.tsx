@@ -2,6 +2,7 @@ import { useSession } from "@/contexts/auth-context";
 import { ErrorMessage } from "@hookform/error-message";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   SafeAreaView,
@@ -26,12 +27,14 @@ export default function Login() {
   } = useForm<FormData>();
   const router = useRouter();
 
+  useEffect(() => {
+    if (session) {
+      router.replace("/home");
+    }
+  }, [session, router]);
+
   if (loading) {
     return <Text>Loading...</Text>;
-  }
-
-  if (session) {
-    router.replace("/home");
   }
 
   const onSubmit = (data: FormData) => {

@@ -1,18 +1,22 @@
 import NavItem from "@/components/nav-item";
 import { useSession } from "@/contexts/auth-context";
-import { useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
+import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function Layout() {
   const { session } = useSession();
   const router = useRouter();
 
-  if (!session) {
-    return router.replace("/");
-  }
+  useEffect(() => {
+    if (!session) {
+      return router.replace("/");
+    }
+  }, [session, router]);
 
   return (
     <View style={styles.container}>
+      <Stack screenOptions={{ headerShown: false }} />
       <View style={styles.navbar}>
         <NavItem href="/home" icon="home-outline" label="Home" />
         <NavItem href="/chest" icon="cube-outline" label="Chest" />
