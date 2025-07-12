@@ -202,7 +202,7 @@ export function EditHuntModal({ isOpen, onClose, hunt, onEditHunt }: EditHuntMod
                 <Label htmlFor="edit-startDate">Start Date *</Label>
                 <Input
                   id="edit-startDate"
-                  type="datetime-local"
+                  type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
                   required
@@ -212,7 +212,7 @@ export function EditHuntModal({ isOpen, onClose, hunt, onEditHunt }: EditHuntMod
                 <Label htmlFor="edit-endDate">End Date *</Label>
                 <Input
                   id="edit-endDate"
-                  type="datetime-local"
+                  type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
                   min={startDate}

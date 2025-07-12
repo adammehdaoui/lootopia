@@ -166,7 +166,7 @@ export function AddHuntModal({ isOpen, onClose, onAddHunt }: AddHuntModalProps) 
                 <Label htmlFor="startDate">Start Date *</Label>
                 <Input
                   id="startDate"
-                  type="datetime-local"
+                  type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
                   required
@@ -176,7 +176,7 @@ export function AddHuntModal({ isOpen, onClose, onAddHunt }: AddHuntModalProps) 
                 <Label htmlFor="endDate">End Date *</Label>
                 <Input
                   id="endDate"
-                  type="datetime-local"
+                  type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
                   min={startDate}
