@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Search, UserPlus, MoreHorizontal } from "lucide-react"
+import { Search, UserPlus, MoreHorizontal, Edit, Trash2 } from "lucide-react"
 import { useState } from "react"
 import {
   DropdownMenu,
@@ -12,12 +12,31 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
+import { AddUserModal } from "@/components/custom/add-user-modal"
+import { useToast } from "@/hooks/use-toast"
+import { EditUserModal } from "@/components/custom/edit-user-modal"
+import { DeleteUserModal } from "@/components/custom/delete-user-modal"
+
+type User = {
+  id: string
+  username: string
+  email: string
+  status: "active" | "inactive"
+  joinDate: string
+  huntsCreated: number
+  huntsParticipated: number
+}
 
 export default function AdminUsers() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const { toast } = useToast()
 
   // Mock users data - replace with real data later
-  const users = [
+  const [users, setUsers] = useState<User[]>([
     {
       id: "1",
       username: "john.doe@example.com",
@@ -54,13 +73,59 @@ export default function AdminUsers() {
       huntsCreated: 8,
       huntsParticipated: 15
     }
-  ]
+  ])
 
   const filteredUsers = users.filter(
     (user) =>
       user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.email.toLowerCase().includes(searchQuery.toLowerCase())
   )
+
+  const handleAddUser = (
+    newUser: Omit<User, "id" | "joinDate" | "huntsCreated" | "huntsParticipated">
+  ) => {
+    const user: User = {
+      ...newUser,
+      id: Math.random().toString(36).substring(2, 15),
+      joinDate: new Date().toISOString().split("T")[0],
+      huntsCreated: 0,
+      huntsParticipated: 0
+    }
+
+    setUsers((prev) => [user, ...prev])
+    toast({
+      title: "User added",
+      description: `${user.username} has been successfully added.`
+    })
+  }
+
+  const handleEditUser = (updatedUser: User) => {
+    setUsers((prev) => prev.map((user) => (user.id === updatedUser.id ? updatedUser : user)))
+    toast({
+      title: "User updated",
+      description: `${updatedUser.username} has been successfully updated.`
+    })
+  }
+
+  const handleDeleteUser = (userId: string) => {
+    const userToDelete = users.find((user) => user.id === userId)
+    setUsers((prev) => prev.filter((user) => user.id !== userId))
+    toast({
+      title: "User deleted",
+      description: `${userToDelete?.username} has been successfully deleted.`,
+      variant: "destructive"
+    })
+  }
+
+  const openEditModal = (user: User) => {
+    setSelectedUser(user)
+    setIsEditModalOpen(true)
+  }
+
+  const openDeleteModal = (user: User) => {
+    setSelectedUser(user)
+    setIsDeleteModalOpen(true)
+  }
 
   return (
     <div className="space-y-6">
@@ -69,7 +134,7 @@ export default function AdminUsers() {
           <h1 className="text-3xl font-bold text-gray-900">Users Management</h1>
           <p className="text-gray-600">Manage user accounts and permissions</p>
         </div>
-        <Button className="flex items-center gap-2">
+        <Button className="flex items-center gap-2" onClick={() => setIsAddModalOpen(true)}>
           <UserPlus className="h-4 w-4" />
           Add User
         </Button>
@@ -132,9 +197,17 @@ export default function AdminUsers() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem>View Details</DropdownMenuItem>
-                          <DropdownMenuItem>Edit User</DropdownMenuItem>
-                          <DropdownMenuItem className="text-red-600">Delete User</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => openEditModal(user)}>
+                            <Edit className="mr-2 h-4 w-4" />
+                            Edit User
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="text-red-600"
+                            onClick={() => openDeleteModal(user)}
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            Delete User
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </td>
@@ -145,6 +218,37 @@ export default function AdminUsers() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Modals */}
+      <AddUserModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onAddUser={handleAddUser}
+      />
+
+      {selectedUser && (
+        <EditUserModal
+          isOpen={isEditModalOpen}
+          onClose={() => {
+            setIsEditModalOpen(false)
+            setSelectedUser(null)
+          }}
+          user={selectedUser}
+          onEditUser={handleEditUser}
+        />
+      )}
+
+      {selectedUser && (
+        <DeleteUserModal
+          isOpen={isDeleteModalOpen}
+          onClose={() => {
+            setIsDeleteModalOpen(false)
+            setSelectedUser(null)
+          }}
+          user={selectedUser}
+          onDeleteUser={handleDeleteUser}
+        />
+      )}
     </div>
   )
 }
