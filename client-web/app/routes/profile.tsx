@@ -1,3 +1,5 @@
+"use client"
+
 import AvatarHandler from "@/components/custom/avatar-handler"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -7,11 +9,12 @@ import { useSession } from "@/contexts/auth-context"
 import { useToast } from "@/hooks/use-toast"
 import { requireAuth } from "@/services/auth/auth"
 import { uploadAvatar } from "@/services/avatar"
-import { ActionFunction, ActionFunctionArgs, data } from "@remix-run/node"
+import { type ActionFunction, type ActionFunctionArgs, data } from "@remix-run/node"
 import { Form, useActionData } from "@remix-run/react"
 import { useQueryClient } from "@tanstack/react-query"
 import { ReasonPhrases, StatusCodes } from "http-status-codes"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { Edit, Save, XCircle } from "lucide-react" // Import new icons
 
 type ActionResponse = {
   message: string
@@ -56,9 +59,19 @@ export const action: ActionFunction = async ({ request }: ActionFunctionArgs) =>
 
 export default function Profile() {
   const data = useActionData<typeof action>()
-  const { username, id } = useSession()
+  const { username: sessionUsername, id } = useSession() // Get username from session
   const queryClient = useQueryClient()
   const { toast } = useToast()
+
+  const [isEditingUsername, setIsEditingUsername] = useState(false)
+  const [editableUsername, setEditableUsername] = useState(sessionUsername || "")
+
+  // Initialize editableUsername when sessionUsername changes (e.g., on initial load)
+  useEffect(() => {
+    if (sessionUsername) {
+      setEditableUsername(sessionUsername)
+    }
+  }, [sessionUsername])
 
   useEffect(() => {
     if (data?.status === StatusCodes.OK) {
@@ -83,6 +96,27 @@ export default function Profile() {
     })
   }
 
+  const handleSaveUsername = () => {
+    // In a real application, you would send this to your backend
+    // For now, it's a front-end only update
+    setIsEditingUsername(false)
+    toast({
+      title: "Username updated",
+      description: `Your username has been changed to ${editableUsername}.`,
+      variant: "default"
+    })
+  }
+
+  const handleCancelEditUsername = () => {
+    setEditableUsername(sessionUsername || "") // Revert to original username
+    setIsEditingUsername(false)
+    toast({
+      title: "Edit canceled",
+      description: "Username change has been canceled.",
+      variant: "default"
+    })
+  }
+
   return (
     <div className="flex min-h-screen justify-center bg-gradient-to-tl from-deep via-royal to-light">
       <div className="flex w-full max-w-xl flex-col items-center justify-center space-y-16 text-white">
@@ -95,7 +129,44 @@ export default function Profile() {
             <div className="flex items-center space-x-4">
               <AvatarHandler />
               <div className="flex flex-col">
-                <h3 className="text-lg font-semibold">{username}</h3>
+                {isEditingUsername ? (
+                  <div className="flex items-center gap-2">
+                    <Input
+                      type="text"
+                      value={editableUsername}
+                      onChange={(e) => setEditableUsername(e.target.value)}
+                      className="w-48 rounded-md border-2 border-white bg-deep p-2 text-white"
+                    />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleSaveUsername}
+                      className="text-white hover:text-green-400"
+                    >
+                      <Save className="h-5 w-5" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleCancelEditUsername}
+                      className="text-white hover:text-red-400"
+                    >
+                      <XCircle className="h-5 w-5" />
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-semibold">{editableUsername}</h3>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setIsEditingUsername(true)}
+                      className="text-white hover:text-gray-300"
+                    >
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                  </div>
+                )}
                 <span className="text-xs text-gray-300">{id}</span>
               </div>
             </div>
