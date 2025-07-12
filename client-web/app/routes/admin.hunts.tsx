@@ -4,8 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Search, Plus, MoreHorizontal } from "lucide-react"
-import { useState } from "react"
+import { Search, Plus, MoreHorizontal, Edit, Trash2 } from "lucide-react"
+import { useState, useCallback } from "react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,9 +17,38 @@ import { QueryHandler } from "@/handlers/query-handler"
 import { hunts } from "@/services/hunts"
 import { useQuery } from "@tanstack/react-query"
 
+import { useToast } from "@/hooks/use-toast"
+import { AddHuntModal } from "@/components/custom/add-hunt-modal"
+import { EditHuntModal } from "@/components/custom/edit-hunt-modal"
+import { DeleteHuntModal } from "@/components/custom/delete-hunt-modal"
+
+type Hunt = {
+  id: string
+  name: string
+  description: string | null
+  latitude: number
+  longitude: number
+  startTime: string
+  endTime: string
+  owner: string | null
+  likes: any[]
+}
+
+type HuntLike = {
+  huntDto: Hunt
+  likedBy: boolean
+  likeCount: number
+}
+
 export default function AdminHunts() {
   const { token } = useSession()
   const [searchQuery, setSearchQuery] = useState("")
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [selectedHunt, setSelectedHunt] = useState<HuntLike | null>(null)
+  const [customHunts, setCustomHunts] = useState<HuntLike[]>([])
+  const { toast } = useToast()
 
   const { isPending, error, data } = useQuery({
     queryKey: ["admin-hunts"],
@@ -28,23 +57,105 @@ export default function AdminHunts() {
     }
   })
 
-  const getHuntStatus = (hunt: any) => {
+  const getHuntStatus = (hunt: Hunt) => {
     const currentTime = new Date().toISOString()
-    if (currentTime >= hunt.huntDto.startTime && currentTime <= hunt.huntDto.endTime) {
+    if (currentTime >= hunt.startTime && currentTime <= hunt.endTime) {
       return { status: "live", label: "Live", variant: "default" as const }
     }
-    if (currentTime < hunt.huntDto.startTime) {
+    if (currentTime < hunt.startTime) {
       return { status: "upcoming", label: "Upcoming", variant: "secondary" as const }
     }
     return { status: "past", label: "Past", variant: "outline" as const }
   }
 
-  const filteredHunts = (data || []).filter(
-    (hunt: any) =>
+  // Combine API data with custom hunts
+  const allHunts = [...customHunts, ...(data || [])]
+
+  const filteredHunts = allHunts.filter(
+    (hunt: HuntLike) =>
       hunt.huntDto.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (hunt.huntDto.description &&
         hunt.huntDto.description.toLowerCase().includes(searchQuery.toLowerCase()))
   )
+
+  const handleAddHunt = useCallback(
+    (newHunt: Omit<Hunt, "id" | "owner" | "likes">) => {
+      const hunt: Hunt = {
+        ...newHunt,
+        id: Math.random().toString(36).substring(2, 15),
+        owner: null,
+        likes: []
+      }
+
+      const huntLike: HuntLike = {
+        huntDto: hunt,
+        likedBy: false,
+        likeCount: 0
+      }
+
+      setCustomHunts((prev) => [huntLike, ...prev])
+      toast({
+        title: "Hunt created",
+        description: `${hunt.name} has been successfully created.`
+      })
+    },
+    [toast]
+  )
+
+  const handleEditHunt = useCallback(
+    (updatedHunt: HuntLike) => {
+      // Update in custom hunts if it exists there
+      setCustomHunts((prev) =>
+        prev.map((hunt) => (hunt.huntDto.id === updatedHunt.huntDto.id ? updatedHunt : hunt))
+      )
+
+      toast({
+        title: "Hunt updated",
+        description: `${updatedHunt.huntDto.name} has been successfully updated.`
+      })
+    },
+    [toast]
+  )
+
+  const handleDeleteHunt = useCallback(
+    (huntId: string) => {
+      const huntToDelete = allHunts.find((hunt) => hunt.huntDto.id === huntId)
+
+      // Remove from custom hunts
+      setCustomHunts((prev) => prev.filter((hunt) => hunt.huntDto.id !== huntId))
+
+      toast({
+        title: "Hunt deleted",
+        description: `${huntToDelete?.huntDto.name} has been successfully deleted.`,
+        variant: "destructive"
+      })
+    },
+    [toast]
+  )
+
+  const openEditModal = useCallback((hunt: HuntLike) => {
+    setSelectedHunt(hunt)
+    setIsEditModalOpen(true)
+  }, [])
+
+  const openDeleteModal = useCallback((hunt: HuntLike) => {
+    setSelectedHunt(hunt)
+    setIsDeleteModalOpen(true)
+  }, [])
+
+  const closeEditModal = useCallback(() => {
+    setIsEditModalOpen(false)
+    setSelectedHunt(null)
+  }, [])
+
+  const closeDeleteModal = useCallback(() => {
+    setIsDeleteModalOpen(false)
+    setSelectedHunt(null)
+  }, [])
+
+  const closeAddModal = useCallback(() => {
+    setIsAddModalOpen(false)
+  }, [])
 
   return (
     <div className="space-y-6">
@@ -53,7 +164,7 @@ export default function AdminHunts() {
           <h1 className="text-3xl font-bold text-gray-900">Hunts Management</h1>
           <p className="text-gray-600">Manage treasure hunts and their settings</p>
         </div>
-        <Button className="flex items-center gap-2">
+        <Button className="flex items-center gap-2" onClick={() => setIsAddModalOpen(true)}>
           <Plus className="h-4 w-4" />
           Create Hunt
         </Button>
@@ -90,8 +201,8 @@ export default function AdminHunts() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredHunts.map((hunt: any) => {
-                    const huntStatus = getHuntStatus(hunt)
+                  {filteredHunts.map((hunt: HuntLike) => {
+                    const huntStatus = getHuntStatus(hunt.huntDto)
                     return (
                       <tr key={hunt.huntDto.id} className="border-b hover:bg-gray-50">
                         <td className="px-4 py-3">
@@ -125,10 +236,15 @@ export default function AdminHunts() {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                              <DropdownMenuItem>View Details</DropdownMenuItem>
-                              <DropdownMenuItem>Edit Hunt</DropdownMenuItem>
-                              <DropdownMenuItem>Duplicate Hunt</DropdownMenuItem>
-                              <DropdownMenuItem className="text-red-600">
+                              <DropdownMenuItem onClick={() => openEditModal(hunt)}>
+                                <Edit className="mr-2 h-4 w-4" />
+                                Edit Hunt
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                className="text-red-600"
+                                onClick={() => openDeleteModal(hunt)}
+                              >
+                                <Trash2 className="mr-2 h-4 w-4" />
                                 Delete Hunt
                               </DropdownMenuItem>
                             </DropdownMenuContent>
@@ -143,6 +259,23 @@ export default function AdminHunts() {
           </CardContent>
         </Card>
       </QueryHandler>
+
+      {/* Modals */}
+      <AddHuntModal isOpen={isAddModalOpen} onClose={closeAddModal} onAddHunt={handleAddHunt} />
+
+      <EditHuntModal
+        isOpen={isEditModalOpen}
+        onClose={closeEditModal}
+        hunt={selectedHunt}
+        onEditHunt={handleEditHunt}
+      />
+
+      <DeleteHuntModal
+        isOpen={isDeleteModalOpen}
+        onClose={closeDeleteModal}
+        hunt={selectedHunt}
+        onDeleteHunt={handleDeleteHunt}
+      />
     </div>
   )
 }
