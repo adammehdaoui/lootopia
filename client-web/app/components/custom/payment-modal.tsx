@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Dialog } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -23,17 +23,26 @@ export function PaymentModal({ isOpen, onClose, crownAmount, price }: PaymentMod
   const [paymentMethod, setPaymentMethod] = useState<"card" | "klarna" | "afterpay">("card")
   const [isProcessing, setIsProcessing] = useState(false)
   const { toast } = useToast()
+  const [showKlarnaConfirmation, setShowKlarnaConfirmation] = useState(false)
+
+  // Klarna SMS states
+  const [klarnaPhoneNumber, setKlarnaPhoneNumber] = useState("")
+  const [klarnaSmsCode, setKlarnaSmsCode] = useState("")
+  const [klarnaCodeSent, setKlarnaCodeSent] = useState(false)
+  // const fictionalSmsCode = "123456" // Fictional code for demonstration - no longer strictly validated
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setIsProcessing(true)
 
-    // Simuler un traitement de paiement
+    // Simulate payment processing
     setTimeout(() => {
       setIsProcessing(false)
+      setShowKlarnaConfirmation(false) // Reset Klarna confirmation state
+      setKlarnaCodeSent(false) // Reset Klarna SMS state
       addCrowns(crownAmount)
       onClose()
-      // Afficher une notification de succès
+      // Show success notification
       toast({
         title: "Achat réussi !",
         description: ` ${crownAmount} couronnes ont été ajoutées à votre compte.`,
@@ -42,16 +51,70 @@ export function PaymentModal({ isOpen, onClose, crownAmount, price }: PaymentMod
     }, 1500)
   }
 
+  const handleKlarnaSendCode = () => {
+    // Removed phone number validation for demonstration purposes
+    // if (!klarnaPhoneNumber.trim()) {
+    //   toast({
+    //     title: "Validation Error",
+    //     description: "Veuillez entrer un numéro de téléphone.",
+    //     variant: "destructive",
+    //   })
+    //   return
+    // }
+
+    // Simulate sending code
+    setIsProcessing(true)
+    setTimeout(() => {
+      setIsProcessing(false)
+      setKlarnaCodeSent(true)
+      toast({
+        title: "Code envoyé !",
+        description: `Un code vous a été envoyé par SMS.`, // Simplified message
+        variant: "default"
+      })
+    }, 1000)
+  }
+
+  const handleKlarnaVerifyCode = () => {
+    // Removed SMS code validation for demonstration purposes
+    // if (klarnaSmsCode === fictionalSmsCode) {
+    handleSubmit(new Event("submit") as unknown as React.FormEvent) // Trigger the purchase
+    // } else {
+    //   toast({
+    //     title: "Code invalide",
+    //     description: "Le code SMS entré est incorrect. Veuillez réessayer.",
+    //     variant: "destructive",
+    //   })
+    // }
+  }
+
+  const handleClose = () => {
+    setShowKlarnaConfirmation(false)
+    setKlarnaPhoneNumber("")
+    setKlarnaSmsCode("")
+    setKlarnaCodeSent(false)
+    onClose()
+  }
+
+  // Reset Klarna SMS states when switching payment methods or closing confirmation
+  useEffect(() => {
+    if (paymentMethod !== "klarna" || !showKlarnaConfirmation) {
+      setKlarnaPhoneNumber("")
+      setKlarnaSmsCode("")
+      setKlarnaCodeSent(false)
+    }
+  }, [paymentMethod, showKlarnaConfirmation])
+
   if (!isOpen) return null
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
         <div className="max-h-[90vh] w-full max-w-xl overflow-auto rounded-xl bg-white">
           <div className="p-6">
             <div className="mb-6 flex items-center justify-between">
               <h2 className="text-xl font-semibold">Paiement</h2>
-              <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+              <button onClick={handleClose} className="text-gray-500 hover:text-gray-700">
                 <X size={20} />
               </button>
             </div>
@@ -167,16 +230,132 @@ export function PaymentModal({ isOpen, onClose, crownAmount, price }: PaymentMod
                 </form>
               )}
 
-              {paymentMethod === "klarna" && (
+              {paymentMethod === "klarna" && !showKlarnaConfirmation && (
                 <div className="py-8 text-center">
                   <p className="mb-4 text-gray-600">Payer en 3 fois sans frais avec Klarna</p>
                   <Button
-                    onClick={handleSubmit}
+                    onClick={() => setShowKlarnaConfirmation(true)}
                     className="w-full rounded-lg bg-pink-600 py-3 font-medium text-white hover:bg-pink-700"
                     disabled={isProcessing}
                   >
-                    {isProcessing ? "Traitement en cours..." : `Continuer avec Klarna`}
+                    Continuer avec Klarna
                   </Button>
+                </div>
+              )}
+
+              {paymentMethod === "klarna" && showKlarnaConfirmation && (
+                <div className="py-6">
+                  <div className="mb-6 rounded-lg border-2 border-pink-200 bg-pink-50 p-4">
+                    <div className="mb-3 flex items-center">
+                      <div className="mr-3 rounded bg-pink-100 p-2">
+                        <span className="text-lg font-bold text-pink-600">K.</span>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900">Confirmation Klarna</h3>
+                        <p className="text-sm text-gray-600">Vérifiez votre commande</p>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span>Montant total:</span>
+                        <span className="font-medium">{price.toFixed(2)} €</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Paiement 1 (aujourd'hui):</span>
+                        <span className="font-medium">{(price / 3).toFixed(2)} €</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Paiement 2 (dans 30 jours):</span>
+                        <span className="font-medium">{(price / 3).toFixed(2)} €</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Paiement 3 (dans 60 jours):</span>
+                        <span className="font-medium">{(price / 3).toFixed(2)} €</span>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 rounded border border-yellow-200 bg-yellow-50 p-3">
+                      <p className="text-xs text-yellow-800">
+                        <strong>Important:</strong> Vous recevrez un SMS de confirmation de Klarna
+                        avec les détails de votre plan de paiement.
+                      </p>
+                    </div>
+                  </div>
+
+                  {!klarnaCodeSent ? (
+                    <div className="space-y-4">
+                      <p className="mb-4 text-gray-600">
+                        Entrez votre numéro de téléphone pour recevoir un code SMS de Klarna.
+                      </p>
+                      <div>
+                        <Label htmlFor="klarnaPhoneNumber">Numéro de téléphone</Label>
+                        <Input
+                          id="klarnaPhoneNumber"
+                          type="tel"
+                          value={klarnaPhoneNumber}
+                          onChange={(e) => setKlarnaPhoneNumber(e.target.value)}
+                          placeholder="Ex: +33 6 12 34 56 78"
+                          className="bg-gray-50"
+                          required
+                        />
+                      </div>
+                      <div className="flex space-x-3">
+                        <Button
+                          onClick={() => setShowKlarnaConfirmation(false)}
+                          variant="outline"
+                          className="flex-1"
+                        >
+                          Retour
+                        </Button>
+                        <Button
+                          onClick={handleKlarnaSendCode}
+                          className="flex-1 rounded-lg bg-pink-600 py-3 font-medium text-white hover:bg-pink-700"
+                          disabled={isProcessing}
+                        >
+                          {isProcessing ? "Envoi du code..." : "Envoyer le code SMS"}
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      <p className="mb-4 text-gray-600">
+                        Un code a été envoyé au {klarnaPhoneNumber}. Veuillez l'entrer ci-dessous.
+                      </p>
+                      <div>
+                        <Label htmlFor="klarnaSmsCode">Code SMS</Label>
+                        <Input
+                          id="klarnaSmsCode"
+                          type="text"
+                          value={klarnaSmsCode}
+                          onChange={(e) => setKlarnaSmsCode(e.target.value)}
+                          placeholder="Entrez le code à 6 chiffres"
+                          className="bg-gray-50"
+                          maxLength={6}
+                          required
+                        />
+                      </div>
+                      <div className="flex space-x-3">
+                        <Button
+                          onClick={() => {
+                            setKlarnaCodeSent(false)
+                            setKlarnaSmsCode("")
+                          }}
+                          variant="outline"
+                          className="flex-1"
+                        >
+                          Retour
+                        </Button>
+                        <Button
+                          onClick={handleKlarnaVerifyCode}
+                          className="flex-1 rounded-lg bg-pink-600 py-3 font-medium text-white hover:bg-pink-700"
+                          disabled={isProcessing}
+                        >
+                          {isProcessing ? "Vérification..." : "Vérifier et Payer"}
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
